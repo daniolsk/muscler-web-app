@@ -52,20 +52,28 @@ export default function Dashboard({ user, workouts }) {
             <div>Name</div>
             <div>Date</div>
           </div>
-          {workouts.map((workout) => (
-            <Link
-              href={`/workout/${workout.id}`}
-              key={workout.id}
-              className="mb-2"
-            >
-              <div className="rounded-md border-2 border-black bg-gradient-to-r from-sky-600 to-indigo-600 p-4">
-                <div className="flex justify-between">
-                  <div className="font-bold text-white">{workout.name}</div>
-                  <div className="text-white">{formatDate(workout.date)}</div>
-                </div>
-              </div>
-            </Link>
-          ))}
+          {workouts.length < 1 ? (
+            <div className="py-10 text-center">No workouts yet...</div>
+          ) : (
+            <>
+              {workouts.map((workout) => (
+                <Link
+                  href={`/workout/${workout.id}`}
+                  key={workout.id}
+                  className="mb-2"
+                >
+                  <div className="rounded-md border-2 border-black bg-gradient-to-r from-sky-600 to-indigo-600 p-4">
+                    <div className="flex justify-between">
+                      <div className="font-bold text-white">{workout.name}</div>
+                      <div className="text-white">
+                        {formatDate(workout.date)}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       </main>
     </div>
