@@ -42,22 +42,26 @@ export default function Dashboard({ user, workouts }) {
         </h1>
         <div
           onClick={handleLogout}
-          className="mb-2 cursor-pointer text-center underline"
+          className="mb-2 cursor-pointer text-center text-red-600 underline"
         >
           Log out
         </div>
-        <p className="mb-6 text-center text-xl">Your Last workouts:</p>
+        <p className="mb-4 text-center text-xl">Your Last workouts:</p>
         <div className="flex flex-col">
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between p-4 text-neutral-600">
             <div>Name</div>
             <div>Date</div>
           </div>
           {workouts.map((workout) => (
-            <Link href={`/workout/${workout.id}`} key={workout.id}>
-              <div className="rounded-md border-2 border-black bg-gradient-to-r from-purple-200 to-pink-300 p-4">
+            <Link
+              href={`/workout/${workout.id}`}
+              key={workout.id}
+              className="mb-2"
+            >
+              <div className="rounded-md border-2 border-black bg-gradient-to-r from-sky-600 to-indigo-600 p-4">
                 <div className="flex justify-between">
-                  <div className="font-bold">{workout.name}</div>
-                  <div>{formatDate(workout.date)}</div>
+                  <div className="font-bold text-white">{workout.name}</div>
+                  <div className="text-white">{formatDate(workout.date)}</div>
                 </div>
               </div>
             </Link>
