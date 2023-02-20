@@ -14,7 +14,15 @@ const user = [
 
 const workout = [
   {
-    name: "klata",
+    name: "Klata",
+    userId: 1,
+  },
+  {
+    name: "Nogi",
+    userId: 1,
+  },
+  {
+    name: "Plecy i barki",
     userId: 1,
   },
 ];

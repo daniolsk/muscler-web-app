@@ -80,7 +80,7 @@ export default function Login() {
       }
     }
 
-    router.push("/");
+    router.push("/dashboard");
   };
 
   return (
@@ -91,13 +91,11 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto max-w-4xl p-10">
-        <h1 className="mb-4 text-center text-5xl font-bold">
-          Workout tracker app
-        </h1>
+      <main className="mx-auto p-10">
+        <h1 className="mb-4 text-center text-4xl font-bold">Dashboard</h1>
         {isNewUser ? (
           <div>
-            <p className="mb-20 text-center text-3xl">Register</p>
+            <p className="mb-12 text-center text-2xl">Create account</p>
             <div className="flex flex-col">
               <input
                 value={username}
@@ -127,7 +125,7 @@ export default function Login() {
           </div>
         ) : (
           <div>
-            <p className="mb-20 text-center text-3xl">Please log in</p>
+            <p className="mb-12 text-center text-2xl">Please log in</p>
             <div className="flex flex-col">
               <input
                 value={username}
@@ -176,7 +174,7 @@ export async function getServerSideProps(context) {
   if (token && verifyToken(token)) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/dashboard",
       },
     };
   }

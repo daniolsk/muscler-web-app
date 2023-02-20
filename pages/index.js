@@ -1,9 +1,7 @@
 import Head from "next/head";
-import { verifyToken } from "../lib/jwt";
-import { decode } from "jsonwebtoken";
-import prisma from "../lib/prisma";
+import Link from "next/link";
 
-export default function Home({ user, workouts }) {
+export default function Home() {
   return (
     <div>
       <Head>
@@ -12,58 +10,23 @@ export default function Home({ user, workouts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto max-w-4xl p-10">
-        <h1 className="mb-4 text-center text-4xl font-bold">
-          Hello {user.username}
-        </h1>
-        <p className="mb-20 text-center text-xl">Your Last workouts:</p>
-        <div className="flex flex-col">
-          {workouts.map((workout) => (
-            <div>
-              {workout.id} - {workout.name} - {workout.date}
-            </div>
-          ))}
+      <main className="mflex flex-col p-8">
+        <h1 className="text-center text-4xl font-bold">Workout tracker app</h1>
+        <h3 className="text-md mt-4 mb-8 text-center font-normal italic">
+          by Daniel Skowron
+        </h3>
+        <p className="mb-8 text-center text-lg">
+          Log your workouts, track your progress, improve your form
+        </p>
+        <div className="flex items-center justify-center p-6">
+          <Link
+            className="cursor-pointer rounded-md border-4 border-red-900 bg-red-200 p-4 font-bold"
+            href="/dashboard"
+          >
+            Open dashboard
+          </Link>
         </div>
       </main>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  const token = context.req.cookies["access-token"];
-
-  if (token && verifyToken(token)) {
-    const dataFromToken = decode(token);
-    console.log(dataFromToken);
-
-    let data = await prisma.workout.findMany({
-      where: {
-        userId: dataFromToken.id,
-      },
-      orderBy: {
-        date: "asc",
-      },
-    });
-
-    let workouts = data.map((workout) => ({
-      ...workout,
-      date: workout.date.toString(),
-    }));
-
-    return {
-      props: {
-        user: {
-          username: dataFromToken.username,
-          id: dataFromToken.id,
-        },
-        workouts: workouts,
-      },
-    };
-  }
-
-  return {
-    redirect: {
-      destination: "/login",
-    },
-  };
 }
