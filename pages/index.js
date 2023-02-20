@@ -1,38 +1,69 @@
-import Head from 'next/head';
-import prisma from '../lib/prisma';
+import Head from "next/head";
+import { verifyToken } from "../lib/jwt";
+import { decode } from "jsonwebtoken";
+import prisma from "../lib/prisma";
 
-export default function Home({ users }) {
-	console.log(users);
-	return (
-		<div>
-			<Head>
-				<title>Workout tracker app</title>
-				<meta name="description" content="Workout tracker app" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+export default function Home({ user, workouts }) {
+  return (
+    <div>
+      <Head>
+        <title>Workout tracker app</title>
+        <meta name="description" content="Workout tracker app" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-			<main className="p-10 mx-auto max-w-4xl">
-				<h1 className="text-6xl font-bold mb-4 text-center">Next.js Starter</h1>
-				<p className="mb-20 text-xl text-center">🔥 Shop from the hottest items in the world 🔥</p>
-				<div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center  gap-4">
-					{users.map((user) => (
-						<div key={user.id}>{user.username}</div>
-					))}
-				</div>
-			</main>
-
-			<footer></footer>
-		</div>
-	);
+      <main className="mx-auto max-w-4xl p-10">
+        <h1 className="mb-4 text-center text-4xl font-bold">
+          Hello {user.username}
+        </h1>
+        <p className="mb-20 text-center text-xl">Your Last workouts:</p>
+        <div className="flex flex-col">
+          {workouts.map((workout) => (
+            <div>
+              {workout.id} - {workout.name} - {workout.date}
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export async function getServerSideProps(context) {
-	const data = await prisma.user.findMany({});
-	const users = data.map((user) => ({
-		...user,
-		createdAt: user.createdAt.toString(),
-	}));
-	return {
-		props: { users },
-	};
+  const token = context.req.cookies["access-token"];
+
+  if (token && verifyToken(token)) {
+    const dataFromToken = decode(token);
+    console.log(dataFromToken);
+
+    let data = await prisma.workout.findMany({
+      where: {
+        userId: dataFromToken.id,
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+
+    let workouts = data.map((workout) => ({
+      ...workout,
+      date: workout.date.toString(),
+    }));
+
+    return {
+      props: {
+        user: {
+          username: dataFromToken.username,
+          id: dataFromToken.id,
+        },
+        workouts: workouts,
+      },
+    };
+  }
+
+  return {
+    redirect: {
+      destination: "/login",
+    },
+  };
 }
