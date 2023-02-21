@@ -16,14 +16,17 @@ const workout = [
   {
     name: "Klata",
     userId: 1,
+    isActive: true,
   },
   {
     name: "Nogi",
     userId: 1,
+    isActive: false,
   },
   {
     name: "Plecy i barki",
     userId: 1,
+    isActive: false,
   },
 ];
 

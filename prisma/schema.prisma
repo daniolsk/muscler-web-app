@@ -20,6 +20,7 @@ model Workout {
     id        Int        @id @default(autoincrement())
     name      String
     date      DateTime   @default(now())
+    isActive  Boolean
     user      User       @relation(fields: [userId], references: [id])
     userId    Int
     exercises Exercise[]

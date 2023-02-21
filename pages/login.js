@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { use, useState } from "react";
+import { useState } from "react";
 import { verifyToken } from "../lib/jwt";
 
 const loginF = async (username, password) => {
@@ -60,6 +60,7 @@ export default function Login() {
 
       if (response.status != 200) {
         setError(data.msg);
+        setPassword("");
         return;
       }
 
@@ -68,6 +69,7 @@ export default function Login() {
 
       if (response.status != 200) {
         setError(data.msg);
+        setPassword("");
         return;
       }
     } else {
@@ -76,6 +78,7 @@ export default function Login() {
 
       if (response.status != 200) {
         setError(data.msg);
+        setPassword("");
         return;
       }
     }
@@ -91,77 +94,82 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto p-10">
-        <h1 className="mb-4 text-center text-4xl font-bold">Dashboard</h1>
-        {isNewUser ? (
+      <main className=" text-white">
+        <div className="flex items-center justify-between bg-background-darker-color p-3">
           <div>
-            <p className="mb-12 text-center text-2xl">Create account</p>
-            <div className="flex flex-col">
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="mb-4 rounded-md border-2 border-black p-2"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-              />
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password"
-                className="mb-4 rounded-md border-2 border-black p-2"
-              />
-              <input
-                onClick={handleSubmit}
-                className="cursor-pointer rounded-md border-2 border-black p-2 hover:bg-slate-200"
-                type="button"
-                value="Register"
-              />
-            </div>
+            WTA{" "}
+            <span className="text-sm font-thin italic text-neutral-400">
+              by Daniel Skowron
+            </span>
           </div>
-        ) : (
-          <div>
-            <p className="mb-12 text-center text-2xl">Please log in</p>
-            <div className="flex flex-col">
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="mb-4 rounded-md border-2 border-black p-2"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-              />
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password"
-                className="mb-4 rounded-md border-2 border-black p-2"
-              />
-              <input
-                onClick={handleSubmit}
-                className="cursor-pointer rounded-md border-2 border-black p-2 hover:bg-slate-200"
-                type="button"
-                value="Login"
-              />
-            </div>
-          </div>
-        )}
-        <div
-          onClick={() => setIsNewUser(!isNewUser)}
-          className="mt-3 cursor-pointer text-center text-blue-500 underline"
-        >
-          {isNewUser ? "Login instead" : "New user? Create account"}
         </div>
-        <div className="mt-5 text-center text-xl font-bold text-red-600">
-          {error ? error : ""}
+        <div className="p-4">
+          {isNewUser ? (
+            <div>
+              <h1 className="mb-4 text-center text-4xl font-bold">Register</h1>
+              <p className="mb-12 text-center text-2xl">Create new account</p>
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                  type="text"
+                  placeholder="Username"
+                />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                />
+                <input
+                  onClick={handleSubmit}
+                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+                  type="submit"
+                  value="Register"
+                />
+              </form>
+            </div>
+          ) : (
+            <div>
+              <h1 className="mb-4 text-center text-4xl font-bold">Log in</h1>
+              <p className="mb-12 text-center text-2xl">
+                Log in to your account
+              </p>
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                  type="text"
+                  placeholder="Username"
+                />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                />
+                <input
+                  onClick={handleSubmit}
+                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+                  type="submit"
+                  value="Login"
+                />
+              </form>
+            </div>
+          )}
+          <div
+            onClick={() => setIsNewUser(!isNewUser)}
+            className="mt-3 cursor-pointer text-center text-blue-500 underline"
+          >
+            {isNewUser ? "Login instead" : "New user? Create account"}
+          </div>
+          <div className="text-md mt-5 text-center font-bold text-red-600">
+            {error ? error : ""}
+          </div>
         </div>
       </main>
     </div>

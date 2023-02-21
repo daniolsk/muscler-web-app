@@ -1,9 +1,12 @@
 import Head from "next/head";
+import Image from "next/image";
 import { verifyToken } from "../lib/jwt";
 import { decode } from "jsonwebtoken";
 import prisma from "../lib/prisma";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+import NewWorkout from "../components/NewWorkout";
+import DeleteWorkout from "../components/DeleteWorkout";
 
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
@@ -36,44 +39,75 @@ export default function Dashboard({ user, workouts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto max-w-4xl p-10">
-        <h1 className="mb-4 text-center text-4xl font-bold">
-          Hello {user.username}
-        </h1>
-        <div
-          onClick={handleLogout}
-          className="mb-2 cursor-pointer text-center text-red-600 underline"
-        >
-          Log out
+      <main className="text-white">
+        <div className="flex items-center justify-between bg-background-darker-color p-3">
+          <div>
+            WTA{" "}
+            <span className="text-sm font-thin italic text-neutral-400">
+              by Daniel Skowron
+            </span>
+          </div>
+          <div
+            className="flex cursor-pointer items-center"
+            onClick={handleLogout}
+          >
+            <div className="mr-2">Log out</div>
+            <Image
+              alt="log out icon"
+              src="/icons/logout.svg"
+              width={15}
+              height={15}
+            ></Image>
+          </div>
         </div>
-        <p className="mb-4 text-center text-xl">Your Last workouts:</p>
+        <h1 className="p-5 pb-2 text-center text-4xl font-bold">
+          <span className="text-2xl font-normal">Hello</span> {user.username}
+        </h1>
+        <p className="mb-4 text-center text-xl">Your last workouts:</p>
         <div className="flex flex-col">
-          <div className="flex justify-between p-4 text-neutral-600">
+          <div className="flex justify-between px-8 py-1">
             <div>Name</div>
             <div>Date</div>
           </div>
-          {workouts.length < 1 ? (
-            <div className="py-10 text-center">No workouts yet...</div>
-          ) : (
-            <>
-              {workouts.map((workout) => (
-                <Link
-                  href={`/workout/${workout.id}`}
-                  key={workout.id}
-                  className="mb-2"
-                >
-                  <div className="rounded-md border-2 border-black bg-gradient-to-r from-sky-600 to-indigo-600 p-4">
-                    <div className="flex justify-between">
-                      <div className="font-bold text-white">{workout.name}</div>
-                      <div className="text-white">
-                        {formatDate(workout.date)}
+          <div className="p-4">
+            <NewWorkout user={user} />
+            {workouts.length < 1 ? (
+              <div className="py-10 text-center">No workouts yet...</div>
+            ) : (
+              <>
+                {workouts.map((workout) => (
+                  <div
+                    onClick={() => router.push(`/workout/${workout.id}`)}
+                    key={workout.id}
+                    className="flex-1 cursor-pointer"
+                  >
+                    <div
+                      className={`mb-2 rounded-md border-2 border-black bg-gradient-to-r ${
+                        workout.isActive
+                          ? "from-purple-500 to-pink-500"
+                          : "from-sky-600 to-indigo-600"
+                      } p-4`}
+                    >
+                      <div className="mb-2 flex justify-between">
+                        <div className="font-bold text-white">
+                          {workout.name}
+                        </div>
+                        <div className="text-white">
+                          {formatDate(workout.date)}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className=" text-white">
+                          Total sets: {workout._count.logs}
+                        </div>
+                        <DeleteWorkout workout={workout} />
                       </div>
                     </div>
                   </div>
-                </Link>
-              ))}
-            </>
-          )}
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </main>
     </div>
@@ -91,7 +125,12 @@ export async function getServerSideProps(context) {
         userId: dataFromToken.id,
       },
       orderBy: {
-        date: "asc",
+        date: "desc",
+      },
+      include: {
+        _count: {
+          select: { logs: true },
+        },
       },
     });
 
