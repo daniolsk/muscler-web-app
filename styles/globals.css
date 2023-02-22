@@ -6,3 +6,11 @@ body {
   min-height: 100vh;
   background-color: #0f172a;
 }
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

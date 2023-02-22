@@ -14,7 +14,7 @@ function Exercise({ exercise, setExericse, workoutId, setExerciseName }) {
           onChange={(e) => setExerciseName(exercise.id, e.target.value)}
         />
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[1fr,_1fr,_2fr] items-center gap-2">
+      <div className="ml-4 grid flex-1 grid-cols-[1fr,_2fr,_6fr] items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
         <div className="text-xs text-neutral-400">PREV</div>
         <div className="text-xs text-neutral-400">TODAY</div>
@@ -26,10 +26,11 @@ function Exercise({ exercise, setExericse, workoutId, setExerciseName }) {
               <span className="px-1">x</span>
               <div className="text-center">0</div>
             </div>
-            <div className="flex text-neutral-400">
+            <div className="flex items-center text-neutral-400">
               <input
-                type="text"
-                className="w-12 bg-background-darker-color/50 p-2 text-center text-white"
+                type="number"
+                inputMode="numeric"
+                className="w-14 bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.weight}
                 onChange={(e) => {
                   let logsTmp = exercise.logs;
@@ -40,14 +41,16 @@ function Exercise({ exercise, setExericse, workoutId, setExerciseName }) {
                 }}
               />
 
-              <span className="px-2">x</span>
+              <span className="px-2 text-sm">kg x</span>
               <input
-                type="text"
-                className="w-12 bg-background-darker-color/50 p-2 text-center text-white"
+                type="number"
+                inputMode="numeric"
+                className="appear w-14 bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.reps}
                 onChange={(e) => {
+                  let nbr = e.target.value.split(".")[0];
                   let logsTmp = exercise.logs;
-                  logsTmp[index].reps = Number(e.target.value);
+                  logsTmp[index].reps = Number(nbr);
                   logsTmp[index].id = log.id;
                   logsTmp[index].isChanged = true;
                   setExericse(exercise.id, logsTmp);
