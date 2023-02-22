@@ -7,9 +7,13 @@ import { useRouter } from "next/navigation";
 
 import NewWorkout from "../components/NewWorkout";
 import DeleteWorkout from "../components/DeleteWorkout";
+import { useState } from "react";
 
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
+
+  const [error, setError] = useState("");
+
   const formatDate = (date) => {
     let dateObj = new Date(date);
 
@@ -24,7 +28,7 @@ export default function Dashboard({ user, workouts }) {
     let data = await response.json();
 
     if (response.status != 200) {
-      console.log(data.msg);
+      setError(data.msg);
       return;
     }
 

@@ -41,15 +41,15 @@ model Exercise {
 }
 
 model Log {
-    id          Int      @id @default(autoincrement())
-    weight      Float
-    reps        Int
-    setNumber   Int
-    workout     Workout  @relation(fields: [workoutId], references: [id])
-    workoutId   Int
-    exercise    Exercise @relation(fields: [excerciseId], references: [id])
-    excerciseId Int
+    id         Int      @id @default(autoincrement())
+    weight     Float
+    reps       Int
+    setNumber  Int
+    workout    Workout  @relation(fields: [workoutId], references: [id])
+    workoutId  Int
+    exercise   Exercise @relation(fields: [exerciseId], references: [id])
+    exerciseId Int
 
     @@index([workoutId])
-    @@index([excerciseId])
+    @@index([exerciseId])
 }
