@@ -4,7 +4,6 @@ import Link from "next/link";
 import Exercise from "./Exercise";
 import { useRouter } from "next/router";
 
-import { Toaster, toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 function WorkoutDetailsInactive({ _count, workout }) {
@@ -73,7 +72,6 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedExercises.length == 0 &&
       modifiedLogs.length == 0
     ) {
-      toast.success("Workout saved!");
       return;
     }
 
@@ -101,8 +99,6 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
     if (refresh) {
       router.replace(router.asPath);
-    } else {
-      toast.success("Workout saved!");
     }
   };
 
@@ -151,7 +147,6 @@ function WorkoutDetailsInactive({ _count, workout }) {
   };
   return (
     <main className="text-white">
-      <Toaster position="bottom-center" />
       <div className="flex items-center justify-between bg-background-darker-color p-3">
         <div>
           MUSCLER{" "}
