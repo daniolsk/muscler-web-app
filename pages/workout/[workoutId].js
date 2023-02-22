@@ -17,9 +17,9 @@ export default function Workout({ workout }) {
       </Head>
 
       {workout.isActive ? (
-        <WorkoutDetailsActive workout={workout} />
+        <WorkoutDetailsActive _count={workout._count} workout={workout} />
       ) : (
-        <WorkoutDetailsInactive workout={workout} />
+        <WorkoutDetailsInactive _count={workout._count} workout={workout} />
       )}
     </div>
   );
@@ -37,6 +37,10 @@ export async function getServerSideProps(context) {
         id: parseInt(id),
       },
       include: {
+        _count: {
+          select: { logs: true, exercises: true },
+        },
+        logs: true,
         user: {
           select: {
             id: true,
@@ -65,6 +69,14 @@ export async function getServerSideProps(context) {
         },
       };
     }
+
+    let totalWeight = 0;
+
+    workout.logs.forEach((log) => {
+      totalWeight += log.weight * log.reps;
+    });
+
+    workout.totalWeight = totalWeight;
 
     workout.date = workout.date.toString();
 

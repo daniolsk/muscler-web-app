@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import { v4 as uuidv4 } from "uuid";
 
-function WorkoutDetailsInactive({ workout }) {
+function WorkoutDetailsInactive({ _count, workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
 
@@ -42,7 +42,14 @@ function WorkoutDetailsInactive({ workout }) {
       });
     });
 
-    console.log(newExercises, newLogs, modifiedExercises, modifiedLogs);
+    if (
+      newExercises.length == 0 &&
+      newLogs.length == 0 &&
+      modifiedExercises.length == 0 &&
+      modifiedLogs.length == 0
+    ) {
+      return;
+    }
 
     const response = await fetch("/api/saveWorkout", {
       method: "POST",
@@ -137,6 +144,24 @@ function WorkoutDetailsInactive({ workout }) {
         <div>
           <h1 className="mb-2 text-left text-2xl font-bold">{workout.name}</h1>
           <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
+          <div className=" flex flex-col justify-start text-white">
+            <div className="text-sm">
+              Total sets:{" "}
+              <span className="text-base font-bold">{workout._count.logs}</span>
+            </div>
+            <div className="text-sm">
+              Total exercises:{" "}
+              <span className="text-base font-bold">
+                {workout._count.exercises}
+              </span>
+            </div>
+            <div className="text-sm">
+              Total weight:{" "}
+              <span className="text-base font-bold">
+                {workout.totalWeight} kg
+              </span>
+            </div>
+          </div>
         </div>
         <button
           onClick={() => saveWorkout(true)}
@@ -148,7 +173,7 @@ function WorkoutDetailsInactive({ workout }) {
       <div className="text-md text-center font-bold text-red-600">
         {error ? error : ""}
       </div>
-      <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISES</div>
+      <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
       <div>
         {exercises.length == 0 ? (
           <div className="p-4">No exerices in this workout</div>

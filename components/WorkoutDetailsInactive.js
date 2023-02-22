@@ -31,9 +31,27 @@ function WorkoutDetailsInactive({ workout }) {
         <div>
           <h1 className="mb-2 text-left text-2xl font-bold">{workout.name}</h1>
           <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
+          <div className=" flex flex-col justify-start text-white">
+            <div className="text-sm">
+              Total sets:{" "}
+              <span className="text-base font-bold">{workout._count.logs}</span>
+            </div>
+            <div className="text-sm">
+              Total exercises:{" "}
+              <span className="text-base font-bold">
+                {workout._count.exercises}
+              </span>
+            </div>
+            <div className="text-sm">
+              Total weight:{" "}
+              <span className="text-base font-bold">
+                {workout.totalWeight} kg
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="px-4 text-xs text-neutral-400">EXERCISES</div>
+      <div className="px-4 text-xs text-neutral-400">EXERCISE</div>
       <div>
         {workout.exercises.length == 0 ? (
           <div className="p-4">No exerices in this workout</div>

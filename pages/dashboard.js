@@ -93,16 +93,31 @@ export default function Dashboard({ user, workouts }) {
                       } p-4`}
                     >
                       <div className="mb-2 flex justify-between">
-                        <div className="font-bold text-white">
-                          {workout.name}
-                        </div>
+                        <div className="text-lg font-bold">{workout.name}</div>
                         <div className="text-white">
                           {formatDate(workout.date)}
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <div className=" text-white">
-                          Total sets: {workout._count.logs}
+                        <div className=" flex flex-col text-white">
+                          <div className="text-sm">
+                            Total sets:{" "}
+                            <span className="text-base font-bold">
+                              {workout._count.logs}
+                            </span>
+                          </div>
+                          <div className="text-sm">
+                            Total exercises:{" "}
+                            <span className="text-base font-bold">
+                              {workout._count.exercises}
+                            </span>
+                          </div>
+                          <div className="text-sm">
+                            Total weight:{" "}
+                            <span className="text-base font-bold">
+                              {workout.totalWeight} kg
+                            </span>
+                          </div>
                         </div>
                         <DeleteWorkout workout={workout} />
                       </div>
@@ -132,8 +147,10 @@ export async function getServerSideProps(context) {
         date: "desc",
       },
       include: {
+        logs: true,
+        exercises: true,
         _count: {
-          select: { logs: true },
+          select: { logs: true, exercises: true },
         },
       },
     });
@@ -142,6 +159,16 @@ export async function getServerSideProps(context) {
       ...workout,
       date: workout.date.toString(),
     }));
+
+    workouts.forEach((workout) => {
+      let totalWeight = 0;
+
+      workout.logs.forEach((log) => {
+        totalWeight += log.weight * log.reps;
+      });
+
+      workout.totalWeight = totalWeight;
+    });
 
     return {
       props: {
