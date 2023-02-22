@@ -16,6 +16,28 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
   const router = useRouter();
 
+  const finishWorkout = async () => {
+    await saveWorkout(false);
+    const response = await fetch("/api/finishWorkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: workout.id,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.status != 200) {
+      setError(data.msg);
+      return;
+    }
+
+    router.replace(router.asPath);
+  };
+
   const saveWorkout = async (refresh) => {
     let newExercises = [];
     let newLogs = [];
@@ -189,14 +211,35 @@ function WorkoutDetailsInactive({ _count, workout }) {
             key={index}
           />
         ))}
-        <div onClick={addExercise} className="mx-4 flex items-center py-4">
-          <Image
-            alt="plus icon"
-            src={"/icons/plus.svg"}
-            width={25}
-            height={25}
-          ></Image>
-          <span>Add an exercise</span>
+        <div className="flex justify-between">
+          <div
+            onClick={addExercise}
+            className="m-2 flex cursor-pointer items-center rounded-md p-3"
+          >
+            <Image
+              alt="plus icon"
+              src={"/icons/plus.svg"}
+              width={25}
+              height={25}
+            ></Image>
+            <span>Add an exercise</span>
+          </div>
+          {exercises.length != 0 ? (
+            <div
+              onClick={finishWorkout}
+              className="m-2 flex cursor-pointer items-center rounded-md bg-blue-dark p-3"
+            >
+              <span className="mr-1">Finish workout</span>
+              <Image
+                alt="finish icon"
+                src={"/icons/finish.svg"}
+                width={23}
+                height={23}
+              ></Image>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </main>

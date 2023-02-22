@@ -76,7 +76,14 @@ export default function Dashboard({ user, workouts }) {
           <div className="p-4">
             <NewWorkout user={user} />
             {workouts.length < 1 ? (
-              <div className="py-10 text-center">No workouts yet...</div>
+              <>
+                <div className="mt-10 mb-2 px-4 text-center">
+                  No workouts yet...
+                </div>
+                <div className="px-4 text-center text-lg font-bold text-blue-light">
+                  Go ahead and create one using button above!
+                </div>
+              </>
             ) : (
               <>
                 {workouts.map((workout) => (
