@@ -97,13 +97,13 @@ export default function Login() {
       <main className=" text-white">
         <div className="flex items-center justify-between bg-background-darker-color p-3">
           <div>
-            WTA{" "}
+            MUSCLER{" "}
             <span className="text-sm font-thin italic text-neutral-400">
               by Daniel Skowron
             </span>
           </div>
         </div>
-        <div className="p-4">
+        <div className="mt-4 p-4">
           {isNewUser ? (
             <div>
               <h1 className="mb-4 text-center text-4xl font-bold">Register</h1>
@@ -167,9 +167,9 @@ export default function Login() {
           >
             {isNewUser ? "Login instead" : "New user? Create account"}
           </div>
-          <div className="text-md mt-5 text-center font-bold text-red-600">
-            {error ? error : ""}
-          </div>
+        </div>
+        <div className="text-md text-center font-bold text-red-600">
+          {error ? error : ""}
         </div>
       </main>
     </div>

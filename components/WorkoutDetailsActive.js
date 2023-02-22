@@ -4,11 +4,13 @@ import Link from "next/link";
 import Exercise from "./Exercise";
 import { useRouter } from "next/router";
 
+import { Toaster, toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 function WorkoutDetailsInactive({ _count, workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setExercises(workout.exercises);
@@ -17,7 +19,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
   const router = useRouter();
 
   const finishWorkout = async () => {
-    await saveWorkout(false);
+    if (!isSaving) await saveWorkout(false);
     const response = await fetch("/api/finishWorkout", {
       method: "POST",
       headers: {
@@ -39,6 +41,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
   };
 
   const saveWorkout = async (refresh) => {
+    setIsSaving(true);
     let newExercises = [];
     let newLogs = [];
     let modifiedExercises = [];
@@ -70,6 +73,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedExercises.length == 0 &&
       modifiedLogs.length == 0
     ) {
+      toast.success("Workout saved!");
       return;
     }
 
@@ -93,8 +97,12 @@ function WorkoutDetailsInactive({ _count, workout }) {
       return;
     }
 
+    setIsSaving(false);
+
     if (refresh) {
       router.replace(router.asPath);
+    } else {
+      toast.success("Workout saved!");
     }
   };
 
@@ -135,20 +143,25 @@ function WorkoutDetailsInactive({ _count, workout }) {
   const formatDate = (date) => {
     let dateObj = new Date(date);
 
-    return dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString();
+    return (
+      dateObj.toLocaleDateString() +
+      " " +
+      dateObj.toLocaleTimeString().slice(0, -3)
+    );
   };
   return (
     <main className="text-white">
+      <Toaster position="bottom-center" />
       <div className="flex items-center justify-between bg-background-darker-color p-3">
         <div>
-          WTA{" "}
+          MUSCLER{" "}
           <span className="text-sm font-thin italic text-neutral-400">
             by Daniel Skowron
           </span>
         </div>
         <div
-          onClick={() => {
-            saveWorkout(false);
+          onClick={async () => {
+            if (!isSaving) await saveWorkout(false);
             router.push("/dashboard");
           }}
           className="flex cursor-pointer items-center"

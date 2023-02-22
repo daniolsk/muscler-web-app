@@ -17,7 +17,11 @@ export default function Dashboard({ user, workouts }) {
   const formatDate = (date) => {
     let dateObj = new Date(date);
 
-    return dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString();
+    return (
+      dateObj.toLocaleDateString() +
+      " " +
+      dateObj.toLocaleTimeString().slice(0, -3)
+    );
   };
 
   const handleLogout = async () => {
@@ -46,7 +50,7 @@ export default function Dashboard({ user, workouts }) {
       <main className="text-white">
         <div className="flex items-center justify-between bg-background-darker-color p-3">
           <div>
-            WTA{" "}
+            MUSCLER{" "}
             <span className="text-sm font-thin italic text-neutral-400">
               by Daniel Skowron
             </span>

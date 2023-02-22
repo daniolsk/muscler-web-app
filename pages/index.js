@@ -10,24 +10,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen text-white">
-        <div className="flex items-center justify-between bg-background-darker-color p-3">
-          <div>
-            WTA{" "}
-            <span className="text-sm font-thin italic text-neutral-400">
-              by Daniel Skowron
-            </span>
-          </div>
-        </div>
-        <div className="flex h-full flex-col items-center p-4">
-          <h1 className="mt-8 text-center text-4xl font-bold">
-            Workout tracker app
-          </h1>
-          <h3 className="text-md mt-4 mb-8 text-center font-normal italic">
+      <main className="h-screen bg-gradient-to-t from-background-darker-color to-background-color text-white">
+        <div className="flex h-full flex-col items-center justify-center p-4">
+          <h1 className="mt-4 text-center text-4xl font-bold">MUSCLER</h1>
+          <h3 className="text-md mb-8 text-center font-normal italic">
             by Daniel Skowron
           </h3>
           <p className="mb-8 text-center text-lg">
             Log your workouts, track your progress, improve your form
+          </p>
+          <p className="text-center text-lg font-bold text-blue-light">
+            IT IS THAT SIMPLE
           </p>
           <div className="flex items-center justify-center p-6">
             <Link
