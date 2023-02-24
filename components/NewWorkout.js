@@ -2,9 +2,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import { toast } from "react-hot-toast";
+
 function NewWorkout({ user }) {
   const [addingWorkout, setAddingWorkout] = useState(false);
-  const [name, setName] = useState("New workout");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -13,6 +15,8 @@ function NewWorkout({ user }) {
     setAddingWorkout(true);
   };
   const handleSubmit = async (e) => {
+    setAddingWorkout(false);
+    const toastId = toast.loading("Adding workout...");
     e.preventDefault();
 
     if (name == "") {
@@ -35,11 +39,18 @@ function NewWorkout({ user }) {
 
     if (response.status != 200) {
       setError(data.msg);
+      toast.error("Something went wrong!", {
+        id: toastId,
+      });
+      return;
     }
 
-    setAddingWorkout(false);
     setError("");
-    setName("New workout");
+    setName("");
+
+    toast.success("Workout added!", {
+      id: toastId,
+    });
 
     router.replace(router.asPath);
   };

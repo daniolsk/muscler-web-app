@@ -73,6 +73,9 @@ export default function Dashboard({ user, workouts }) {
           <span className="text-2xl font-normal">Hello</span> {user.username}
         </h1>
         <p className="mb-4 text-center text-xl">Your last workouts:</p>
+        <div className="text-md text-center font-bold text-red-600">
+          {error ? error : ""}
+        </div>
         <div className="flex flex-col">
           <div className="flex justify-between px-8 py-1">
             <div>Name</div>
@@ -92,10 +95,9 @@ export default function Dashboard({ user, workouts }) {
             ) : (
               <>
                 {workouts.map((workout) => (
-                  <div className="mb-2 flex flex-1">
+                  <div key={workout.id} className="mb-2 flex flex-1">
                     <Link
                       href={`/workout/${workout.id}`}
-                      key={workout.id}
                       className="flex-1 cursor-pointer"
                     >
                       <div

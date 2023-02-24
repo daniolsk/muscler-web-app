@@ -4,6 +4,8 @@ import Link from "next/link";
 import Exercise from "./Exercise";
 import { useRouter } from "next/router";
 
+import { toast } from "react-hot-toast";
+
 import { v4 as uuidv4 } from "uuid";
 
 function WorkoutDetailsInactive({ _count, workout }) {
@@ -41,6 +43,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
   const saveWorkout = async (refresh) => {
     setIsSaving(true);
+    const toastId = toast.loading("Saving...");
     let newExercises = [];
     let newLogs = [];
     let modifiedExercises = [];
@@ -72,6 +75,10 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedExercises.length == 0 &&
       modifiedLogs.length == 0
     ) {
+      toast.success("Saved!", {
+        id: toastId,
+      });
+      setIsSaving(false);
       return;
     }
 
@@ -92,10 +99,18 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
     if (response.status != 200) {
       setError(data.msg);
+      setIsSaving(false);
+      toast.error("Something went wrong!", {
+        id: toastId,
+      });
       return;
     }
 
     setIsSaving(false);
+
+    toast.success("Saved!", {
+      id: toastId,
+    });
 
     if (refresh) {
       router.replace(router.asPath);
@@ -285,7 +300,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
         <div className="flex justify-between">
           <div
             onClick={addExercise}
-            className="m-4 flex cursor-pointer items-center rounded-md p-3"
+            className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"
           >
             <Image
               alt="plus icon"
@@ -298,7 +313,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
           {exercises.length != 0 ? (
             <div
               onClick={finishWorkout}
-              className="m-4 flex cursor-pointer items-center rounded-md bg-blue-dark p-3"
+              className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2"
             >
               <span className="mr-1">Finish workout</span>
               <Image

@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import { toast } from "react-hot-toast";
+
 function DeleteWorkout({ workout }) {
   const [deletingWorkout, setDeletingWorkout] = useState(false);
   const [error, setError] = useState("");
@@ -13,6 +15,10 @@ function DeleteWorkout({ workout }) {
   };
 
   const handleSubmit = async (e) => {
+    setDeletingWorkout(false);
+
+    const toastId = toast.loading("Removing workout...");
+
     e.preventDefault();
     const response = await fetch("/api/deleteWorkout", {
       method: "POST",
@@ -28,10 +34,15 @@ function DeleteWorkout({ workout }) {
 
     if (response.status != 200) {
       setError(data.msg);
+      toast.error("Something went wrong!", {
+        id: toastId,
+      });
       return;
     }
 
-    setDeletingWorkout(false);
+    toast.success("Workout removed!", {
+      id: toastId,
+    });
     setError("");
 
     router.replace(router.asPath);
