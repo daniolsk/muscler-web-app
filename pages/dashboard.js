@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import NewWorkout from "../components/NewWorkout";
 import DeleteWorkout from "../components/DeleteWorkout";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
@@ -91,47 +92,53 @@ export default function Dashboard({ user, workouts }) {
             ) : (
               <>
                 {workouts.map((workout) => (
-                  <div
-                    onClick={() => router.push(`/workout/${workout.id}`)}
-                    key={workout.id}
-                    className="flex-1 cursor-pointer"
-                  >
-                    <div
-                      className={`mb-2 rounded-md border-2 border-black bg-gradient-to-r ${
-                        workout.isActive
-                          ? "from-purple-500 to-pink-500"
-                          : "from-sky-600 to-indigo-600"
-                      } p-4`}
+                  <div className="mb-2 flex flex-1">
+                    <Link
+                      href={`/workout/${workout.id}`}
+                      key={workout.id}
+                      className="flex-1 cursor-pointer"
                     >
-                      <div className="mb-2 flex justify-between">
-                        <div className="text-lg font-bold">{workout.name}</div>
-                        <div className="text-white">
-                          {formatDate(workout.date)}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className=" flex flex-col text-white">
-                          <div className="text-sm">
-                            Total sets:{" "}
-                            <span className="text-base font-bold">
-                              {workout._count.logs}
-                            </span>
+                      <div
+                        className={`rounded-l-md border-2 border-black bg-gradient-to-r ${
+                          workout.isActive
+                            ? "from-purple-500 to-pink-500"
+                            : "from-sky-600 to-indigo-600"
+                        } p-4`}
+                      >
+                        <div className="mb-2 flex justify-between">
+                          <div className="text-lg font-bold">
+                            {workout.name}
                           </div>
-                          <div className="text-sm">
-                            Total exercises:{" "}
-                            <span className="text-base font-bold">
-                              {workout._count.exercises}
-                            </span>
-                          </div>
-                          <div className="text-sm">
-                            Total weight:{" "}
-                            <span className="text-base font-bold">
-                              {workout.totalWeight} kg
-                            </span>
+                          <div className="text-white">
+                            {formatDate(workout.date)}
                           </div>
                         </div>
-                        <DeleteWorkout workout={workout} />
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col text-white">
+                            <div className="text-sm">
+                              Total sets:{" "}
+                              <span className="text-base font-bold">
+                                {workout._count.logs}
+                              </span>
+                            </div>
+                            <div className="text-sm">
+                              Total exercises:{" "}
+                              <span className="text-base font-bold">
+                                {workout._count.exercises}
+                              </span>
+                            </div>
+                            <div className="text-sm">
+                              Total weight:{" "}
+                              <span className="text-base font-bold">
+                                {workout.totalWeight} kg
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
+                    </Link>
+                    <div className="flex flex-col justify-start rounded-r-md bg-background-darker-color">
+                      <DeleteWorkout workout={workout} />
                     </div>
                   </div>
                 ))}

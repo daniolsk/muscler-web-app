@@ -8,8 +8,7 @@ function DeleteWorkout({ workout }) {
 
   const router = useRouter();
 
-  const deleteWorkout = (e) => {
-    e.stopPropagation();
+  const deleteWorkout = () => {
     setDeletingWorkout(true);
   };
 
@@ -41,10 +40,7 @@ function DeleteWorkout({ workout }) {
   return (
     <>
       {deletingWorkout ? (
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="absolute left-0 top-0 z-50 flex h-screen w-screen cursor-auto flex-col items-center justify-center bg-background-darker-color/90"
-        >
+        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen cursor-auto flex-col items-center justify-center bg-background-darker-color/90">
           <h1 className="mb-4 text-2xl font-bold">
             Delete workout <span className="italic">{workout.name}</span>?
           </h1>
@@ -71,10 +67,7 @@ function DeleteWorkout({ workout }) {
       ) : (
         ""
       )}
-      <div
-        className="rounded-md p-2 hover:bg-background-color"
-        onClick={deleteWorkout}
-      >
+      <div className="cursor-pointer p-3" onClick={deleteWorkout}>
         <Image
           src="/icons/trash.svg"
           width={20}

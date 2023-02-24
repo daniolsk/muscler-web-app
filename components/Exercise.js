@@ -3,29 +3,44 @@ import { Fragment, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
-function Exercise({ exercise, setExericse, workoutId, setExerciseName }) {
+function Exercise({
+  exercise,
+  setExericse,
+  workoutId,
+  setExerciseName,
+  removeLog,
+  removeExericse,
+}) {
   return (
     <div className="flex border-b-[1px] border-background-darker-color py-4 px-4">
-      <div className="w-20 self-stretch text-sm font-bold">
+      <div className="flex w-20 flex-col justify-between self-stretch text-sm font-bold">
         <textarea
-          className="h-full w-20 resize-none border-none bg-transparent text-left text-white"
+          className="mb-2 w-20 flex-1 resize-none border-none bg-transparent text-left text-white"
           type="text"
           value={exercise.name}
           onChange={(e) => setExerciseName(exercise.id, e.target.value)}
         />
+        <button
+          onClick={() => {
+            removeExericse(exercise.id, exercise.isNew);
+          }}
+          className="flex w-full items-center justify-center rounded-md bg-blue-dark p-2"
+        >
+          <Image
+            alt="plus icon"
+            src={"/icons/trash.svg"}
+            width={13}
+            height={13}
+          ></Image>
+        </button>
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[1fr,_2fr,_6fr] items-center gap-2">
+      <div className="ml-4 grid flex-1 grid-cols-[1fr,_6fr,_1fr] items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
-        <div className="text-xs text-neutral-400">PREV</div>
         <div className="text-xs text-neutral-400">TODAY</div>
+        <div className="text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={index}>
             <div className="text-sm text-neutral-400">{log.setNumber}</div>
-            <div className="flex text-sm  text-neutral-400">
-              <div className="text-center">0</div>
-              <span className="px-1">x</span>
-              <div className="text-center">0</div>
-            </div>
             <div className="flex items-center text-neutral-400">
               <input
                 type="number"
@@ -56,6 +71,21 @@ function Exercise({ exercise, setExericse, workoutId, setExerciseName }) {
                   setExericse(exercise.id, logsTmp);
                 }}
               />
+            </div>
+            <div className="flex items-center justify-center text-sm  text-neutral-400">
+              <button
+                onClick={() => {
+                  removeLog(log.id, log.isNew);
+                }}
+                className="col-span-3 flex items-center justify-center p-2"
+              >
+                <Image
+                  alt="plus icon"
+                  src={"/icons/trash.svg"}
+                  width={20}
+                  height={20}
+                ></Image>
+              </button>
             </div>
           </Fragment>
         ))}

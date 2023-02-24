@@ -136,6 +136,67 @@ function WorkoutDetailsInactive({ _count, workout }) {
     setExercises([...exercisesTmp]);
   };
 
+  const removeLog = async (id, isNew) => {
+    if (isSaving) return;
+
+    if (isNew) {
+      let tmpExercises = exercises;
+      tmpExercises.forEach((ex) => {
+        ex.logs = ex.logs.filter((log) => log.id != id);
+      });
+      console.log(tmpExercises);
+      setExercises([...tmpExercises]);
+    } else {
+      const response = await fetch("/api/deleteLog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          logId: id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status != 200) {
+        setError(data.msg);
+        return;
+      }
+
+      router.replace(router.asPath);
+    }
+  };
+
+  const removeExericse = async (id, isNew) => {
+    if (isSaving) return;
+
+    if (isNew) {
+      let tmpExercises = exercises;
+      tmpExercises = tmpExercises.filter((ex) => ex.id != id);
+      setExercises([...tmpExercises]);
+    } else {
+      const response = await fetch("/api/deleteExercise", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          exerciseId: id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status != 200) {
+        setError(data.msg);
+        return;
+      }
+
+      router.replace(router.asPath);
+    }
+  };
+
   const formatDate = (date) => {
     let dateObj = new Date(date);
 
@@ -215,6 +276,8 @@ function WorkoutDetailsInactive({ _count, workout }) {
             setExerciseName={setExerciseName}
             workoutId={workout.id}
             setExericse={setExericse}
+            removeLog={removeLog}
+            removeExericse={removeExericse}
             exercise={exercise}
             key={index}
           />
@@ -222,7 +285,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
         <div className="flex justify-between">
           <div
             onClick={addExercise}
-            className="m-2 flex cursor-pointer items-center rounded-md p-3"
+            className="m-4 flex cursor-pointer items-center rounded-md p-3"
           >
             <Image
               alt="plus icon"
@@ -235,7 +298,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
           {exercises.length != 0 ? (
             <div
               onClick={finishWorkout}
-              className="m-2 flex cursor-pointer items-center rounded-md bg-blue-dark p-3"
+              className="m-4 flex cursor-pointer items-center rounded-md bg-blue-dark p-3"
             >
               <span className="mr-1">Finish workout</span>
               <Image

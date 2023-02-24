@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function NewWorkout({ user }) {
   const [addingWorkout, setAddingWorkout] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState("New workout");
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -39,7 +39,7 @@ function NewWorkout({ user }) {
 
     setAddingWorkout(false);
     setError("");
-    setName("");
+    setName("New workout");
 
     router.replace(router.asPath);
   };
