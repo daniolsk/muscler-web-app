@@ -34,7 +34,7 @@ function Exercise({
           ></Image>
         </button>
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[1fr,_6fr,_1fr] items-center gap-2">
+      <div className="ml-4 grid flex-1 grid-cols-[1fr,_8fr,_2fr] items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
         <div className="text-xs text-neutral-400">TODAY</div>
         <div className="text-xs text-neutral-400">DELETE</div>
@@ -47,6 +47,12 @@ function Exercise({
                 inputMode="numeric"
                 className="w-14 bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.weight}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onClick={(e) => {
+                  e.target.select();
+                }}
                 onChange={(e) => {
                   let logsTmp = exercise.logs;
                   logsTmp[index].weight = Number(e.target.value);
@@ -58,17 +64,26 @@ function Exercise({
 
               <span className="px-2 text-sm">kg x</span>
               <input
-                type="number"
+                type="text"
                 inputMode="numeric"
                 className="appear w-14 bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.reps}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onClick={(e) => {
+                  e.target.select();
+                }}
                 onChange={(e) => {
-                  let nbr = e.target.value.split(".")[0];
-                  let logsTmp = exercise.logs;
-                  logsTmp[index].reps = Number(nbr);
-                  logsTmp[index].id = log.id;
-                  logsTmp[index].isChanged = true;
-                  setExericse(exercise.id, logsTmp);
+                  const inputValue = e.target.value;
+
+                  if (/^\d*$/.test(inputValue)) {
+                    let logsTmp = exercise.logs;
+                    logsTmp[index].reps = Number(inputValue);
+                    logsTmp[index].id = log.id;
+                    logsTmp[index].isChanged = true;
+                    setExericse(exercise.id, logsTmp);
+                  }
                 }}
               />
             </div>
