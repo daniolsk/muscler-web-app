@@ -12,7 +12,7 @@ export default function MyApp({ Component, pageProps }) {
           style: {
             borderRadius: "10px",
             padding: "1rem",
-            background: "#040914",
+            background: "rgba(4, 9, 20, 0.8)",
             color: "#fff",
           },
         }}

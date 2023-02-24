@@ -15,14 +15,15 @@ function NewWorkout({ user }) {
     setAddingWorkout(true);
   };
   const handleSubmit = async (e) => {
-    setAddingWorkout(false);
-    const toastId = toast.loading("Adding workout...");
     e.preventDefault();
 
     if (name == "") {
       setError("Name can not be empty");
       return;
     }
+
+    setAddingWorkout(false);
+    const toastId = toast.loading("Adding workout...");
 
     const response = await fetch("/api/addWorkout", {
       method: "POST",

@@ -21,6 +21,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
   const finishWorkout = async () => {
     if (!isSaving) await saveWorkout(false);
+    const toastId = toast.loading("Finishing workout...");
     const response = await fetch("/api/finishWorkout", {
       method: "POST",
       headers: {
@@ -35,9 +36,15 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
     if (response.status != 200) {
       setError(data.msg);
+      toast.error("Something went wrong!", {
+        id: toastId,
+      });
       return;
     }
 
+    toast.success("Workout finished!", {
+      id: toastId,
+    });
     router.replace(router.asPath);
   };
 

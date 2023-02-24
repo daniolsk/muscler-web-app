@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { verifyToken } from "../lib/jwt";
 
+import { toast } from "react-hot-toast";
+
 const loginF = async (username, password) => {
   const response = await fetch("/api/auth/login", {
     method: "POST",
@@ -48,11 +50,15 @@ export default function Login() {
       return;
     }
 
+    let toastId;
+
     if (isNewUser) {
       if (password.length < 5) {
         setError("Password too short");
         return;
       }
+
+      toastId = toast.loading("Creating new user...");
 
       let response = await registerF(username, password);
 
@@ -69,20 +75,31 @@ export default function Login() {
 
       if (response.status != 200) {
         setError(data.msg);
+        toast.error("Something went wrong!", {
+          id: toastId,
+        });
         setPassword("");
         return;
       }
     } else {
+      toastId = toast.loading("Logging in...");
+
       let response = await loginF(username, password);
       let data = await response.json();
 
       if (response.status != 200) {
         setError(data.msg);
+        toast.error("Something went wrong!", {
+          id: toastId,
+        });
         setPassword("");
         return;
       }
     }
 
+    toast.success("Logged in!", {
+      id: toastId,
+    });
     router.push("/dashboard");
   };
 
