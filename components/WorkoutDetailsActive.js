@@ -50,7 +50,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
   const saveWorkout = async (refresh) => {
     setIsSaving(true);
-    const toastId = toast.loading("Saving...");
+
     let newExercises = [];
     let newLogs = [];
     let modifiedExercises = [];
@@ -82,12 +82,11 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedExercises.length == 0 &&
       modifiedLogs.length == 0
     ) {
-      toast.success("Workout saved!", {
-        id: toastId,
-      });
       setIsSaving(false);
       return;
     }
+
+    const toastId = toast.loading("Saving...");
 
     const response = await fetch("/api/saveWorkout", {
       method: "POST",

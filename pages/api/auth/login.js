@@ -33,6 +33,7 @@ export default async function handler(req, res) {
         serialize("access-token", accessToken, {
           maxAge: 3600000 * 24 * 7,
           path: "/",
+          httpOnly: true,
         })
       );
 
