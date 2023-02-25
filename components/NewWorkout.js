@@ -52,7 +52,6 @@ function NewWorkout({ user }) {
     toast.success("Workout added!", {
       id: toastId,
     });
-
     router.replace(router.asPath);
   };
   return (

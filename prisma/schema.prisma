@@ -25,6 +25,7 @@ model Workout {
     userId    Int
     exercises Exercise[]
     logs      Log[]
+    tags      Tag[]
 
     @@index([userId])
 }
@@ -52,4 +53,19 @@ model Log {
 
     @@index([workoutId])
     @@index([exerciseId])
+}
+
+model Tag {
+    id       Int          @id @default(autoincrement())
+    name     Muscle_group
+    workouts Workout[]
+}
+
+enum Muscle_group {
+    CHEST
+    BACK
+    ARMS
+    SHOULDERS
+    LEGS
+    CALVES
 }

@@ -7,8 +7,8 @@ const user = [
     password: bcrypt.hashSync("Daniel123", 10),
   },
   {
-    username: "Maciek",
-    password: bcrypt.hashSync("Maciek123", 10),
+    username: "Sylwia",
+    password: bcrypt.hashSync("Sylwia123", 10),
   },
 ];
 
@@ -17,16 +17,19 @@ const workout = [
     name: "Klata",
     userId: 1,
     isActive: true,
+    tags: [{ name: "CHEST" }],
   },
   {
     name: "Nogi",
     userId: 1,
     isActive: false,
+    tags: [{ name: "LEGS" }, { name: "CALVES" }],
   },
   {
     name: "Plecy i barki",
     userId: 1,
     isActive: false,
+    tags: [{ name: "BACK" }, { name: "SHOULDERS" }],
   },
 ];
 

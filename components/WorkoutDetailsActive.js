@@ -20,7 +20,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
   const router = useRouter();
 
   const finishWorkout = async () => {
-    if (!isSaving) await saveWorkout(false);
+    await saveWorkout(false);
     const toastId = toast.loading("Finishing workout...");
     const response = await fetch("/api/finishWorkout", {
       method: "POST",
@@ -82,7 +82,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedExercises.length == 0 &&
       modifiedLogs.length == 0
     ) {
-      toast.success("Saved!", {
+      toast.success("Workout saved!", {
         id: toastId,
       });
       setIsSaving(false);
@@ -115,7 +115,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
     setIsSaving(false);
 
-    toast.success("Saved!", {
+    toast.success("Workout saved!", {
       id: toastId,
     });
 
@@ -161,14 +161,14 @@ function WorkoutDetailsInactive({ _count, workout }) {
   const removeLog = async (id, isNew) => {
     if (isSaving) return;
 
-    if (isNew) {
-      let tmpExercises = exercises;
-      tmpExercises.forEach((ex) => {
-        ex.logs = ex.logs.filter((log) => log.id != id);
-      });
-      console.log(tmpExercises);
-      setExercises([...tmpExercises]);
-    } else {
+    let tmpExercises = exercises;
+    tmpExercises.forEach((ex) => {
+      ex.logs = ex.logs.filter((log) => log.id != id);
+    });
+    console.log(tmpExercises);
+    setExercises([...tmpExercises]);
+
+    if (!isNew) {
       const response = await fetch("/api/deleteLog", {
         method: "POST",
         headers: {
@@ -183,21 +183,20 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
       if (response.status != 200) {
         setError(data.msg);
+        toast.error("Something went wrong!");
         return;
       }
-
-      router.replace(router.asPath);
     }
   };
 
   const removeExericse = async (id, isNew) => {
     if (isSaving) return;
 
-    if (isNew) {
-      let tmpExercises = exercises;
-      tmpExercises = tmpExercises.filter((ex) => ex.id != id);
-      setExercises([...tmpExercises]);
-    } else {
+    let tmpExercises = exercises;
+    tmpExercises = tmpExercises.filter((ex) => ex.id != id);
+    setExercises([...tmpExercises]);
+
+    if (!isNew) {
       const response = await fetch("/api/deleteExercise", {
         method: "POST",
         headers: {
@@ -212,10 +211,9 @@ function WorkoutDetailsInactive({ _count, workout }) {
 
       if (response.status != 200) {
         setError(data.msg);
+        toast.error("Something went wrong!");
         return;
       }
-
-      router.replace(router.asPath);
     }
   };
 
@@ -305,7 +303,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
           />
         ))}
         <div className="flex justify-between">
-          <div
+          <button
             onClick={addExercise}
             className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"
           >
@@ -316,9 +314,10 @@ function WorkoutDetailsInactive({ _count, workout }) {
               height={25}
             ></Image>
             <span>Add an exercise</span>
-          </div>
+          </button>
           {exercises.length != 0 ? (
-            <div
+            <button
+              disabled={isSaving ? true : false}
               onClick={finishWorkout}
               className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2"
             >
@@ -329,7 +328,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
                 width={23}
                 height={23}
               ></Image>
-            </div>
+            </button>
           ) : (
             ""
           )}

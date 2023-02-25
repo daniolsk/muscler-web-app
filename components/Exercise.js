@@ -40,7 +40,7 @@ function Exercise({
         <div className="text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={index}>
-            <div className="text-sm text-neutral-400">{log.setNumber}</div>
+            <div className="text-sm text-neutral-400">{index + 1}</div>
             <div className="flex items-center text-neutral-400">
               <input
                 type="number"

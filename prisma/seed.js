@@ -13,18 +13,31 @@ const load = async () => {
     await prisma.$queryRaw`ALTER TABLE Workout AUTO_INCREMENT = 1`;
     await prisma.$queryRaw`ALTER TABLE Exercise AUTO_INCREMENT = 1`;
     await prisma.$queryRaw`ALTER TABLE Log AUTO_INCREMENT = 1`;
+    await prisma.$queryRaw`ALTER TABLE Tag AUTO_INCREMENT = 1`;
 
-    await prisma.exercise.createMany({
-      data: exercise,
-    });
+    // await prisma.exercise.createMany({
+    //   data: exercise,
+    // });
+    for (const w of workout) {
+      await prisma.workout.create({
+        data: {
+          name: w.name,
+          userId: w.userId,
+          isActive: w.isActive,
+          tags: {
+            create: w.tags,
+          },
+        },
+      });
+    }
     await prisma.log.createMany({
       data: log,
     });
     await prisma.user.createMany({
       data: user,
     });
-    await prisma.workout.createMany({
-      data: workout,
+    await prisma.exercise.createMany({
+      data: exercise,
     });
   } catch (e) {
     console.error(e);
