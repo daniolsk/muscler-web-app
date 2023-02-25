@@ -136,6 +136,16 @@ export default function Dashboard({ user, workouts }) {
                               </span>
                             </div>
                           </div>
+                          <div className="flex flex-col items-end">
+                            {workout.tags.map((tag) => (
+                              <div
+                                key={tag.id}
+                                className="mb-1 rounded-full bg-red-800 p-2 text-xs font-bold"
+                              >
+                                {tag.name}
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </Link>
@@ -168,6 +178,7 @@ export async function getServerSideProps(context) {
       },
       include: {
         logs: true,
+        tags: true,
         exercises: true,
         _count: {
           select: { logs: true, exercises: true },

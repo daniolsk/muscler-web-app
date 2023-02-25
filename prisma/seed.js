@@ -8,6 +8,7 @@ const load = async () => {
     await prisma.log.deleteMany();
     await prisma.user.deleteMany();
     await prisma.workout.deleteMany();
+    await prisma.tag.deleteMany();
 
     await prisma.$queryRaw`ALTER TABLE User AUTO_INCREMENT = 1`;
     await prisma.$queryRaw`ALTER TABLE Workout AUTO_INCREMENT = 1`;

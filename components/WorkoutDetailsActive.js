@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 
 import { v4 as uuidv4 } from "uuid";
 
-function WorkoutDetailsInactive({ _count, workout }) {
+function WorkoutDetailsInactive({ workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -48,8 +48,14 @@ function WorkoutDetailsInactive({ _count, workout }) {
     router.replace(router.asPath);
   };
 
-  const saveWorkout = async (refresh) => {
+  const saveWorkout = async (refresh, showToast) => {
     setIsSaving(true);
+
+    let toastId = null;
+
+    if (showToast) {
+      toastId = toast.loading("Saving...");
+    }
 
     let newExercises = [];
     let newLogs = [];
@@ -83,10 +89,15 @@ function WorkoutDetailsInactive({ _count, workout }) {
       modifiedLogs.length == 0
     ) {
       setIsSaving(false);
+      toast.success("Workout saved!", {
+        id: toastId,
+      });
       return;
     }
 
-    const toastId = toast.loading("Saving...");
+    if (!toastId) {
+      toastId = toast.loading("Saving...");
+    }
 
     const response = await fetch("/api/saveWorkout", {
       method: "POST",
@@ -236,7 +247,7 @@ function WorkoutDetailsInactive({ _count, workout }) {
         </div>
         <div
           onClick={async () => {
-            if (!isSaving) await saveWorkout(false);
+            if (!isSaving) await saveWorkout(false, false);
             router.push("/dashboard");
           }}
           className="flex cursor-pointer items-center"
@@ -274,11 +285,21 @@ function WorkoutDetailsInactive({ _count, workout }) {
           </div>
         </div>
         <button
-          onClick={() => saveWorkout(true)}
+          onClick={() => saveWorkout(true, true)}
           className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold"
         >
           Save
         </button>
+      </div>
+      <div className="flex items-center px-6 py-2">
+        {workout.tags.map((tag) => (
+          <div
+            key={tag.id}
+            className="mr-2 rounded-full bg-red-800 p-2 text-xs font-bold"
+          >
+            {tag.name}
+          </div>
+        ))}
       </div>
       <div className="text-md text-center font-bold text-red-600">
         {error ? error : ""}

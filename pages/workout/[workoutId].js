@@ -17,9 +17,9 @@ export default function Workout({ workout }) {
       </Head>
 
       {workout.isActive ? (
-        <WorkoutDetailsActive _count={workout._count} workout={workout} />
+        <WorkoutDetailsActive workout={workout} />
       ) : (
-        <WorkoutDetailsInactive _count={workout._count} workout={workout} />
+        <WorkoutDetailsInactive workout={workout} />
       )}
     </div>
   );
@@ -37,6 +37,7 @@ export async function getServerSideProps(context) {
         id: parseInt(id),
       },
       include: {
+        tags: true,
         _count: {
           select: { logs: true, exercises: true },
         },
