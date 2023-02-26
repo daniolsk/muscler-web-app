@@ -319,7 +319,7 @@ function WorkoutDetailsInactive({ workout }) {
             removeLog={removeLog}
             removeExericse={removeExericse}
             exercise={exercise}
-            key={index}
+            key={exercise.id}
           />
         ))}
         <div className="flex justify-between">

@@ -10,13 +10,16 @@ export default async function handler(req, res) {
         return res.status(401).json({ msg: "Unauthorized" });
       }
 
-      const { userId, name } = req.body;
+      const { userId, name, tags } = req.body;
 
       const workout = await prisma.workout.create({
         data: {
           name: name,
           isActive: true,
           userId: userId,
+          tags: {
+            create: tags,
+          },
         },
       });
 

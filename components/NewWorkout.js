@@ -5,20 +5,22 @@ import { Muscle_group } from "@prisma/client";
 
 import { toast } from "react-hot-toast";
 
+const initialState = {
+  CHEST: false,
+  BACK: false,
+  BICEPS: false,
+  TRICEPS: false,
+  SHOULDERS: false,
+  LEGS: false,
+  CALVES: false,
+  ABS: false,
+};
+
 function NewWorkout({ user }) {
   const [addingWorkout, setAddingWorkout] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const [checkboxes, setCheckboxes] = useState({
-    CHEST: false,
-    BACK: false,
-    BICEP: false,
-    TRICEP: false,
-    SHOULDERS: false,
-    LEGS: false,
-    CALVES: false,
-    ABS: false,
-  });
+  const [checkboxes, setCheckboxes] = useState(initialState);
 
   const router = useRouter();
 
@@ -36,7 +38,7 @@ function NewWorkout({ user }) {
     let categories = [];
     Object.keys(Muscle_group).map((muscle, i) => {
       if (checkboxes[muscle]) {
-        categories.push({ name: checkboxes[muscle] });
+        categories.push({ name: muscle });
       }
     });
     if (categories.length == 0) {
@@ -71,6 +73,7 @@ function NewWorkout({ user }) {
 
     setError("");
     setName("");
+    setCheckboxes(initialState);
 
     toast.success("Workout added!", {
       id: toastId,

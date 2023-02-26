@@ -64,8 +64,8 @@ model Tag {
 enum Muscle_group {
     CHEST
     BACK
-    BICEP
-    TRICEP
+    BICEPS
+    TRICEPS
     SHOULDERS
     LEGS
     CALVES

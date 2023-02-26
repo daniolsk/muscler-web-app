@@ -54,6 +54,16 @@ function WorkoutDetailsInactive({ workout }) {
             </div>
           </div>
         </div>
+        <div className="flex flex-col items-end">
+          {workout.tags.map((tag) => (
+            <div
+              key={tag.id}
+              className="mb-2 rounded-full bg-red-800 p-2 text-xs font-bold"
+            >
+              {tag.name}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="px-4 text-xs text-neutral-400">EXERCISE</div>
       <div>

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { verifyToken } from "../../lib/jwt";
 import { decode } from "jsonwebtoken";
 import prisma from "../../lib/prisma";
@@ -7,7 +6,6 @@ import WorkoutDetailsInactive from "../../components/WorkoutDetailsInactive";
 import WorkoutDetailsActive from "../../components/WorkoutDetailsActive";
 
 export default function Workout({ workout }) {
-  const router = useRouter();
   return (
     <div>
       <Head>
