@@ -37,7 +37,7 @@ function Exercise({
       <div className="ml-4 grid flex-1 grid-cols-[1fr,_8fr,_2fr] items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
         <div className="text-xs text-neutral-400">TODAY</div>
-        <div className="text-xs text-neutral-400">DELETE</div>
+        <div className="justify-self-end text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={log.id}>
             <div className="text-sm text-neutral-400">{index + 1}</div>
@@ -87,7 +87,7 @@ function Exercise({
                 }}
               />
             </div>
-            <div className="flex items-center justify-center text-sm  text-neutral-400">
+            <div className="flex items-center justify-end text-sm  text-neutral-400">
               <button
                 onClick={() => {
                   removeLog(log.id, log.isNew);
@@ -95,7 +95,7 @@ function Exercise({
                 className="col-span-3 flex items-center justify-center p-2"
               >
                 <Image
-                  alt="plus icon"
+                  alt="trash icon"
                   src={"/icons/trash.svg"}
                   width={20}
                   height={20}

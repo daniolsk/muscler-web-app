@@ -1,34 +1,36 @@
 {
-	"name": "workout-tracker-app",
-	"private": true,
-	"author": "Daniel Skowron",
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"seed": "node prisma/seed.js"
-	},
-	"dependencies": {
-		"@prisma/client": "^4.10.1",
-		"bcrypt": "^5.1.0",
-		"cookie": "^0.5.0",
-		"jsonwebtoken": "^9.0.0",
-		"next": "13.1.6",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"react-hot-toast": "^2.4.0",
-		"react-toastify": "^9.1.1",
-		"uuid": "^9.0.0"
-	},
-	"devDependencies": {
-		"autoprefixer": "^10.4.2",
-		"eslint": "8.34.0",
-		"eslint-config-next": "13.1.6",
-		"postcss": "^8.4.5",
-		"prettier": "^2.8.4",
-		"prettier-plugin-tailwindcss": "^0.2.3",
-		"prisma": "^4.10.1",
-		"tailwindcss": "^3.0.15"
-	}
+  "name": "workout-tracker-app",
+  "private": true,
+  "author": "Daniel Skowron",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "node prisma/seed.js",
+    "db": "npx prisma generate && npx prisma db push",
+    "vercel-build": "prisma generate && prisma db push && next build"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.10.1",
+    "bcrypt": "^5.1.0",
+    "cookie": "^0.5.0",
+    "jsonwebtoken": "^9.0.0",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "react-toastify": "^9.1.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "eslint": "8.34.0",
+    "eslint-config-next": "13.1.6",
+    "postcss": "^8.4.5",
+    "prettier": "^2.8.4",
+    "prettier-plugin-tailwindcss": "^0.2.3",
+    "prisma": "^4.10.1",
+    "tailwindcss": "^3.0.15"
+  }
 }

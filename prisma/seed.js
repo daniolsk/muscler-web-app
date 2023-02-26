@@ -16,6 +16,8 @@ const load = async () => {
     await prisma.$queryRaw`ALTER TABLE Log AUTO_INCREMENT = 1`;
     await prisma.$queryRaw`ALTER TABLE Tag AUTO_INCREMENT = 1`;
 
+    await prisma.$queryRaw`DELETE FROM _TagToWorkout`;
+
     // await prisma.exercise.createMany({
     //   data: exercise,
     // });
