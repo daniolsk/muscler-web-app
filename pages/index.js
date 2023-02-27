@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Workout tracker app</title>
+        <title>Muscler</title>
         <meta name="description" content="Workout tracker app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

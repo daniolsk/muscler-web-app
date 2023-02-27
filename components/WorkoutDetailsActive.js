@@ -258,100 +258,109 @@ function WorkoutDetailsInactive({ workout }) {
             src="/icons/go-back.svg"
             width={15}
             height={15}
+            priority
           ></Image>
         </div>
       </div>
-      <div className="flex items-center justify-between py-4 px-6">
-        <div>
-          <h1 className="mb-2 text-left text-2xl font-bold">{workout.name}</h1>
-          <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
-          <div className=" flex flex-col justify-start text-white">
-            <div className="text-sm">
-              Total sets:{" "}
-              <span className="text-base font-bold">{workout._count.logs}</span>
-            </div>
-            <div className="text-sm">
-              Total exercises:{" "}
-              <span className="text-base font-bold">
-                {workout._count.exercises}
-              </span>
-            </div>
-            <div className="text-sm">
-              Total weight:{" "}
-              <span className="text-base font-bold">
-                {workout.totalWeight} kg
-              </span>
+      <div className="m-auto max-w-3xl">
+        <div className="flex items-center justify-between py-4 px-6">
+          <div>
+            <h1 className="mb-2 text-left text-2xl font-bold">
+              {workout.name}
+            </h1>
+            <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
+            <div className=" flex flex-col justify-start text-white">
+              <div className="text-sm">
+                Total sets:{" "}
+                <span className="text-base font-bold">
+                  {workout._count.logs}
+                </span>
+              </div>
+              <div className="text-sm">
+                Total exercises:{" "}
+                <span className="text-base font-bold">
+                  {workout._count.exercises}
+                </span>
+              </div>
+              <div className="text-sm">
+                Total weight:{" "}
+                <span className="text-base font-bold">
+                  {workout.totalWeight} kg
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <button
-          onClick={() => saveWorkout(true, true)}
-          className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold"
-        >
-          Save
-        </button>
-      </div>
-      <div className="flex items-center px-6 py-2">
-        {workout.tags.map((tag) => (
-          <div
-            key={tag.id}
-            className="mr-2 rounded-full bg-red-800 p-2 text-xs font-bold"
-          >
-            {tag.name}
-          </div>
-        ))}
-      </div>
-      <div className="text-md text-center font-bold text-red-600">
-        {error ? error : ""}
-      </div>
-      <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
-      <div>
-        {exercises.length == 0 ? (
-          <div className="p-4">No exerices in this workout</div>
-        ) : (
-          ""
-        )}
-        {exercises.map((exercise, index) => (
-          <Exercise
-            setExerciseName={setExerciseName}
-            workoutId={workout.id}
-            setExericse={setExericse}
-            removeLog={removeLog}
-            removeExericse={removeExericse}
-            exercise={exercise}
-            key={exercise.id}
-          />
-        ))}
-        <div className="flex justify-between">
           <button
-            onClick={addExercise}
-            className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"
+            onClick={() => saveWorkout(true, true)}
+            className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold"
           >
-            <Image
-              alt="plus icon"
-              src={"/icons/plus.svg"}
-              width={25}
-              height={25}
-            ></Image>
-            <span>Add an exercise</span>
+            Save
           </button>
-          {exercises.length != 0 ? (
-            <button
-              disabled={isSaving ? true : false}
-              onClick={finishWorkout}
-              className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2"
+        </div>
+        <div className="flex items-center px-6 py-2">
+          {workout.tags.map((tag) => (
+            <div
+              key={tag.id}
+              className="mr-2 rounded-full bg-red-800 p-2 text-xs font-bold"
             >
-              <span className="mr-1">Finish workout</span>
-              <Image
-                alt="finish icon"
-                src={"/icons/finish.svg"}
-                width={23}
-                height={23}
-              ></Image>
-            </button>
+              {tag.name}
+            </div>
+          ))}
+        </div>
+        <div className="text-md text-center font-bold text-red-600">
+          {error ? error : ""}
+        </div>
+        <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
+        <div>
+          {exercises.length == 0 ? (
+            <div className="p-4">No exerices in this workout</div>
           ) : (
             ""
           )}
+          {exercises.map((exercise, index) => (
+            <Exercise
+              setExerciseName={setExerciseName}
+              workoutId={workout.id}
+              setExericse={setExericse}
+              removeLog={removeLog}
+              removeExericse={removeExericse}
+              exercise={exercise}
+              key={exercise.id}
+            />
+          ))}
+          <div className="flex justify-between">
+            <button
+              onClick={addExercise}
+              className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"
+            >
+              <Image
+                alt="plus icon"
+                src={"/icons/plus.svg"}
+                width={25}
+                height={25}
+                priority
+              ></Image>
+              <span>Add an exercise</span>
+            </button>
+            {exercises.length != 0 ? (
+              <button
+                disabled={isSaving ? true : false}
+                onClick={finishWorkout}
+                className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2"
+              >
+                <span className="mr-1">Finish workout</span>
+                <Image
+                  alt="finish icon"
+                  src={"/icons/finish.svg"}
+                  width={23}
+                  height={23}
+                  priority
+                ></Image>
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     </main>

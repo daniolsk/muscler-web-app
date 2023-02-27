@@ -20,7 +20,7 @@ function NewWorkout({ user }) {
   const [addingWorkout, setAddingWorkout] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const [checkboxes, setCheckboxes] = useState(initialState);
+  const [checkboxes, setCheckboxes] = useState({ ...initialState });
 
   const router = useRouter();
 
@@ -73,7 +73,7 @@ function NewWorkout({ user }) {
 
     setError("");
     setName("");
-    setCheckboxes(initialState);
+    setCheckboxes({ ...initialState });
 
     toast.success("Workout added!", {
       id: toastId,
@@ -132,6 +132,7 @@ function NewWorkout({ user }) {
             onClick={() => {
               setError("");
               setName("");
+              setCheckboxes({ ...initialState });
               setAddingWorkout(false);
             }}
           >
@@ -153,6 +154,7 @@ function NewWorkout({ user }) {
           src={"/icons/plus.svg"}
           width={30}
           height={30}
+          priority
         ></Image>
       </button>
     </>

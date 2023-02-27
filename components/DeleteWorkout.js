@@ -84,6 +84,7 @@ function DeleteWorkout({ workout }) {
           width={20}
           height={20}
           alt="trash can icon"
+          priority
         ></Image>
       </div>
     </>

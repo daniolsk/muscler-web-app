@@ -106,7 +106,7 @@ export default function Login() {
   return (
     <div>
       <Head>
-        <title>Workout tracker app</title>
+        <title>Muscler</title>
         <meta name="description" content="Workout tracker app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -150,32 +150,34 @@ export default function Login() {
             </div>
           ) : (
             <div>
-              <h1 className="mb-4 text-center text-4xl font-bold">Log in</h1>
-              <p className="mb-12 text-center text-2xl">
-                Log in to your account
-              </p>
-              <form onSubmit={handleSubmit} className="flex flex-col">
-                <input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
-                  type="text"
-                  placeholder="Username"
-                />
-                <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  placeholder="Password"
-                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
-                />
-                <input
-                  onClick={handleSubmit}
-                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
-                  type="submit"
-                  value="Login"
-                />
-              </form>
+              <div className="m-auto max-w-md">
+                <h1 className="mb-4 text-center text-4xl font-bold">Log in</h1>
+                <p className="mb-12 text-center text-2xl">
+                  Log in to your account
+                </p>
+                <form onSubmit={handleSubmit} className="flex flex-col">
+                  <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    placeholder="Password"
+                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                  />
+                  <input
+                    onClick={handleSubmit}
+                    className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+                    type="submit"
+                    value="Login"
+                  />
+                </form>
+              </div>
             </div>
           )}
           <div

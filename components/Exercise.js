@@ -31,6 +31,7 @@ function Exercise({
             src={"/icons/trash.svg"}
             width={13}
             height={13}
+            priority
           ></Image>
         </button>
       </div>
@@ -99,6 +100,7 @@ function Exercise({
                   src={"/icons/trash.svg"}
                   width={20}
                   height={20}
+                  priority
                 ></Image>
               </button>
             </div>
@@ -131,6 +133,7 @@ function Exercise({
             src={"/icons/plus.svg"}
             width={25}
             height={25}
+            priority
           ></Image>
         </button>
       </div>
