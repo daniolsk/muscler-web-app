@@ -78,10 +78,7 @@ function DeleteWorkout({ workout }) {
       ) : (
         ""
       )}
-      <div
-        className="cursor-pointer p-3 hover:bg-blue-darker-lighter"
-        onClick={deleteWorkout}
-      >
+      <div className="cursor-pointer p-3 " onClick={deleteWorkout}>
         <Image
           src="/icons/trash.svg"
           width={20}

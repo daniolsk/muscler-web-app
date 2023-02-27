@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 

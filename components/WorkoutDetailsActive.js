@@ -1,6 +1,5 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Exercise from "./Exercise";
 import { useRouter } from "next/router";
 
@@ -135,6 +134,7 @@ function WorkoutDetailsInactive({ workout }) {
   };
 
   const setExericse = (id, logs) => {
+    if (isSaving) return;
     let index = exercises.findIndex((ex) => ex.id == id);
     let exercisesTmp = exercises;
     exercisesTmp[index].logs = logs;
@@ -142,6 +142,7 @@ function WorkoutDetailsInactive({ workout }) {
   };
 
   const addExercise = () => {
+    if (isSaving) return;
     let setNmr =
       exercises.length == 0
         ? 1
@@ -161,6 +162,7 @@ function WorkoutDetailsInactive({ workout }) {
   };
 
   const setExerciseName = (id, name) => {
+    if (isSaving) return;
     let index = exercises.findIndex((ex) => ex.id == id);
     let exercisesTmp = exercises;
     exercisesTmp[index].name = name;
