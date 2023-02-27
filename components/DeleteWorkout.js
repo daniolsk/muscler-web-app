@@ -57,7 +57,7 @@ function DeleteWorkout({ workout }) {
           </h1>
           <form onSubmit={handleSubmit} className="flex flex-col">
             <input
-              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
               type="submit"
               value="Delete"
             />
@@ -78,7 +78,10 @@ function DeleteWorkout({ workout }) {
       ) : (
         ""
       )}
-      <div className="cursor-pointer p-3" onClick={deleteWorkout}>
+      <div
+        className="cursor-pointer p-3 hover:bg-blue-darker-lighter"
+        onClick={deleteWorkout}
+      >
         <Image
           src="/icons/trash.svg"
           width={20}

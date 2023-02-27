@@ -112,10 +112,10 @@ export default function Login() {
       </Head>
 
       <main className=" text-white">
-        <div className="flex items-center justify-between bg-background-darker-color p-3">
+        <div className="flex items-center justify-between bg-background-darker-color p-3  md:p-4 md:text-xl">
           <div>
             MUSCLER{" "}
-            <span className="text-sm font-thin italic text-neutral-400">
+            <span className="text-sm font-thin italic text-neutral-400 md:text-base">
               by Daniel Skowron
             </span>
           </div>
@@ -142,7 +142,7 @@ export default function Login() {
                 />
                 <input
                   onClick={handleSubmit}
-                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
                   type="submit"
                   value="Register"
                 />
@@ -172,7 +172,7 @@ export default function Login() {
                   />
                   <input
                     onClick={handleSubmit}
-                    className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+                    className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
                     type="submit"
                     value="Login"
                   />

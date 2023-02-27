@@ -24,7 +24,7 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-center p-6">
             <Link
-              className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark p-6 font-bold text-white hover:bg-background-darker-color"
+              className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark p-6 font-bold text-white hover:bg-blue-darker-lighter"
               href="/dashboard"
             >
               Open dashboard

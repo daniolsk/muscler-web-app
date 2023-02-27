@@ -24,7 +24,7 @@ function Exercise({
           onClick={() => {
             removeExericse(exercise.id, exercise.isNew);
           }}
-          className="flex w-full items-center justify-center rounded-md bg-blue-dark p-2"
+          className="flex w-full items-center justify-center rounded-md bg-blue-dark p-2 hover:bg-blue-darker-lighter"
         >
           <Image
             alt="plus icon"
@@ -93,7 +93,7 @@ function Exercise({
                 onClick={() => {
                   removeLog(log.id, log.isNew);
                 }}
-                className="col-span-3 flex items-center justify-center p-2"
+                className="col-span-3 flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
               >
                 <Image
                   alt="trash icon"

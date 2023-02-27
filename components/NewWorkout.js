@@ -122,7 +122,7 @@ function NewWorkout({ user }) {
               ))}
             </ul>
             <input
-              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-background-darker-color"
+              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
               type="submit"
               value="Add"
             />
@@ -147,7 +147,7 @@ function NewWorkout({ user }) {
       )}
       <button
         onClick={addWorkout}
-        className="mb-2 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5"
+        className="mb-2 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5 hover:bg-background-darker-color-lighter"
       >
         <Image
           alt="plus icon"

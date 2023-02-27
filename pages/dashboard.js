@@ -49,10 +49,10 @@ export default function Dashboard({ user, workouts }) {
       </Head>
 
       <main className="text-white">
-        <div className="flex items-center justify-between bg-background-darker-color p-3">
+        <div className="flex items-center justify-between bg-background-darker-color p-3  md:p-4 md:text-xl">
           <div>
             MUSCLER{" "}
-            <span className="text-sm font-thin italic text-neutral-400">
+            <span className="text-sm font-thin italic text-neutral-400 md:text-base">
               by Daniel Skowron
             </span>
           </div>

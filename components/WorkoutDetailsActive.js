@@ -238,10 +238,10 @@ function WorkoutDetailsInactive({ workout }) {
   };
   return (
     <main className="text-white">
-      <div className="flex items-center justify-between bg-background-darker-color p-3">
+      <div className="flex items-center justify-between bg-background-darker-color p-3 md:p-4 md:text-xl">
         <div>
           MUSCLER{" "}
-          <span className="text-sm font-thin italic text-neutral-400">
+          <span className="text-sm font-thin italic text-neutral-400 md:text-base">
             by Daniel Skowron
           </span>
         </div>
@@ -292,7 +292,7 @@ function WorkoutDetailsInactive({ workout }) {
           </div>
           <button
             onClick={() => saveWorkout(true, true)}
-            className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold"
+            className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold hover:bg-blue-darker-lighter"
           >
             Save
           </button>
@@ -346,7 +346,7 @@ function WorkoutDetailsInactive({ workout }) {
               <button
                 disabled={isSaving ? true : false}
                 onClick={finishWorkout}
-                className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2"
+                className="my-3 mr-3 ml-0 flex cursor-pointer items-center rounded-md bg-blue-dark p-2 hover:bg-blue-darker-lighter"
               >
                 <span className="mr-1">Finish workout</span>
                 <Image
