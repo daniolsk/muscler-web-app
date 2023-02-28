@@ -13,6 +13,9 @@ module.exports = {
         "blue-dark": "#4F46E5",
         // "blue-darker": "#6158f5",
         "blue-darker-lighter": "#7763FF",
+
+        // "purple-main": "#8947EB",
+        // "purple-main-lighter": "#8947EB",
       },
     },
   },

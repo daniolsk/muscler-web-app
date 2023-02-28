@@ -1,6 +1,5 @@
 import { Fragment } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import Header from "../components/Header";
 
 function WorkoutDetailsInactive({ workout }) {
   const formatDate = (date) => {
@@ -14,24 +13,12 @@ function WorkoutDetailsInactive({ workout }) {
   };
   return (
     <main className="text-white">
-      <div className="flex items-center justify-between bg-background-darker-color p-3  md:p-4 md:text-xl">
-        <div>
-          MUSCLER{" "}
-          <span className="text-sm font-thin italic text-neutral-400 md:text-base">
-            by Daniel Skowron
-          </span>
-        </div>
-        <Link href="/dashboard" className="flex cursor-pointer items-center">
-          <div className="mr-2">Back</div>
-          <Image
-            alt="go back icon"
-            src="/icons/go-back.svg"
-            width={15}
-            height={15}
-            priority
-          ></Image>
-        </Link>
-      </div>
+      <Header
+        buttonText={"Back"}
+        asLink
+        href="/dashboard"
+        buttonImageName="go-back"
+      />
       <div className="m-auto max-w-3xl">
         <div className="mb-4 flex items-center justify-between py-4 px-6">
           <div>
