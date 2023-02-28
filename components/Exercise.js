@@ -18,6 +18,12 @@ function Exercise({
           className="mb-2 w-20 flex-1 resize-none border-none bg-transparent text-left text-white"
           type="text"
           value={exercise.name}
+          onFocus={(e) => {
+            e.target.select();
+          }}
+          onClick={(e) => {
+            e.target.select();
+          }}
           onChange={(e) => setExerciseName(exercise.id, e.target.value)}
         />
         <button
@@ -35,18 +41,20 @@ function Exercise({
           ></Image>
         </button>
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[1fr,_8fr,_2fr] items-center gap-2">
+      <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr,_2fr] items-center justify-items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
-        <div className="text-xs text-neutral-400">TODAY</div>
-        <div className="justify-self-end text-xs text-neutral-400">DELETE</div>
+        <div className="text-xs text-neutral-400">WEIGHT</div>
+        <div className="text-xs text-neutral-400"></div>
+        <div className="text-xs text-neutral-400">REPS</div>
+        <div className="text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={log.id}>
-            <div className="text-sm text-neutral-400">{index + 1}</div>
+            <div className="text-md text-blue-darker-lighter">{index + 1}</div>
             <div className="flex items-center text-neutral-400">
               <input
                 type="number"
                 inputMode="numeric"
-                className="w-14 bg-background-darker-color/50 p-2 text-center text-white"
+                className="w-full bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.weight}
                 onFocus={(e) => {
                   e.target.select();
@@ -62,12 +70,14 @@ function Exercise({
                   setExericse(exercise.id, logsTmp);
                 }}
               />
-
-              <span className="px-2 text-sm">kg x</span>
+            </div>
+            <span className="px-2 text-sm">x</span>
+            <div>
+              {" "}
               <input
                 type="text"
                 inputMode="numeric"
-                className="appear w-14 bg-background-darker-color/50 p-2 text-center text-white"
+                className="appear w-full bg-background-darker-color/50 p-2 text-center text-white"
                 value={log.reps}
                 onFocus={(e) => {
                   e.target.select();
@@ -93,7 +103,7 @@ function Exercise({
                 onClick={() => {
                   removeLog(log.id, log.isNew);
                 }}
-                className="col-span-3 flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
+                className="flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
               >
                 <Image
                   alt="trash icon"
@@ -126,7 +136,7 @@ function Exercise({
             });
             setExericse(exercise.id, logsTmp);
           }}
-          className="col-span-3 flex items-center justify-center rounded-md bg-background-darker-color py-0.5"
+          className="col-span-5 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5"
         >
           <Image
             alt="plus icon"

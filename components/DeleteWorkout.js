@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { toast } from "react-hot-toast";
 
-function DeleteWorkout({ workout }) {
+function DeleteWorkout({ workout, deleteWorkoutHandle }) {
   const [deletingWorkout, setDeletingWorkout] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,6 +18,8 @@ function DeleteWorkout({ workout }) {
     setDeletingWorkout(false);
 
     const toastId = toast.loading("Removing workout...");
+
+    deleteWorkoutHandle(workout.id);
 
     e.preventDefault();
     const response = await fetch("/api/deleteWorkout", {

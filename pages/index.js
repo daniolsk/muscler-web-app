@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen bg-gradient-to-t from-background-darker-color to-background-color text-white">
+      <main className="text-white">
         <div className="flex h-full flex-col items-center justify-center p-4">
           <h1 className="mt-4 text-center text-4xl font-bold">MUSCLER</h1>
           <h3 className="text-md mb-8 text-center font-normal italic">

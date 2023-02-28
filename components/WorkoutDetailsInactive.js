@@ -68,18 +68,22 @@ function WorkoutDetailsInactive({ workout }) {
           {workout.exercises.map((exercise) => (
             <div key={exercise.id} className="mb-4 mt-2 flex px-4">
               <div className="w-20 font-bold">{exercise.name}</div>
-              <div className="ml-8 grid flex-1 grid-cols-[1fr,_2fr] items-center gap-2 pr-5 ">
+              <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr] items-center justify-items-center gap-2 ">
                 <div className="text-xs text-neutral-400">SET</div>
-                {/* <div className="text-xs text-neutral-400">PREV</div> */}
-                <div className="text-xs text-neutral-400">WEIGHT X REPS</div>
+                <div className="text-xs text-neutral-400">WEIGHT</div>
+                <div className="text-xs text-neutral-400"></div>
+                <div className="text-xs text-neutral-400">REPS</div>
                 {exercise.logs.map((log, index) => (
                   <Fragment key={log.id}>
-                    <div className="text-sm text-neutral-400">{index + 1}</div>
-                    {/* <div className="text-sm text-neutral-400">...</div> */}
-                    <div className="flex justify-start text-neutral-400">
-                      <div className="text-center text-white">{log.weight}</div>
-                      <span className="px-2">kg x</span>
-                      <div className="text-center text-white">{log.reps}</div>
+                    <div className="text-sm text-blue-darker-lighter">
+                      {index + 1}
+                    </div>
+                    <div className="w-full text-center text-white">
+                      {log.weight}
+                    </div>
+                    <span className="px-2 text-sm">x</span>
+                    <div className="w-full text-center text-white">
+                      {log.reps}
                     </div>
                   </Fragment>
                 ))}

@@ -26,7 +26,7 @@ export default function Home({ user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen bg-gradient-to-t from-background-darker-color to-background-color text-white">
+      <main className="text-white">
         <Header
           buttonText={"Back"}
           asLink

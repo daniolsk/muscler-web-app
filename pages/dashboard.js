@@ -8,17 +8,24 @@ import { useRouter } from "next/navigation";
 import NewWorkout from "../components/NewWorkout";
 import DeleteWorkout from "../components/DeleteWorkout";
 import Header from "../components/Header";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
 
+  console.log(workouts);
+
+  const [workoutsState, setWorkoutsState] = useState(workouts);
   const [error, setError] = useState("");
 
   const [filter, setFilter] = useState("");
   const [filteredWorkouts, setFilteredWorkouts] = useState(workouts);
   const [isFilter, setIsFilter] = useState(false);
+
+  useEffect(() => {
+    setWorkoutsState(workouts);
+  }, [workouts]);
 
   const handleFilterInput = (e) => {
     let val = e.target.value;
@@ -28,7 +35,7 @@ export default function Dashboard({ user, workouts }) {
     } else {
       setIsFilter(true);
 
-      let tmpWrk = workouts.filter((workout) => {
+      let tmpWrk = workoutsState.filter((workout) => {
         if (workout.name.toLowerCase().includes(val.toLowerCase())) {
           return true;
         } else {
@@ -57,6 +64,12 @@ export default function Dashboard({ user, workouts }) {
       " " +
       dateObj.toLocaleTimeString().slice(0, -3)
     );
+  };
+
+  const deleteWorkout = (id) => {
+    let tmpWrks = workoutsState;
+    tmpWrks = tmpWrks.filter((wrk) => wrk.id != id);
+    setWorkoutsState([...tmpWrks]);
   };
 
   const handleLogout = async () => {
@@ -122,7 +135,7 @@ export default function Dashboard({ user, workouts }) {
             </div>
             <div className="p-4 pt-2">
               <NewWorkout user={user} />
-              {workouts.length < 1 ? (
+              {workoutsState.length < 1 ? (
                 <>
                   <div className="mt-10 mb-2 px-4 text-center">
                     No workouts yet...
@@ -133,66 +146,113 @@ export default function Dashboard({ user, workouts }) {
                 </>
               ) : (
                 <>
-                  {(isFilter ? filteredWorkouts : workouts).map((workout) => (
-                    <div key={workout.id} className="mb-2 flex flex-1">
-                      <Link
-                        href={`/workout/${workout.id}`}
-                        className="flex-1 cursor-pointer"
-                      >
+                  {(isFilter ? filteredWorkouts : workoutsState).map(
+                    (workout) => (
+                      <div key={workout.id} className="mb-2 flex flex-1">
                         <div
-                          className={`rounded-l-md border-2 border-black bg-gradient-to-r ${
+                          className={`flex flex-1 rounded-md border-2 border-black bg-gradient-to-r ${
                             workout.isActive
                               ? "from-purple-500 to-pink-500"
                               : "from-sky-600 to-indigo-600"
-                          } p-4`}
+                          }`}
                         >
-                          <div className="mb-2 flex justify-between">
-                            <div className="text-lg font-bold md:text-xl">
-                              {workout.name}
-                            </div>
-                            <div className="text-white md:text-base">
-                              {formatDate(workout.date)}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className=" flex flex-col text-white">
-                              <div className="text-sm md:text-base">
-                                Total sets:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout._count.logs}
-                                </span>
-                              </div>
-                              <div className="text-sm md:text-base">
-                                Total exercises:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout._count.exercises}
-                                </span>
-                              </div>
-                              <div className="text-sm md:text-base">
-                                Total weight:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout.totalWeight} kg
-                                </span>
-                              </div>
-                            </div>
-                            <div className="flex flex-col items-end">
-                              {workout.tags.map((tag) => (
-                                <div
-                                  key={tag.id}
-                                  className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
-                                >
-                                  {tag.name}
+                          <Link
+                            href={`/workout/${workout.id}`}
+                            className="flex-1"
+                          >
+                            <div className="p-4">
+                              <div className="mb-2 flex justify-between">
+                                <div className="text-lg font-bold md:text-xl">
+                                  {workout.name}
                                 </div>
-                              ))}
+                                <div className="text-white md:text-base">
+                                  {formatDate(workout.date)}
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div className=" flex flex-col text-white">
+                                  <div className="text-sm md:text-base">
+                                    Total sets:{" "}
+                                    <span className="text-base font-bold md:text-lg">
+                                      {workout._count.logs}
+                                    </span>
+                                  </div>
+                                  <div className="text-sm md:text-base">
+                                    Total exercises:{" "}
+                                    <span className="text-base font-bold md:text-lg">
+                                      {workout._count.exercises}
+                                    </span>
+                                  </div>
+                                  <div className="text-sm md:text-base">
+                                    Total weight:{" "}
+                                    <span className="text-base font-bold md:text-lg">
+                                      {workout.totalWeight} kg
+                                    </span>
+                                  </div>
+                                </div>
+                                {/* <div className="flex max-w-min flex-col">
+                                  {workout.exercises.map((exercise) => (
+                                    <div
+                                      key={exercise.id}
+                                      className="mb-4 mt-2 flex px-4"
+                                    >
+                                      <div className="w-20 font-bold">
+                                        {exercise.name}
+                                      </div>
+                                      <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr] items-center justify-items-center gap-2 ">
+                                        <div className="text-xs text-neutral-400">
+                                          SET
+                                        </div>
+                                        <div className="text-xs text-neutral-400">
+                                          WEIGHT
+                                        </div>
+                                        <div className="text-xs text-neutral-400"></div>
+                                        <div className="text-xs text-neutral-400">
+                                          REPS
+                                        </div>
+                                        {exercise.logs.map((log, index) => (
+                                          <Fragment key={log.id}>
+                                            <div className="text-sm text-neutral-400">
+                                              {index + 1}
+                                            </div>
+                                            <div className="w-full text-center text-white">
+                                              {log.weight}
+                                            </div>
+                                            <span className="px-2 text-sm">
+                                              x
+                                            </span>
+                                            <div className="w-full text-center text-white">
+                                              {log.reps}
+                                            </div>
+                                          </Fragment>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div> */}
+                                <div className="flex flex-col items-end">
+                                  {workout.tags.map((tag) => (
+                                    <div
+                                      key={tag.id}
+                                      className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
+                                    >
+                                      {tag.name}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
+                          </Link>
+                          <div className="flex flex-col justify-start bg-background-darker-color/60">
+                            <DeleteWorkout
+                              deleteWorkoutHandle={deleteWorkout}
+                              workout={workout}
+                            />
                           </div>
                         </div>
-                      </Link>
-                      <div className="flex flex-col justify-start rounded-r-md bg-background-darker-color">
-                        <DeleteWorkout workout={workout} />
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </>
               )}
             </div>
@@ -225,7 +285,11 @@ export async function getServerSideProps(context) {
       include: {
         logs: true,
         tags: true,
-        exercises: true,
+        exercises: {
+          include: {
+            logs: true,
+          },
+        },
         _count: {
           select: { logs: true, exercises: true },
         },

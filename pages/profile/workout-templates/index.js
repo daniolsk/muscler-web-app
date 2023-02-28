@@ -8,18 +8,28 @@ import { useRouter } from "next/navigation";
 import TemplateNewWorkout from "../../../components/Templates/TemplateNewWorkout";
 import TemplateDeleteWorkout from "../../../components/Templates/TemplateDeleteWorkout";
 import Header from "../../../components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Dashboard({ user, workouts }) {
-  console.log(user, workouts);
   const router = useRouter();
 
+  const [workoutsState, setWorkoutsState] = useState(workouts);
   const [error, setError] = useState("");
 
   const [filter, setFilter] = useState("");
   const [filteredWorkouts, setFilteredWorkouts] = useState(workouts);
   const [isFilter, setIsFilter] = useState(false);
+
+  useEffect(() => {
+    setWorkoutsState(workouts);
+  }, [workouts]);
+
+  const deleteWorkout = (id) => {
+    let tmpWrks = workoutsState;
+    tmpWrks = tmpWrks.filter((wrk) => wrk.id != id);
+    setWorkoutsState([...tmpWrks]);
+  };
 
   const handleFilterInput = (e) => {
     let val = e.target.value;
@@ -29,7 +39,7 @@ export default function Dashboard({ user, workouts }) {
     } else {
       setIsFilter(true);
 
-      let tmpWrk = workouts.filter((workout) => {
+      let tmpWrk = workoutsState.filter((workout) => {
         if (workout.name.toLowerCase().includes(val.toLowerCase())) {
           return true;
         } else {
@@ -109,7 +119,7 @@ export default function Dashboard({ user, workouts }) {
             </div>
             <div className="p-4 pt-2">
               <TemplateNewWorkout user={user} />
-              {workouts.length < 1 ? (
+              {workoutsState.length < 1 ? (
                 <>
                   <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light">
                     Create new template using button above!
@@ -117,62 +127,67 @@ export default function Dashboard({ user, workouts }) {
                 </>
               ) : (
                 <>
-                  {(isFilter ? filteredWorkouts : workouts).map((workout) => (
-                    <div key={workout.id} className="mb-2 flex flex-1">
-                      <Link
-                        href={`/profile/workout-templates/${workout.id}`}
-                        className="flex-1 cursor-pointer"
-                      >
+                  {(isFilter ? filteredWorkouts : workoutsState).map(
+                    (workout) => (
+                      <div key={workout.id} className="mb-2 flex flex-1">
                         <div
-                          className={`rounded-l-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800 p-4`}
+                          className={`flex flex-1 rounded-md border-2 border-black bg-gradient-to-r ${
+                            workout.isActive
+                              ? "from-purple-500 to-pink-500"
+                              : "from-sky-600 to-indigo-600"
+                          }`}
                         >
-                          <div className="mb-2 flex justify-between">
-                            <div className="text-lg font-bold md:text-xl">
-                              {workout.name}
-                            </div>
-                            <div className="text-white md:text-base">
-                              {formatDate(workout.date)}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className=" flex flex-col text-white">
-                              <div className="text-sm md:text-base">
-                                Total sets:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout._count.logs}
-                                </span>
-                              </div>
-                              <div className="text-sm md:text-base">
-                                Total exercises:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout._count.exercises}
-                                </span>
-                              </div>
-                              <div className="text-sm md:text-base">
-                                Total weight:{" "}
-                                <span className="text-base font-bold md:text-lg">
-                                  {workout.totalWeight} kg
-                                </span>
-                              </div>
-                            </div>
-                            <div className="flex flex-col items-end">
-                              {workout.tags.map((tag) => (
-                                <div
-                                  key={tag.id}
-                                  className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
-                                >
-                                  {tag.name}
+                          <Link
+                            href={`/profile/workout-templates/${workout.id}`}
+                            className="flex-1"
+                          >
+                            <div className="p-4">
+                              <div className="mb-2 flex justify-between">
+                                <div className="text-lg font-bold md:text-xl">
+                                  {workout.name}
                                 </div>
-                              ))}
+                                <div className="text-white md:text-base">
+                                  {formatDate(workout.date)}
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div className=" flex flex-col text-white">
+                                  <div className="text-sm md:text-base">
+                                    Total sets:{" "}
+                                    <span className="text-base font-bold md:text-lg">
+                                      {workout._count.logs}
+                                    </span>
+                                  </div>
+                                  <div className="text-sm md:text-base">
+                                    Total exercises:{" "}
+                                    <span className="text-base font-bold md:text-lg">
+                                      {workout._count.exercises}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex flex-col items-end">
+                                  {workout.tags.map((tag) => (
+                                    <div
+                                      key={tag.id}
+                                      className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
+                                    >
+                                      {tag.name}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
+                          </Link>
+                          <div className="flex flex-col justify-start bg-background-darker-color/60">
+                            <TemplateDeleteWorkout
+                              deleteWorkoutHandle={deleteWorkout}
+                              workout={workout}
+                            />
                           </div>
                         </div>
-                      </Link>
-                      <div className="flex flex-col justify-start rounded-r-md bg-background-darker-color">
-                        <TemplateDeleteWorkout workout={workout} />
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </>
               )}
             </div>

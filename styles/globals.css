@@ -2,15 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  min-height: 100vh;
-  background-color: #0f172a;
-}
-
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+  body {
+    @apply min-h-screen bg-gradient-to-t from-background-darker-color to-background-color text-white;
   }
 }

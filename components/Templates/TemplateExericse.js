@@ -35,29 +35,41 @@ function Exercise({
           ></Image>
         </button>
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[1fr,_8fr,_2fr] items-center gap-2">
+      <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr,_2fr] items-center justify-items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
-        <div className="text-xs text-neutral-400">TODAY</div>
+        <div className="text-xs text-neutral-400">WEIGHT</div>
+        <div className="text-xs text-neutral-400"></div>
+        <div className="text-xs text-neutral-400">REPS</div>
         <div className="justify-self-end text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={log.id}>
-            <div className="text-sm text-neutral-400">{index + 1}</div>
+            <div className="text-md text-blue-darker-lighter">{index + 1}</div>
             <div className="flex items-center text-neutral-400">
-              <div className="w-14 bg-background-darker-color/50 p-2 text-center text-white">
-                x
-              </div>
-
-              <span className="px-2 text-sm">kg x</span>
-              <div className="w-14 bg-background-darker-color/50 p-2 text-center text-white">
-                x
-              </div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
+                value="0"
+                disabled
+              />
+            </div>
+            <span className="px-2 text-sm">x</span>
+            <div>
+              {" "}
+              <input
+                type="text"
+                inputMode="numeric"
+                className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
+                value="0"
+                disabled
+              />
             </div>
             <div className="flex items-center justify-end text-sm  text-neutral-400">
               <button
                 onClick={() => {
                   removeLog(log.id, log.isNew);
                 }}
-                className="col-span-3 flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
+                className="flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
               >
                 <Image
                   alt="trash icon"
@@ -90,7 +102,7 @@ function Exercise({
             });
             setExericse(exercise.id, logsTmp);
           }}
-          className="col-span-3 flex items-center justify-center rounded-md bg-background-darker-color py-0.5"
+          className="col-span-5 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5"
         >
           <Image
             alt="plus icon"
