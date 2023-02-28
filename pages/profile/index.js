@@ -68,7 +68,7 @@ export default function Home({ user }) {
                   alt="workout templates"
                   src={`/icons/arrow-right.svg`}
                   width={15}
-                  height={15}
+                  height={24}
                   priority
                 ></Image>
                 <div className="ml-2">Workout templates</div>

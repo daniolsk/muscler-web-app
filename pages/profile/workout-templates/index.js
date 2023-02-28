@@ -1,17 +1,18 @@
 import Head from "next/head";
 import Image from "next/image";
-import { verifyToken } from "../lib/jwt";
+import { verifyToken } from "../../../lib/jwt";
 import { decode } from "jsonwebtoken";
-import prisma from "../lib/prisma";
+import prisma from "../../../lib/prisma";
 import { useRouter } from "next/navigation";
 
-import NewWorkout from "../components/NewWorkout";
-import DeleteWorkout from "../components/DeleteWorkout";
-import Header from "../components/Header";
+import TemplateNewWorkout from "../../../components/Templates/TemplateNewWorkout";
+import TemplateDeleteWorkout from "../../../components/Templates/TemplateDeleteWorkout";
+import Header from "../../../components/Header";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Dashboard({ user, workouts }) {
+  console.log(user, workouts);
   const router = useRouter();
 
   const [error, setError] = useState("");
@@ -84,29 +85,15 @@ export default function Dashboard({ user, workouts }) {
 
       <main className="text-white">
         <Header
-          buttonText={"Log out"}
-          buttonOnClick={handleLogout}
-          buttonImageName="logout"
+          buttonText={"Back"}
+          asLink
+          href={"/profile"}
+          buttonImageName="go-back"
         />
         <div className="m-auto max-w-3xl">
-          <div className="flex items-center justify-center p-5 pb-2">
-            <h1 className="mr-2 text-center text-4xl font-bold md:text-5xl">
-              <span className="text-2xl font-normal md:text-3xl">Hello</span>{" "}
-              {user.username}
-            </h1>
-            <Link href={"/profile"} className="p-1 md:p-2">
-              <Image
-                alt="profile settings"
-                src="/icons/settings.svg"
-                width={21}
-                height={21}
-                priority
-              ></Image>
-            </Link>
+          <div className="p-4 text-center text-xl font-bold md:text-2xl">
+            Your templates:
           </div>
-          <p className="mb-4 text-center text-xl md:text-2xl">
-            Your recent workouts:
-          </p>
           <div className="text-md text-center font-bold text-red-600">
             {error ? error : ""}
           </div>
@@ -115,20 +102,17 @@ export default function Dashboard({ user, workouts }) {
               <input
                 className="flex-1 rounded-md border-2 border-black bg-background-darker-color p-2 text-white"
                 type="text"
-                placeholder="Filter workouts by name or tag..."
+                placeholder="Filter templates by name or tag..."
                 value={filter}
                 onChange={handleFilterInput}
               />
             </div>
             <div className="p-4 pt-2">
-              <NewWorkout user={user} />
+              <TemplateNewWorkout user={user} />
               {workouts.length < 1 ? (
                 <>
-                  <div className="mt-10 mb-2 px-4 text-center">
-                    No workouts yet...
-                  </div>
-                  <div className="px-4 text-center text-lg font-bold text-blue-light">
-                    Go ahead and create one using button above!
+                  <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light">
+                    Create new template using button above!
                   </div>
                 </>
               ) : (
@@ -136,15 +120,11 @@ export default function Dashboard({ user, workouts }) {
                   {(isFilter ? filteredWorkouts : workouts).map((workout) => (
                     <div key={workout.id} className="mb-2 flex flex-1">
                       <Link
-                        href={`/workout/${workout.id}`}
+                        href={`/profile/workout-templates/${workout.id}`}
                         className="flex-1 cursor-pointer"
                       >
                         <div
-                          className={`rounded-l-md border-2 border-black bg-gradient-to-r ${
-                            workout.isActive
-                              ? "from-purple-500 to-pink-500"
-                              : "from-sky-600 to-indigo-600"
-                          } p-4`}
+                          className={`rounded-l-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800 p-4`}
                         >
                           <div className="mb-2 flex justify-between">
                             <div className="text-lg font-bold md:text-xl">
@@ -189,7 +169,7 @@ export default function Dashboard({ user, workouts }) {
                         </div>
                       </Link>
                       <div className="flex flex-col justify-start rounded-r-md bg-background-darker-color">
-                        <DeleteWorkout workout={workout} />
+                        <TemplateDeleteWorkout workout={workout} />
                       </div>
                     </div>
                   ))}
@@ -212,16 +192,11 @@ export async function getServerSideProps(context) {
     let data = await prisma.workout.findMany({
       where: {
         userId: dataFromToken.id,
-        isTemplate: false,
+        isTemplate: true,
       },
-      orderBy: [
-        {
-          isActive: "desc",
-        },
-        {
-          date: "desc",
-        },
-      ],
+      orderBy: {
+        date: "desc",
+      },
       include: {
         logs: true,
         tags: true,
