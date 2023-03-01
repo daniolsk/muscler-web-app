@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { verifyToken } from "../lib/jwt";
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="text-white">
+      <main className="h-screen text-white">
         <div className="flex h-full flex-col items-center justify-center p-4">
           <h1 className="mt-4 text-center text-4xl font-bold">MUSCLER</h1>
           <h3 className="text-md mb-8 text-center font-normal italic">
@@ -34,4 +35,16 @@ export default function Home() {
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const token = context.req.cookies["access-token"];
+
+  if (token && verifyToken(token)) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
 }

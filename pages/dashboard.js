@@ -14,8 +14,6 @@ import Link from "next/link";
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
 
-  console.log(workouts);
-
   const [workoutsState, setWorkoutsState] = useState(workouts);
   const [error, setError] = useState("");
 
@@ -150,10 +148,10 @@ export default function Dashboard({ user, workouts }) {
                     (workout) => (
                       <div key={workout.id} className="mb-2 flex flex-1">
                         <div
-                          className={`flex flex-1 rounded-md border-2 border-black bg-gradient-to-r ${
+                          className={`flex flex-1 rounded-md border-2 border-black ${
                             workout.isActive
-                              ? "from-purple-500 to-pink-500"
-                              : "from-sky-600 to-indigo-600"
+                              ? "bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700"
+                              : "bg-gradient-to-r from-sky-600 to-indigo-600"
                           }`}
                         >
                           <Link
@@ -190,46 +188,6 @@ export default function Dashboard({ user, workouts }) {
                                     </span>
                                   </div>
                                 </div>
-                                {/* <div className="flex max-w-min flex-col">
-                                  {workout.exercises.map((exercise) => (
-                                    <div
-                                      key={exercise.id}
-                                      className="mb-4 mt-2 flex px-4"
-                                    >
-                                      <div className="w-20 font-bold">
-                                        {exercise.name}
-                                      </div>
-                                      <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr] items-center justify-items-center gap-2 ">
-                                        <div className="text-xs text-neutral-400">
-                                          SET
-                                        </div>
-                                        <div className="text-xs text-neutral-400">
-                                          WEIGHT
-                                        </div>
-                                        <div className="text-xs text-neutral-400"></div>
-                                        <div className="text-xs text-neutral-400">
-                                          REPS
-                                        </div>
-                                        {exercise.logs.map((log, index) => (
-                                          <Fragment key={log.id}>
-                                            <div className="text-sm text-neutral-400">
-                                              {index + 1}
-                                            </div>
-                                            <div className="w-full text-center text-white">
-                                              {log.weight}
-                                            </div>
-                                            <span className="px-2 text-sm">
-                                              x
-                                            </span>
-                                            <div className="w-full text-center text-white">
-                                              {log.reps}
-                                            </div>
-                                          </Fragment>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div> */}
                                 <div className="flex flex-col items-end">
                                   {workout.tags.map((tag) => (
                                     <div

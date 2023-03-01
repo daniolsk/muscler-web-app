@@ -86,7 +86,10 @@ function NewWorkout({ user }) {
       {addingWorkout ? (
         <div className="absolute top-0 left-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-background-darker-color/90 p-4">
           <h1 className="mb-4 text-2xl font-bold">Add Template</h1>
-          <form onSubmit={handleSubmit} className="flex flex-col">
+          <form
+            onSubmit={handleSubmit}
+            className="flex w-full max-w-lg flex-col"
+          >
             <input
               type="text"
               value={name}

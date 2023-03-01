@@ -40,7 +40,7 @@ function Exercise({
         <div className="text-xs text-neutral-400">WEIGHT</div>
         <div className="text-xs text-neutral-400"></div>
         <div className="text-xs text-neutral-400">REPS</div>
-        <div className="justify-self-end text-xs text-neutral-400">DELETE</div>
+        <div className="text-xs text-neutral-400">DELETE</div>
         {exercise.logs.map((log, index) => (
           <Fragment key={log.id}>
             <div className="text-md text-blue-darker-lighter">{index + 1}</div>

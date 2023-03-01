@@ -130,13 +130,7 @@ export default function Dashboard({ user, workouts }) {
                   {(isFilter ? filteredWorkouts : workoutsState).map(
                     (workout) => (
                       <div key={workout.id} className="mb-2 flex flex-1">
-                        <div
-                          className={`flex flex-1 rounded-md border-2 border-black bg-gradient-to-r ${
-                            workout.isActive
-                              ? "from-purple-500 to-pink-500"
-                              : "from-sky-600 to-indigo-600"
-                          }`}
-                        >
+                        <div className="flex flex-1 rounded-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800">
                           <Link
                             href={`/profile/workout-templates/${workout.id}`}
                             className="flex-1"
