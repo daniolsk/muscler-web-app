@@ -106,10 +106,7 @@ function NewWorkout({ user }) {
 
     setTemplates(data.workouts);
     setIsLoading(false);
-    console.log(data.workouts);
   };
-
-  console.log(templates);
 
   return (
     <>
