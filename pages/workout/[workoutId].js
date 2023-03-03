@@ -5,7 +5,7 @@ import prisma from "../../lib/prisma";
 import WorkoutDetailsInactive from "../../components/WorkoutDetailsInactive";
 import WorkoutDetailsActive from "../../components/WorkoutDetailsActive";
 
-export default function Workout({ workout }) {
+export default function Workout({ workout, infoForGuest }) {
   return (
     <div>
       <Head>
@@ -17,7 +17,7 @@ export default function Workout({ workout }) {
       {workout.isActive ? (
         <WorkoutDetailsActive workout={workout} />
       ) : (
-        <WorkoutDetailsInactive workout={workout} />
+        <WorkoutDetailsInactive workout={workout} guest={infoForGuest} />
       )}
     </div>
   );
@@ -67,6 +67,8 @@ export async function getServerSideProps(context) {
     };
   }
 
+  let infoForGuest = false;
+
   if (workout.isActive) {
     if (!(token && verifyToken(token))) {
       return {
@@ -74,10 +76,28 @@ export async function getServerSideProps(context) {
           destination: "/login",
         },
       };
+    } else {
+      let dataFromToken = decode(token);
+      if (dataFromToken.id != workout.user.id) {
+        return {
+          redirect: {
+            destination: "/dashboard",
+          },
+        };
+      }
+    }
+  } else {
+    if (!(token && verifyToken(token))) {
+      infoForGuest = true;
+    } else {
+      let dataFromToken = decode(token);
+      if (dataFromToken.id != workout.user.id) {
+        infoForGuest = true;
+      }
     }
   }
 
-  const dataFromToken = decode(token);
+  let dataFromToken = decode(token);
 
   let totalWeight = 0;
 
@@ -98,6 +118,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { workout },
+    props: { workout, infoForGuest },
   };
 }

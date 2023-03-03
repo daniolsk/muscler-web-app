@@ -1,7 +1,9 @@
+import Image from "next/image";
 import { Fragment } from "react";
+import { toast } from "react-hot-toast";
 import Header from "../components/Header";
 
-function WorkoutDetailsInactive({ workout }) {
+function WorkoutDetailsInactive({ workout, guest }) {
   const formatDate = (date) => {
     let dateObj = new Date(date);
 
@@ -11,6 +13,7 @@ function WorkoutDetailsInactive({ workout }) {
       dateObj.toLocaleTimeString().slice(0, -3)
     );
   };
+
   return (
     <main className="text-white">
       <Header
@@ -22,9 +25,31 @@ function WorkoutDetailsInactive({ workout }) {
       <div className="m-auto max-w-3xl">
         <div className="mb-4 flex items-center justify-between py-4 px-6">
           <div>
-            <h1 className="mb-2 text-left text-2xl font-bold">
-              {workout.name}
-            </h1>
+            {guest ? (
+              <h1 className="mb-2 text-left text-2xl font-bold italic">
+                {workout.user.username}'s workout
+              </h1>
+            ) : (
+              ""
+            )}
+            <div className="mb-2 flex flex-col items-start text-left text-2xl font-bold md:flex-row">
+              <div className="mb-2 md:mr-4">{workout.name}</div>
+              <button
+                className="flex items-center rounded-md bg-background-darker-color px-2.5 py-1.5"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success("Link copied to clipboard!");
+                }}
+              >
+                <div className="mr-1 text-sm">Share</div>
+                <Image
+                  alt="share icon"
+                  src={"/icons/share.svg"}
+                  width={18}
+                  height={18}
+                ></Image>
+              </button>
+            </div>
             <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
             <div className=" flex flex-col justify-start text-white">
               <div className="text-sm">

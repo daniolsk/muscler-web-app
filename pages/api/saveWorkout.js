@@ -13,6 +13,8 @@ export default async function handler(req, res) {
       const { newExercises, newLogs, modifiedExercises, modifiedLogs } =
         req.body;
 
+      let idsToChange = [];
+
       for (const exercise of newExercises) {
         const newExercise = await prisma.exercise.create({
           data: {
@@ -21,6 +23,8 @@ export default async function handler(req, res) {
             workoutId: exercise.workoutId,
           },
         });
+
+        idsToChange.push([exercise.id, newExercise.id]);
 
         newLogs.forEach((log) => {
           if (log.exerciseId == exercise.id) {
@@ -39,6 +43,8 @@ export default async function handler(req, res) {
             exerciseId: log.exerciseId,
           },
         });
+
+        idsToChange.push([log.id, newLog.id]);
       }
 
       for (const exercise of modifiedExercises) {
@@ -52,6 +58,8 @@ export default async function handler(req, res) {
             workoutId: exercise.workoutId,
           },
         });
+
+        idsToChange.push([exercise.id, updatedExercise.id]);
       }
 
       for (const log of modifiedLogs) {
@@ -67,9 +75,11 @@ export default async function handler(req, res) {
             exerciseId: log.exerciseId,
           },
         });
+
+        idsToChange.push([log.id, updatedLog.id]);
       }
 
-      return res.status(200).json({ msg: "Workout saved" });
+      return res.status(200).json({ msg: "Workout saved", data: idsToChange });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "Something went wrong" });

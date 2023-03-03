@@ -140,6 +140,29 @@ function WorkoutDetailsInactive({ workout }) {
 
     setIsSaving(false);
 
+    if (data.data && data.data.length > 0) {
+      let tmpExercises = exercises;
+      for (const ids of data.data) {
+        tmpExercises.forEach((exercise) => {
+          if (exercise.id == ids[0]) {
+            delete exercise.isNew;
+            delete exercise.isChanged;
+            exercise.id = ids[1];
+          }
+
+          exercise.logs.forEach((log) => {
+            if (log.id == ids[0]) {
+              delete log.isNew;
+              delete log.isChanged;
+              log.id = ids[1];
+            }
+          });
+        });
+      }
+
+      setExercises([...tmpExercises]);
+    }
+
     if (showToast)
       toast.success("Workout saved!", {
         id: toastId,
@@ -190,7 +213,6 @@ function WorkoutDetailsInactive({ workout }) {
     tmpExercises.forEach((ex) => {
       ex.logs = ex.logs.filter((log) => log.id != id);
     });
-    console.log(tmpExercises);
     setExercises([...tmpExercises]);
 
     if (!isNew) {

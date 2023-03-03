@@ -174,7 +174,6 @@ function WorkoutDetailsInactive({ workout }) {
     tmpExercises.forEach((ex) => {
       ex.logs = ex.logs.filter((log) => log.id != id);
     });
-    console.log(tmpExercises);
     setExercises([...tmpExercises]);
 
     if (!isNew) {
