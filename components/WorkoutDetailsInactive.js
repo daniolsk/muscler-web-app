@@ -44,6 +44,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
                 <div className="mr-1 text-sm">Share</div>
                 <Image
                   alt="share icon"
+                  priority
                   src={"/icons/share.svg"}
                   width={18}
                   height={18}
