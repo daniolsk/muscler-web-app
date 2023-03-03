@@ -53,7 +53,7 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
   return (
     <>
       {deletingWorkout ? (
-        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen cursor-auto flex-col items-center justify-center bg-background-darker-color/90">
+        <div className="fixed left-0 top-0 z-50 flex h-screen w-screen cursor-auto flex-col items-center justify-center bg-background-darker-color/90">
           <h1 className="mb-4 text-2xl font-bold">
             Delete template <span className="italic">{workout.name}</span>?
           </h1>
@@ -64,7 +64,7 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
               value="Delete"
             />
           </form>
-          <div
+          <button
             className=" cursor-pointer p-4 text-sm underline"
             onClick={() => {
               setError("");
@@ -72,7 +72,7 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
             }}
           >
             Cancel
-          </div>
+          </button>
           <div className="text-md text-center font-bold text-red-600">
             {error ? error : ""}
           </div>

@@ -48,7 +48,7 @@ function WorkoutDetailsInactive({ workout }) {
     router.replace(router.asPath);
   };
 
-  const saveWorkout = async (refresh, showToast) => {
+  const saveWorkout = async (showToast) => {
     setIsSaving(true);
 
     let toastId = null;
@@ -89,7 +89,7 @@ function WorkoutDetailsInactive({ workout }) {
       modifiedLogs.length == 0
     ) {
       setIsSaving(false);
-      toast.success("Workout saved!", {
+      toast.success("Template saved!", {
         id: toastId,
       });
       return;
@@ -125,13 +125,9 @@ function WorkoutDetailsInactive({ workout }) {
 
     setIsSaving(false);
 
-    toast.success("Workout saved!", {
+    toast.success("Template saved!", {
       id: toastId,
     });
-
-    if (refresh) {
-      router.replace(router.asPath);
-    }
   };
 
   const setExericse = (id, logs) => {

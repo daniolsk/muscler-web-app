@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+
+import FullScreenConfirm from "../FullScreenConfirm";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,18 +13,35 @@ function Exercise({
   removeLog,
   removeExericse,
 }) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   return (
-    <div className="flex border-b-[1px] border-background-darker-color py-4 px-4">
+    <div className="mt-2 mb-2 flex border-background-darker-color bg-background-darker-color-lighter/25 p-3.5">
       <div className="flex w-20 flex-col justify-between self-stretch text-sm font-bold">
         <textarea
-          className="mb-2 w-20 flex-1 resize-none border-none bg-transparent text-left text-white"
+          className="mb-2 min-h-[5rem] w-20 flex-1 resize-none border-none bg-transparent text-left text-white"
           type="text"
           value={exercise.name}
           onChange={(e) => setExerciseName(exercise.id, e.target.value)}
         />
+        {isDeleting ? (
+          <FullScreenConfirm
+            button="Delete"
+            onCancel={() => setIsDeleting(false)}
+            onConfirm={() => removeExericse(exercise.id, exercise.isNew)}
+            prompt={() => (
+              <div>
+                Delete exericsie <span className="italic">{exercise.name}</span>
+                ?
+              </div>
+            )}
+          />
+        ) : (
+          ""
+        )}
         <button
           onClick={() => {
-            removeExericse(exercise.id, exercise.isNew);
+            setIsDeleting(true);
           }}
           className="flex w-full items-center justify-center rounded-md bg-blue-dark p-2 hover:bg-blue-darker-lighter"
         >
@@ -35,7 +54,7 @@ function Exercise({
           ></Image>
         </button>
       </div>
-      <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr,_2fr] items-center justify-items-center gap-2">
+      <div className="ml-4 grid grid-cols-[2fr,_6fr,_1fr,_6fr,_2fr] items-center justify-items-center gap-2">
         <div className="text-xs text-neutral-400">SET</div>
         <div className="text-xs text-neutral-400">WEIGHT</div>
         <div className="text-xs text-neutral-400"></div>
@@ -102,7 +121,7 @@ function Exercise({
             });
             setExericse(exercise.id, logsTmp);
           }}
-          className="col-span-5 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5"
+          className="col-span-5 flex w-full items-center justify-center self-end rounded-md bg-background-darker-color py-0.5"
         >
           <Image
             alt="plus icon"

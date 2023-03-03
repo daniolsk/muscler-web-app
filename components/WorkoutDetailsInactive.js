@@ -59,16 +59,21 @@ function WorkoutDetailsInactive({ workout }) {
           </div>
         </div>
         <div className="px-4 text-xs text-neutral-400">EXERCISE</div>
-        <div>
+        <div className="mb-4 sm:grid sm:grid-cols-2 sm:p-4">
           {workout.exercises.length == 0 ? (
             <div className="p-4">No exerices in this workout</div>
           ) : (
             ""
           )}
-          {workout.exercises.map((exercise) => (
-            <div key={exercise.id} className="mb-4 mt-2 flex px-4">
-              <div className="w-20 font-bold">{exercise.name}</div>
-              <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr] items-center justify-items-center gap-2 ">
+          {workout.exercises.map((exercise, index) => (
+            <div
+              key={exercise.id}
+              className="mb-2 mt-2 flex bg-background-darker-color-lighter/25 px-4 py-2 sm:odd:mr-4"
+            >
+              <div className="w-20 text-sm font-bold">
+                {index + 1 + ". " + exercise.name}
+              </div>
+              <div className="ml-4 grid flex-1 grid-cols-[2fr,_6fr,_1fr,_6fr] items-center justify-items-center gap-0.5 ">
                 <div className="text-xs text-neutral-400">SET</div>
                 <div className="text-xs text-neutral-400">WEIGHT</div>
                 <div className="text-xs text-neutral-400"></div>

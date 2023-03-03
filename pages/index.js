@@ -43,8 +43,12 @@ export async function getServerSideProps(context) {
   if (token && verifyToken(token)) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/dashboard",
       },
     };
   }
+
+  return {
+    props: {},
+  };
 }

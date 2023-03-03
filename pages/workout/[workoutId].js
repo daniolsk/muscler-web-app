@@ -25,76 +25,79 @@ export default function Workout({ workout }) {
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies["access-token"];
-  const dataFromToken = decode(token);
 
-  if (token && verifyToken(token)) {
-    const id = context.params.workoutId;
+  const id = context.params.workoutId;
 
-    let workout = await prisma.workout.findUnique({
-      where: {
-        id: parseInt(id),
+  let workout = await prisma.workout.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+    include: {
+      tags: true,
+      _count: {
+        select: { logs: true, exercises: true },
       },
-      include: {
-        tags: true,
-        _count: {
-          select: { logs: true, exercises: true },
+      logs: true,
+      user: {
+        select: {
+          id: true,
+          username: true,
         },
-        logs: true,
-        user: {
-          select: {
-            id: true,
-            username: true,
-          },
+      },
+      exercises: {
+        orderBy: {
+          exerciseNumber: "asc",
         },
-        exercises: {
-          orderBy: {
-            exerciseNumber: "asc",
-          },
-          include: {
-            logs: {
-              orderBy: {
-                setNumber: "asc",
-              },
+        include: {
+          logs: {
+            orderBy: {
+              setNumber: "asc",
             },
           },
         },
       },
-    });
+    },
+  });
 
-    if (!workout) {
-      return {
-        redirect: {
-          destination: "/dashboard",
-        },
-      };
-    }
-
-    let totalWeight = 0;
-
-    workout.logs.forEach((log) => {
-      totalWeight += log.weight * log.reps;
-    });
-
-    workout.totalWeight = totalWeight;
-
-    workout.date = workout.date.toString();
-
-    if (dataFromToken.id != workout.user.id) {
-      return {
-        redirect: {
-          destination: "/dashboard",
-        },
-      };
-    }
-
+  if (!workout) {
     return {
-      props: { workout },
+      redirect: {
+        destination: "/dashboard",
+      },
+    };
+  }
+
+  if (workout.isActive) {
+    if (!(token && verifyToken(token))) {
+      return {
+        redirect: {
+          destination: "/login",
+        },
+      };
+    }
+  }
+
+  const dataFromToken = decode(token);
+
+  let totalWeight = 0;
+
+  workout.logs.forEach((log) => {
+    totalWeight += log.weight * log.reps;
+  });
+
+  workout.totalWeight = totalWeight;
+
+  workout.date = workout.date.toString();
+
+  if (workout.isActive && dataFromToken.id != workout.user.id) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+      },
     };
   }
 
   return {
-    redirect: {
-      destination: "/login",
-    },
+    props: { workout },
   };
 }

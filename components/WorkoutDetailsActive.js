@@ -8,19 +8,29 @@ import { toast } from "react-hot-toast";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { usePageVisibility } from "./hooks/usePageVisibility";
+
 function WorkoutDetailsInactive({ workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  const isVisible = usePageVisibility();
+
   useEffect(() => {
     setExercises(workout.exercises);
   }, [workout]);
 
+  useEffect(() => {
+    if (isVisible == false) {
+      if (!isSaving) saveWorkout(false);
+    }
+  }, [isVisible]);
+
   const router = useRouter();
 
   const finishWorkout = async () => {
-    await saveWorkout(false);
+    if (!isSaving) await saveWorkout(false);
     const toastId = toast.loading("Finishing workout...");
     const response = await fetch("/api/finishWorkout", {
       method: "POST",
@@ -48,7 +58,7 @@ function WorkoutDetailsInactive({ workout }) {
     router.replace(router.asPath);
   };
 
-  const saveWorkout = async (refresh, showToast) => {
+  const saveWorkout = async (showToast) => {
     setIsSaving(true);
 
     let toastId = null;
@@ -89,14 +99,17 @@ function WorkoutDetailsInactive({ workout }) {
       modifiedLogs.length == 0
     ) {
       setIsSaving(false);
-      toast.success("Workout saved!", {
-        id: toastId,
-      });
+      if (showToast)
+        toast.success("Workout saved!", {
+          id: toastId,
+        });
       return;
     }
 
-    if (!toastId) {
-      toastId = toast.loading("Saving...");
+    if (showToast) {
+      if (!toastId) {
+        toastId = toast.loading("Saving...");
+      }
     }
 
     const response = await fetch("/api/saveWorkout", {
@@ -117,21 +130,19 @@ function WorkoutDetailsInactive({ workout }) {
     if (response.status != 200) {
       setError(data.msg);
       setIsSaving(false);
-      toast.error("Something went wrong!", {
-        id: toastId,
-      });
+      if (showToast)
+        toast.error("Something went wrong!", {
+          id: toastId,
+        });
       return;
     }
 
     setIsSaving(false);
 
-    toast.success("Workout saved!", {
-      id: toastId,
-    });
-
-    if (refresh) {
-      router.replace(router.asPath);
-    }
+    if (showToast)
+      toast.success("Workout saved!", {
+        id: toastId,
+      });
   };
 
   const setExericse = (id, logs) => {
@@ -244,7 +255,7 @@ function WorkoutDetailsInactive({ workout }) {
       <Header
         buttonText={"Back"}
         buttonOnClick={async () => {
-          if (!isSaving) await saveWorkout(false, false);
+          if (!isSaving) await saveWorkout(false);
           router.push("/dashboard");
         }}
         buttonImageName="go-back"
@@ -278,7 +289,7 @@ function WorkoutDetailsInactive({ workout }) {
             </div>
           </div>
           <button
-            onClick={() => saveWorkout(true, true)}
+            onClick={() => saveWorkout(true)}
             className="cursor-pointer rounded-md bg-blue-dark px-4 py-3 text-lg font-bold hover:bg-blue-darker-lighter"
           >
             Save
@@ -315,7 +326,7 @@ function WorkoutDetailsInactive({ workout }) {
               key={exercise.id}
             />
           ))}
-          <div className="flex justify-between">
+          <div className="mb-2 flex justify-between">
             <button
               onClick={addExercise}
               className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { verifyToken } from "../../../lib/jwt";
 import { decode } from "jsonwebtoken";
 import prisma from "../../../lib/prisma";
-import TemplateWorkoutDetailsActive from "../../../components/Templates/TemplateWorkoutDetailsActive";
+import TemplateWorkoutDetailsActive from "../../../components/templates/TemplateWorkoutDetailsActive";
 
 export default function Workout({ workout }) {
   return (

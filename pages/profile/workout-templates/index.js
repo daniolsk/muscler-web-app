@@ -5,8 +5,8 @@ import { decode } from "jsonwebtoken";
 import prisma from "../../../lib/prisma";
 import { useRouter } from "next/navigation";
 
-import TemplateNewWorkout from "../../../components/Templates/TemplateNewWorkout";
-import TemplateDeleteWorkout from "../../../components/Templates/TemplateDeleteWorkout";
+import TemplateNewWorkout from "../../../components/templates/TemplateNewWorkout";
+import TemplateDeleteWorkout from "../../../components/templates/TemplateDeleteWorkout";
 import Header from "../../../components/Header";
 import { useState, useEffect } from "react";
 import Link from "next/link";

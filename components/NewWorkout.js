@@ -111,7 +111,7 @@ function NewWorkout({ user }) {
   return (
     <>
       {addingWorkout ? (
-        <div className="absolute top-0 left-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-background-darker-color/90 p-4">
+        <div className="fixed top-0 left-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-background-darker-color/90 p-4">
           <h1 className="mb-4 text-2xl font-bold">Add Workout</h1>
           <form
             onSubmit={handleSubmit}
@@ -266,7 +266,7 @@ function NewWorkout({ user }) {
       )}
       <button
         onClick={addWorkout}
-        className="mb-2 flex w-full items-center justify-center rounded-md bg-background-darker-color py-0.5 hover:bg-background-darker-color-lighter"
+        className="mb-2 flex w-full items-center justify-center rounded-md border-2 border-black bg-background-darker-color py-0.5 hover:bg-background-darker-color-lighter"
       >
         <Image
           alt="plus icon"
