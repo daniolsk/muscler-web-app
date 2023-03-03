@@ -27,7 +27,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
           <div>
             {guest ? (
               <h1 className="mb-2 text-left text-2xl font-bold italic">
-                {workout.user.username}'s workout
+                {workout.user.username}&apos;s workout
               </h1>
             ) : (
               ""
