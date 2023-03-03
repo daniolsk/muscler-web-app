@@ -25,6 +25,7 @@ function WorkoutDetailsInactive({ workout }) {
     if (isVisible == false) {
       if (!isSaving) saveWorkout(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   const router = useRouter();

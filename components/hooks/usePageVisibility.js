@@ -28,8 +28,6 @@ export function getIsDocumentHidden() {
 }
 
 export function usePageVisibility() {
-  if (typeof window == undefined) return null;
-
   const [isVisible, setIsVisible] = useState(getIsDocumentHidden());
   const onVisibilityChange = () => setIsVisible(getIsDocumentHidden());
 
