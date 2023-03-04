@@ -70,6 +70,11 @@ export default function Dashboard({ user, workouts }) {
     );
   };
 
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const handleLogout = async () => {
     const response = await fetch("/api/auth/logout", {
       method: "POST",
@@ -141,7 +146,7 @@ export default function Dashboard({ user, workouts }) {
                                   {workout.name}
                                 </div>
                                 <div className="text-white md:text-base">
-                                  {formatDate(workout.date)}
+                                  {isClient ? formatDate(workout.date) : ""}
                                 </div>
                               </div>
                               <div className="flex items-center justify-between">

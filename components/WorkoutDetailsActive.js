@@ -273,6 +273,12 @@ function WorkoutDetailsInactive({ workout }) {
       dateObj.toLocaleTimeString().slice(0, -3)
     );
   };
+
+  const [date, setDate] = useState();
+  useEffect(() => {
+    setDate(formatDate(workout.date));
+  }, []);
+
   return (
     <main className="text-white">
       <Header
@@ -289,7 +295,7 @@ function WorkoutDetailsInactive({ workout }) {
             <h1 className="mb-2 text-left text-2xl font-bold">
               {workout.name}
             </h1>
-            <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
+            <h3 className="text-left text-sm">{date}</h3>
             <div className=" flex flex-col justify-start text-white">
               <div className="text-sm">
                 Total sets:{" "}

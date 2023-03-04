@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Header from "../components/Header";
 
@@ -13,6 +13,11 @@ function WorkoutDetailsInactive({ workout, guest }) {
       dateObj.toLocaleTimeString().slice(0, -3)
     );
   };
+
+  const [date, setDate] = useState();
+  useEffect(() => {
+    setDate(formatDate(workout.date));
+  }, []);
 
   return (
     <main className="text-white">
@@ -51,7 +56,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
                 ></Image>
               </button>
             </div>
-            <h3 className="text-left text-sm">{formatDate(workout.date)}</h3>
+            <h3 className="text-left text-sm">{date}</h3>
             <div className=" flex flex-col justify-start text-white">
               <div className="text-sm">
                 Total sets:{" "}

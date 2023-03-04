@@ -64,6 +64,11 @@ export default function Dashboard({ user, workouts }) {
     );
   };
 
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const deleteWorkout = (id) => {
     let tmpWrks = workoutsState;
     tmpWrks = tmpWrks.filter((wrk) => wrk.id != id);
@@ -164,7 +169,7 @@ export default function Dashboard({ user, workouts }) {
                                   {workout.name}
                                 </div>
                                 <div className="text-white md:text-base">
-                                  {formatDate(workout.date)}
+                                  {isClient ? formatDate(workout.date) : ""}
                                 </div>
                               </div>
                               <div className="flex items-center justify-between">

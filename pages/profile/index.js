@@ -6,6 +6,7 @@ import { decode } from "jsonwebtoken";
 import prisma from "../../lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function Home({ user }) {
   const formatDate = (date) => {
@@ -17,6 +18,11 @@ export default function Home({ user }) {
       dateObj.toLocaleTimeString().slice(0, -3)
     );
   };
+
+  const [date, setDate] = useState();
+  useEffect(() => {
+    setDate(formatDate(user.createdAt));
+  }, []);
 
   return (
     <div>
@@ -45,9 +51,7 @@ export default function Home({ user }) {
                 </div>
                 <div className="mb-3">
                   <div className="text-sm text-neutral-400">Created at:</div>
-                  <div className="pl-4 text-xl ">
-                    {formatDate(user.createdAt)}
-                  </div>
+                  <div className="pl-4 text-xl ">{date}</div>
                 </div>
               </div>
               <Image
