@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import NewWorkout from "../components/NewWorkout";
 import DeleteWorkout from "../components/DeleteWorkout";
 import Header from "../components/Header";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Dashboard({ user, workouts }) {
@@ -138,86 +138,91 @@ export default function Dashboard({ user, workouts }) {
             </div>
             <div className="p-4 pt-2">
               <NewWorkout user={user} />
-              {workoutsState.length < 1 ? (
-                <>
-                  <div className="mt-10 mb-2 px-4 text-center">
-                    No workouts yet...
-                  </div>
-                  <div className="px-4 text-center text-lg font-bold text-blue-light">
-                    Go ahead and create one using button above!
-                  </div>
-                </>
-              ) : (
-                <>
-                  {(isFilter ? filteredWorkouts : workoutsState).map(
-                    (workout) => (
-                      <div key={workout.id} className="mb-2 flex flex-1">
+              <div className="flex flex-col md:grid md:grid-cols-2">
+                {workoutsState.length < 1 ? (
+                  <>
+                    <div className="mt-10 mb-2 px-4 text-center">
+                      No workouts yet...
+                    </div>
+                    <div className="px-4 text-center text-lg font-bold text-blue-light">
+                      Go ahead and create one using button above!
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {(isFilter ? filteredWorkouts : workoutsState).map(
+                      (workout) => (
                         <div
-                          className={`flex flex-1 rounded-md border-2 border-black ${
-                            workout.isActive
-                              ? "bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700"
-                              : "bg-gradient-to-r from-sky-600 to-indigo-600"
-                          }`}
+                          key={workout.id}
+                          className="mb-2 flex flex-1 sm:odd:mr-1 sm:even:ml-1"
                         >
-                          <Link
-                            href={`/workout/${workout.id}`}
-                            className="flex-1"
+                          <div
+                            className={`flex flex-1 rounded-md border-2 border-black ${
+                              workout.isActive
+                                ? "bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700"
+                                : "bg-gradient-to-r from-sky-600 to-indigo-600"
+                            }`}
                           >
-                            <div className="p-4">
-                              <div className="mb-2 flex justify-between">
-                                <div className="text-lg font-bold md:text-xl">
-                                  {workout.name}
-                                </div>
-                                <div className="text-white md:text-base">
-                                  {isClient ? formatDate(workout.date) : ""}
-                                </div>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <div className=" flex flex-col text-white">
-                                  <div className="text-sm md:text-base">
-                                    Total sets:{" "}
-                                    <span className="text-base font-bold md:text-lg">
-                                      {workout._count.logs}
-                                    </span>
+                            <Link
+                              href={`/workout/${workout.id}`}
+                              className="flex-1"
+                            >
+                              <div className="p-4">
+                                <div className="mb-2 flex justify-between">
+                                  <div className="text-lg font-bold md:text-xl">
+                                    {workout.name}
                                   </div>
-                                  <div className="text-sm md:text-base">
-                                    Total exercises:{" "}
-                                    <span className="text-base font-bold md:text-lg">
-                                      {workout._count.exercises}
-                                    </span>
-                                  </div>
-                                  <div className="text-sm md:text-base">
-                                    Total weight:{" "}
-                                    <span className="text-base font-bold md:text-lg">
-                                      {workout.totalWeight} kg
-                                    </span>
+                                  <div className="text-white md:text-base">
+                                    {isClient ? formatDate(workout.date) : ""}
                                   </div>
                                 </div>
-                                <div className="flex flex-col items-end">
-                                  {workout.tags.map((tag) => (
-                                    <div
-                                      key={tag.id}
-                                      className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
-                                    >
-                                      {tag.name}
+                                <div className="flex items-start justify-between">
+                                  <div className=" flex flex-col text-white">
+                                    <div className="text-sm md:text-base">
+                                      Total sets:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.logs}
+                                      </span>
                                     </div>
-                                  ))}
+                                    <div className="text-sm md:text-base">
+                                      Total exercises:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.exercises}
+                                      </span>
+                                    </div>
+                                    <div className="text-sm md:text-base">
+                                      Total weight:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout.totalWeight} kg
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col items-end">
+                                    {workout.tags.map((tag) => (
+                                      <div
+                                        key={tag.id}
+                                        className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold"
+                                      >
+                                        {tag.name}
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
+                            </Link>
+                            <div className="flex flex-col justify-start bg-background-darker-color/60">
+                              <DeleteWorkout
+                                deleteWorkoutHandle={deleteWorkout}
+                                workout={workout}
+                              />
                             </div>
-                          </Link>
-                          <div className="flex flex-col justify-start bg-background-darker-color/60">
-                            <DeleteWorkout
-                              deleteWorkoutHandle={deleteWorkout}
-                              workout={workout}
-                            />
                           </div>
                         </div>
-                      </div>
-                    )
-                  )}
-                </>
-              )}
+                      )
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

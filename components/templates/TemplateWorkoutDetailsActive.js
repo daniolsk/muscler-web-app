@@ -8,45 +8,27 @@ import { toast } from "react-hot-toast";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { usePageVisibility } from "../hooks/usePageVisibility";
+
 function WorkoutDetailsInactive({ workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  const isVisible = usePageVisibility();
+
   useEffect(() => {
     setExercises(workout.exercises);
   }, [workout]);
 
-  const router = useRouter();
-
-  const finishWorkout = async () => {
-    await saveWorkout(false);
-    const toastId = toast.loading("Finishing workout...");
-    const response = await fetch("/api/finishWorkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: workout.id,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (response.status != 200) {
-      setError(data.msg);
-      toast.error("Something went wrong!", {
-        id: toastId,
-      });
-      return;
+  useEffect(() => {
+    if (isVisible == false) {
+      if (!isSaving) saveWorkout(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVisible]);
 
-    toast.success("Workout finished!", {
-      id: toastId,
-    });
-    router.replace(router.asPath);
-  };
+  const router = useRouter();
 
   const saveWorkout = async (showToast) => {
     setIsSaving(true);
@@ -89,14 +71,17 @@ function WorkoutDetailsInactive({ workout }) {
       modifiedLogs.length == 0
     ) {
       setIsSaving(false);
-      toast.success("Template saved!", {
-        id: toastId,
-      });
+      if (showToast)
+        toast.success("Workout saved!", {
+          id: toastId,
+        });
       return;
     }
 
-    if (!toastId) {
-      toastId = toast.loading("Saving...");
+    if (showToast) {
+      if (!toastId) {
+        toastId = toast.loading("Saving...");
+      }
     }
 
     const response = await fetch("/api/saveWorkout", {
@@ -125,9 +110,33 @@ function WorkoutDetailsInactive({ workout }) {
 
     setIsSaving(false);
 
-    toast.success("Template saved!", {
-      id: toastId,
-    });
+    if (data.data && data.data.length > 0) {
+      let tmpExercises = exercises;
+      for (const ids of data.data) {
+        tmpExercises.forEach((exercise) => {
+          if (exercise.id == ids[0]) {
+            delete exercise.isNew;
+            delete exercise.isChanged;
+            exercise.id = ids[1];
+          }
+
+          exercise.logs.forEach((log) => {
+            if (log.id == ids[0]) {
+              delete log.isNew;
+              delete log.isChanged;
+              log.id = ids[1];
+            }
+          });
+        });
+      }
+
+      setExercises([...tmpExercises]);
+    }
+
+    if (showToast)
+      toast.success("Workout saved!", {
+        id: toastId,
+      });
   };
 
   const setExericse = (id, logs) => {
@@ -174,7 +183,6 @@ function WorkoutDetailsInactive({ workout }) {
     tmpExercises.forEach((ex) => {
       ex.logs = ex.logs.filter((log) => log.id != id);
     });
-    console.log(tmpExercises);
     setExercises([...tmpExercises]);
 
     if (!isNew) {

@@ -99,7 +99,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
           {workout.exercises.map((exercise, index) => (
             <div
               key={exercise.id}
-              className="mb-2 mt-2 flex bg-background-darker-color-lighter/25 px-4 py-2 sm:odd:mr-4"
+              className="mb-2 mt-2 flex bg-background-darker-color-lighter/25 px-4 py-2 sm:odd:mr-2 sm:even:ml-2"
             >
               <div className="w-20 text-sm font-bold">
                 {index + 1 + ". " + exercise.name}

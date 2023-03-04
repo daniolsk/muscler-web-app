@@ -75,21 +75,6 @@ export default function Dashboard({ user, workouts }) {
     setIsClient(true);
   }, []);
 
-  const handleLogout = async () => {
-    const response = await fetch("/api/auth/logout", {
-      method: "POST",
-    });
-
-    let data = await response.json();
-
-    if (response.status != 200) {
-      setError(data.msg);
-      return;
-    }
-
-    router.push("/login");
-  };
-
   return (
     <div>
       <Head>
@@ -124,71 +109,76 @@ export default function Dashboard({ user, workouts }) {
             </div>
             <div className="p-4 pt-2">
               <TemplateNewWorkout user={user} />
-              {workoutsState.length < 1 ? (
-                <>
-                  <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light">
-                    Create new template using button above!
-                  </div>
-                </>
-              ) : (
-                <>
-                  {(isFilter ? filteredWorkouts : workoutsState).map(
-                    (workout) => (
-                      <div key={workout.id} className="mb-2 flex flex-1">
-                        <div className="flex flex-1 rounded-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800">
-                          <Link
-                            href={`/profile/workout-templates/${workout.id}`}
-                            className="flex-1"
-                          >
-                            <div className="p-4">
-                              <div className="mb-2 flex justify-between">
-                                <div className="text-lg font-bold md:text-xl">
-                                  {workout.name}
-                                </div>
-                                <div className="text-white md:text-base">
-                                  {isClient ? formatDate(workout.date) : ""}
-                                </div>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <div className=" flex flex-col text-white">
-                                  <div className="text-sm md:text-base">
-                                    Total sets:{" "}
-                                    <span className="text-base font-bold md:text-lg">
-                                      {workout._count.logs}
-                                    </span>
+              <div className="flex flex-col md:grid md:grid-cols-2">
+                {workoutsState.length < 1 ? (
+                  <>
+                    <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light">
+                      Create new template using button above!
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {(isFilter ? filteredWorkouts : workoutsState).map(
+                      (workout) => (
+                        <div
+                          key={workout.id}
+                          className="mb-2 flex flex-1 sm:odd:mr-1 sm:even:ml-1"
+                        >
+                          <div className="flex flex-1 rounded-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800">
+                            <Link
+                              href={`/profile/workout-templates/${workout.id}`}
+                              className="flex-1"
+                            >
+                              <div className="p-4">
+                                <div className="mb-2 flex justify-between">
+                                  <div className="text-lg font-bold md:text-xl">
+                                    {workout.name}
                                   </div>
-                                  <div className="text-sm md:text-base">
-                                    Total exercises:{" "}
-                                    <span className="text-base font-bold md:text-lg">
-                                      {workout._count.exercises}
-                                    </span>
+                                  <div className="text-white md:text-base">
+                                    {isClient ? formatDate(workout.date) : ""}
                                   </div>
                                 </div>
-                                <div className="flex flex-col items-end">
-                                  {workout.tags.map((tag) => (
-                                    <div
-                                      key={tag.id}
-                                      className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold md:text-sm"
-                                    >
-                                      {tag.name}
+                                <div className="flex items-start justify-between">
+                                  <div className=" flex flex-col text-white">
+                                    <div className="text-sm md:text-base">
+                                      Total sets:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.logs}
+                                      </span>
                                     </div>
-                                  ))}
+                                    <div className="text-sm md:text-base">
+                                      Total exercises:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.exercises}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col items-end">
+                                    {workout.tags.map((tag) => (
+                                      <div
+                                        key={tag.id}
+                                        className="mb-1 rounded-full bg-red-800 p-2 text-xs font-semibold"
+                                      >
+                                        {tag.name}
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
+                            </Link>
+                            <div className="flex flex-col justify-start bg-background-darker-color/60">
+                              <TemplateDeleteWorkout
+                                deleteWorkoutHandle={deleteWorkout}
+                                workout={workout}
+                              />
                             </div>
-                          </Link>
-                          <div className="flex flex-col justify-start bg-background-darker-color/60">
-                            <TemplateDeleteWorkout
-                              deleteWorkoutHandle={deleteWorkout}
-                              workout={workout}
-                            />
                           </div>
                         </div>
-                      </div>
-                    )
-                  )}
-                </>
-              )}
+                      )
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
