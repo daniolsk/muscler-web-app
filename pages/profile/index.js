@@ -22,7 +22,7 @@ export default function Home({ user }) {
   const [date, setDate] = useState();
   useEffect(() => {
     setDate(formatDate(user.createdAt));
-  }, []);
+  }, [user.createdAt]);
 
   return (
     <div>

@@ -239,7 +239,7 @@ function WorkoutDetailsInactive({ workout }) {
   const [date, setDate] = useState();
   useEffect(() => {
     setDate(formatDate(workout.date));
-  }, []);
+  }, [workout.date]);
 
   return (
     <main className="text-white">
