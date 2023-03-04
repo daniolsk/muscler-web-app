@@ -109,20 +109,28 @@ function WorkoutDetailsInactive({ workout, guest }) {
                 <div className="text-xs text-neutral-400">WEIGHT</div>
                 <div className="text-xs text-neutral-400"></div>
                 <div className="text-xs text-neutral-400">REPS</div>
-                {exercise.logs.map((log, index) => (
-                  <Fragment key={log.id}>
-                    <div className="text-sm text-blue-darker-lighter">
-                      {index + 1}
-                    </div>
-                    <div className="w-full text-center text-white">
-                      {log.weight}
-                    </div>
-                    <span className="px-2 text-sm">x</span>
-                    <div className="w-full text-center text-white">
-                      {log.reps}
-                    </div>
-                  </Fragment>
-                ))}
+                {exercise.logs.length == 0 ? (
+                  <div className="col-span-4 flex w-full items-center justify-center self-end p-2 text-sm italic text-neutral-400">
+                    This exercise contains no sets
+                  </div>
+                ) : (
+                  <>
+                    {exercise.logs.map((log, index) => (
+                      <Fragment key={log.id}>
+                        <div className="text-sm text-blue-darker-lighter">
+                          {index + 1}
+                        </div>
+                        <div className="w-full text-center text-white">
+                          {log.weight}
+                        </div>
+                        <span className="px-2 text-sm">x</span>
+                        <div className="w-full text-center text-white">
+                          {log.reps}
+                        </div>
+                      </Fragment>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           ))}

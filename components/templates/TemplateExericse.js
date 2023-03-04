@@ -16,7 +16,7 @@ function Exercise({
   const [isDeleting, setIsDeleting] = useState(false);
 
   return (
-    <div className="mt-2 mb-2 flex border-background-darker-color bg-background-darker-color-lighter/25 p-3.5">
+    <div className="mt-2 mb-2 flex border-background-darker-color bg-background-darker-color-lighter/25 p-3.5 md:odd:mr-2 md:even:ml-2">
       <div className="flex w-20 flex-col justify-between self-stretch text-sm font-bold">
         <textarea
           className="mb-2 min-h-[5rem] w-20 flex-1 resize-none border-none bg-transparent text-left text-white"
@@ -60,47 +60,57 @@ function Exercise({
         <div className="text-xs text-neutral-400"></div>
         <div className="text-xs text-neutral-400">REPS</div>
         <div className="text-xs text-neutral-400">DELETE</div>
-        {exercise.logs.map((log, index) => (
-          <Fragment key={log.id}>
-            <div className="text-md text-blue-darker-lighter">{index + 1}</div>
-            <div className="flex items-center text-neutral-400">
-              <input
-                type="text"
-                inputMode="numeric"
-                className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
-                value="0"
-                disabled
-              />
-            </div>
-            <span className="px-2 text-sm">x</span>
-            <div>
-              {" "}
-              <input
-                type="text"
-                inputMode="numeric"
-                className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
-                value="0"
-                disabled
-              />
-            </div>
-            <div className="flex items-center justify-end text-sm  text-neutral-400">
-              <button
-                onClick={() => {
-                  removeLog(log.id, log.isNew);
-                }}
-                className="flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
-              >
-                <Image
-                  alt="trash icon"
-                  src={"/icons/trash.svg"}
-                  width={20}
-                  height={20}
-                  priority
-                ></Image>
-              </button>
-            </div>
-          </Fragment>
-        ))}
+        {exercise.logs.length == 0 ? (
+          <div className="col-span-5 flex w-full items-center justify-center self-end text-sm italic text-neutral-400">
+            Add sets using the button below
+          </div>
+        ) : (
+          <>
+            {exercise.logs.map((log, index) => (
+              <Fragment key={log.id}>
+                <div className="text-md text-blue-darker-lighter">
+                  {index + 1}
+                </div>
+                <div className="flex items-center text-neutral-400">
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
+                    value="0"
+                    disabled
+                  />
+                </div>
+                <span className="px-2 text-sm">x</span>
+                <div>
+                  {" "}
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    className="appear w-full bg-background-darker-color/50 p-2 text-center text-neutral-600"
+                    value="0"
+                    disabled
+                  />
+                </div>
+                <div className="flex items-center justify-end text-sm  text-neutral-400">
+                  <button
+                    onClick={() => {
+                      removeLog(log.id, log.isNew);
+                    }}
+                    className="flex items-center justify-center p-2 hover:bg-blue-darker-lighter"
+                  >
+                    <Image
+                      alt="trash icon"
+                      src={"/icons/trash.svg"}
+                      width={20}
+                      height={20}
+                      priority
+                    ></Image>
+                  </button>
+                </div>
+              </Fragment>
+            ))}
+          </>
+        )}
         <button
           onClick={() => {
             let logsTmp = exercise.logs;

@@ -16,7 +16,7 @@ function Exercise({
   const [isDeleting, setIsDeleting] = useState(false);
 
   return (
-    <div className="mt-2 mb-2 flex border-background-darker-color bg-background-darker-color-lighter/25 p-3.5">
+    <div className="mt-2 mb-2 flex border-background-darker-color bg-background-darker-color-lighter/25 p-3.5 md:odd:mr-2 md:even:ml-2">
       <div className="flex w-20 flex-col justify-between self-stretch text-sm font-bold">
         <textarea
           className="mb-2 min-h-[5rem] w-20 flex-1 resize-none border-none bg-transparent text-left text-white"

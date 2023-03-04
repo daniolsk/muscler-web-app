@@ -302,7 +302,7 @@ function WorkoutDetailsInactive({ workout }) {
           {error ? error : ""}
         </div>
         <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
-        <div>
+        <div className="mb-2 flex flex-col md:grid md:grid-cols-2">
           {exercises.length == 0 ? (
             <div className="p-4">No exerices in this workout</div>
           ) : (
@@ -322,7 +322,7 @@ function WorkoutDetailsInactive({ workout }) {
           <div className="flex justify-between">
             <button
               onClick={addExercise}
-              className="my-3 mr-0 ml-3 flex cursor-pointer items-center rounded-md p-2"
+              className="my-3 mr-0 ml-3 flex cursor-pointer items-center self-start rounded-md p-2 hover:bg-background-color"
             >
               <Image
                 alt="plus icon"
