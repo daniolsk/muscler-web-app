@@ -46,8 +46,6 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
       id: toastId,
     });
     setError("");
-
-    router.replace(router.asPath);
   };
 
   return (
