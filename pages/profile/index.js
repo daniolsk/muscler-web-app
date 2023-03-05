@@ -66,7 +66,7 @@ export default function Home({ user }) {
               <div className="mb-4">Settings:</div>
               <Link
                 href="/profile/workout-templates"
-                className="mb-3 flex cursor-pointer rounded-md bg-background-color p-3"
+                className="mb-3 flex cursor-pointer rounded-md bg-background-color p-3 hover:bg-white/5"
               >
                 <Image
                   alt="workout templates"

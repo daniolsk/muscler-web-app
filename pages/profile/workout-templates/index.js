@@ -129,9 +129,21 @@ export default function Dashboard({ user, workouts }) {
                           animate={{
                             y: 0,
                             opacity: 100,
+                            transition: {
+                              delay: i * 0.1,
+                            },
                           }}
-                          transition={{
-                            delay: i * 0.1,
+                          whileHover={{
+                            scale: 1.02,
+                            transition: {
+                              delay: 0,
+                            },
+                          }}
+                          whileTap={{
+                            scale: 0.98,
+                            transition: {
+                              delay: 0,
+                            },
                           }}
                           key={workout.id}
                           className="mb-2 flex flex-1 sm:odd:mr-1 sm:even:ml-1"

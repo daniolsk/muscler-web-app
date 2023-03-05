@@ -10,8 +10,8 @@ function Header({
   href,
 }) {
   return (
-    <div className="flex items-center justify-between bg-background-darker-color p-3  md:p-4 md:text-xl">
-      <div>
+    <div className="flex items-center justify-between bg-background-darker-color p-1.5 md:p-2.5 md:text-xl">
+      <div className="p-2">
         <Link href="/dashboard">MUSCLER </Link>
         <span className="text-sm font-thin italic text-neutral-400 md:text-base">
           by Daniel Skowron
@@ -22,7 +22,10 @@ function Header({
       ) : (
         <>
           {asLink ? (
-            <Link href={href} className="flex cursor-pointer items-center">
+            <Link
+              href={href}
+              className="flex cursor-pointer items-center rounded-md p-1.5 hover:bg-white/20"
+            >
               <div className="mr-2">{buttonText}</div>
               <Image
                 alt="log out icon"
@@ -34,7 +37,7 @@ function Header({
             </Link>
           ) : (
             <button
-              className="flex cursor-pointer items-center"
+              className="flex cursor-pointer items-center rounded-md p-1.5 hover:bg-white/20"
               onClick={buttonOnClick}
             >
               <div className="mr-2">{buttonText}</div>

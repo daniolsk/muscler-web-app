@@ -111,7 +111,10 @@ export default function Dashboard({ user, workouts }) {
               <span className="text-2xl font-normal md:text-3xl">Hello</span>{" "}
               {user.username}
             </h1>
-            <Link href={"/profile"} className="p-1 md:p-2">
+            <Link
+              href={"/profile"}
+              className="cursor-pointer rounded-md p-1 hover:bg-white/20 md:p-2"
+            >
               <Image
                 alt="profile settings"
                 src="/icons/settings.svg"
@@ -161,9 +164,21 @@ export default function Dashboard({ user, workouts }) {
                           animate={{
                             y: 0,
                             opacity: 100,
+                            transition: {
+                              delay: i * 0.1,
+                            },
                           }}
-                          transition={{
-                            delay: i * 0.1,
+                          whileHover={{
+                            scale: 1.02,
+                            transition: {
+                              delay: 0,
+                            },
+                          }}
+                          whileTap={{
+                            scale: 0.98,
+                            transition: {
+                              delay: 0,
+                            },
                           }}
                           key={workout.id}
                           className="mb-2 flex flex-1 sm:odd:mr-1 sm:even:ml-1"

@@ -78,7 +78,10 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
       ) : (
         ""
       )}
-      <div className="cursor-pointer p-3 " onClick={deleteWorkout}>
+      <div
+        className="m-1.5 cursor-pointer rounded-sm p-1.5 hover:bg-white/20"
+        onClick={deleteWorkout}
+      >
         <Image
           src="/icons/trash.svg"
           width={20}
