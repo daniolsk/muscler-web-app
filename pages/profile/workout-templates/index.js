@@ -10,6 +10,7 @@ import TemplateDeleteWorkout from "../../../components/templates/TemplateDeleteW
 import Header from "../../../components/Header";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
@@ -119,8 +120,19 @@ export default function Dashboard({ user, workouts }) {
                 ) : (
                   <>
                     {(isFilter ? filteredWorkouts : workoutsState).map(
-                      (workout) => (
-                        <div
+                      (workout, i) => (
+                        <motion.div
+                          initial={{
+                            y: 20,
+                            opacity: 0,
+                          }}
+                          animate={{
+                            y: 0,
+                            opacity: 100,
+                          }}
+                          transition={{
+                            delay: i * 0.1,
+                          }}
                           key={workout.id}
                           className="mb-2 flex flex-1 sm:odd:mr-1 sm:even:ml-1"
                         >
@@ -173,7 +185,7 @@ export default function Dashboard({ user, workouts }) {
                               />
                             </div>
                           </div>
-                        </div>
+                        </motion.div>
                       )
                     )}
                   </>
