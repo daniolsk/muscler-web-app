@@ -10,23 +10,25 @@ export default async function handler(req, res) {
         return res.status(401).json({ msg: "Unauthorized" });
       }
 
-      const { userId, name, tags, isTemplate } = req.body;
+      const { userId, name, tags, isTemplate, templateId, isFromTemplate } =
+        req.body;
 
-      const workout = await prisma.workout.create({
-        data: {
-          name: name,
-          isActive: true,
-          userId: userId,
-          isTemplate: isTemplate ? true : false,
-          tags: {
-            create: tags,
-          },
-        },
-      });
+      console.log(userId, name, tags, isTemplate, templateId, isFromTemplate);
 
-      return res
-        .status(200)
-        .json({ msg: "Workout added", newWorkout: workout });
+      // const workout = await prisma.workout.create({
+      //   data: {
+      //     name: name,
+      //     isActive: true,
+      //     userId: userId,
+      //     isTemplate: isTemplate ? true : false,
+      //     tags: {
+      //       create: tags,
+      //     },
+      //   },
+      // });
+
+      return res.status(200);
+      // .json({ msg: "Workout added", newWorkout: workout });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "Something went wrong" });

@@ -5,6 +5,7 @@ import { Muscle_group } from "@prisma/client";
 import Loading from "../components/Loading";
 
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const initialState = {
   CHEST: false,
@@ -25,6 +26,7 @@ function NewWorkout({ user }) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [checkboxes, setCheckboxes] = useState({ ...initialState });
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   const router = useRouter();
 
@@ -40,29 +42,46 @@ function NewWorkout({ user }) {
     }
 
     let categories = [];
-    Object.keys(Muscle_group).map((muscle, i) => {
-      if (checkboxes[muscle]) {
-        categories.push({ name: muscle });
+
+    if (!selectedTemplate) {
+      Object.keys(Muscle_group).map((muscle, i) => {
+        if (checkboxes[muscle]) {
+          categories.push({ name: muscle });
+        }
+      });
+      if (categories.length == 0) {
+        setError("Select at least one category");
+        return;
       }
-    });
-    if (categories.length == 0) {
-      setError("Select at least one category");
-      return;
     }
 
     setAddingWorkout(false);
     const toastId = toast.loading("Adding workout...");
+
+    let bodyTmp;
+
+    if (!selectedTemplate) {
+      bodyTmp = {
+        name: name,
+        userId: user.id,
+        isFromTemplate: false,
+        tags: categories,
+      };
+    } else {
+      bodyTmp = {
+        name: name,
+        userId: user.id,
+        isFromTemplate: true,
+        templateId: selectedTemplate,
+      };
+    }
 
     const response = await fetch("/api/addWorkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: name,
-        userId: user.id,
-        tags: categories,
-      }),
+      body: JSON.stringify(bodyTmp),
     });
 
     const data = await response.json();
@@ -125,18 +144,33 @@ function NewWorkout({ user }) {
               className="mb-4 rounded-md border-2 border-black p-3 text-black"
             />
             {selectingTemplate ? (
-              <div className="mb-4 flex overflow-x-auto">
+              <div className="mb-4 flex min-h-[150px] overflow-x-auto py-2">
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  templates.map((template) => (
-                    <div
+                  templates.map((template, i) => (
+                    <motion.div
+                      initial={{
+                        x: 50,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        x: 0,
+                        opacity: 100,
+                        transition: {
+                          delay: i * 0.1,
+                        },
+                      }}
+                      onClick={() => setSelectedTemplate(template.id)}
                       key={template.id}
-                      className="mr-2 flex cursor-pointer flex-col rounded-md border-2 border-black bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800 p-3"
+                      className={`mr-2 flex cursor-pointer flex-col rounded-lg border-2 border-gray-700 bg-gray-800 text-gray-300  hover:border-gray-600 ${
+                        selectedTemplate == template.id
+                          ? `!border-blue-dark !text-white`
+                          : ""
+                      }`}
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between rounded-t-md bg-gray-900 p-3">
                         <div className="mr-5 flex flex-col">
-                          <div className="text-xs text-neutral-400">name</div>
                           <div className="whitespace-nowrap text-lg font-bold">
                             {template.name}
                           </div>
@@ -152,12 +186,8 @@ function NewWorkout({ user }) {
                           ))}
                         </div>
                       </div>
-                      <div className="flex flex-1 p-2">
+                      <div className="flex flex-1 p-3">
                         <div className="grid flex-1 grid-cols-[2fr,_1fr] items-center justify-items-center gap-2">
-                          <div className="text-xs text-neutral-400">
-                            exercise name
-                          </div>
-                          <div className="text-xs text-neutral-400">set(s)</div>
                           {template.exercises.map((exercise) => (
                             <Fragment key={exercise.id}>
                               <div className="text-sm">{exercise.name}</div>
@@ -168,7 +198,7 @@ function NewWorkout({ user }) {
                           ))}
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))
                 )}
               </div>
@@ -177,7 +207,7 @@ function NewWorkout({ user }) {
                 <h3 className="text-md mb-4 text-center font-medium text-white">
                   Choose categories:
                 </h3>
-                <ul className="mb-4 flex flex-wrap justify-center gap-2">
+                <ul className="mb-4 flex flex-wrap items-center justify-center gap-2 py-2">
                   {Object.keys(Muscle_group).map((muscle, i) => (
                     <li key={i}>
                       <input
@@ -193,7 +223,7 @@ function NewWorkout({ user }) {
                       />
                       <label
                         htmlFor={muscle}
-                        className="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border-2 border-gray-700 bg-gray-800 p-3 text-gray-400  hover:text-gray-300 peer-checked:border-blue-600 peer-checked:text-gray-300"
+                        className="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border-2 border-gray-700 bg-gray-800 p-3 text-gray-400  hover:text-gray-300 peer-checked:border-blue-dark peer-checked:text-gray-300"
                       >
                         <div className="block">
                           <div className="text-sm font-semibold">{muscle}</div>
@@ -209,8 +239,9 @@ function NewWorkout({ user }) {
                 type="button"
                 onClick={() => {
                   setSelectingTemplate(false);
+                  setSelectedTemplate(null);
                 }}
-                className="mb-2 flex items-center justify-center rounded bg-background-darker-color/70 p-2"
+                className="mb-2 flex items-center justify-center rounded-md border-2 border-gray-700 bg-gray-800 p-2 text-white hover:bg-gray-700"
               >
                 <div className="mr-1">Back</div>
                 <Image
@@ -227,7 +258,7 @@ function NewWorkout({ user }) {
                   setSelectingTemplate(true);
                   fetchTemplates();
                 }}
-                className="mb-2 flex items-center justify-center rounded bg-background-darker-color/70 p-2"
+                className="mb-2 flex items-center justify-center rounded-md border-2 border-gray-700 bg-gray-800 p-2 text-white hover:bg-gray-700"
               >
                 <div className="mr-1">Or select from templates</div>
                 <Image
@@ -253,6 +284,7 @@ function NewWorkout({ user }) {
               setSelectingTemplate(false);
               setTemplates([]);
               setAddingWorkout(false);
+              setSelectedTemplate(null);
             }}
           >
             Cancel
