@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import FullScreenConfirm from "../components/FullScreenConfirm";
 
 import { toast } from "react-hot-toast";
 
