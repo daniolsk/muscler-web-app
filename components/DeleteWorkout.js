@@ -12,7 +12,7 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
     setDeletingWorkout(true);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     setDeletingWorkout(false);
 
     const toastId = toast.loading("Removing workout...");

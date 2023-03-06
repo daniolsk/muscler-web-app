@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import FullScreenConfirm from "../components/FullScreenConfirm";
+import FullScreenConfirm from "../FullScreenConfirm";
 
 import { toast } from "react-hot-toast";
 
@@ -12,14 +12,13 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
     setDeletingWorkout(true);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     setDeletingWorkout(false);
 
     const toastId = toast.loading("Removing workout...");
 
     deleteWorkoutHandle(workout.id);
 
-    e.preventDefault();
     const response = await fetch("/api/deleteWorkout", {
       method: "POST",
       headers: {
