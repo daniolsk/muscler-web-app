@@ -17,6 +17,7 @@ export default function MyApp({ Component, pageProps }) {
           },
         }}
       />
+      <div id="portal"></div>
       <Component {...pageProps} />
     </>
   );
