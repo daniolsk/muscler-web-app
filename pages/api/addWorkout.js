@@ -13,22 +13,59 @@ export default async function handler(req, res) {
       const { userId, name, tags, isTemplate, templateId, isFromTemplate } =
         req.body;
 
-      console.log(userId, name, tags, isTemplate, templateId, isFromTemplate);
+      let data = {
+        name: name,
+        isActive: true,
+        userId: userId,
+      };
 
-      // const workout = await prisma.workout.create({
-      //   data: {
-      //     name: name,
-      //     isActive: true,
-      //     userId: userId,
-      //     isTemplate: isTemplate ? true : false,
-      //     tags: {
-      //       create: tags,
-      //     },
-      //   },
-      // });
+      if (isTemplate) {
+        data = {
+          ...data,
+          isTemplate: true,
+          tags: {
+            create: tags,
+          },
+        };
+      } else if (isFromTemplate) {
+        data = {
+          ...data,
+          isTemplate: false,
+        };
 
-      return res.status(200);
-      // .json({ msg: "Workout added", newWorkout: workout });
+        const workoutOrgin = await prisma.workout.findUnique({
+          where: {
+            id: templateId,
+          },
+          include: {
+            tags: true,
+            exercises: {
+              include: {
+                logs: true,
+              },
+            },
+          },
+        });
+
+        data = {
+          ...data,
+          tags: {
+            create: workoutOrgin.tags.map((tag) => {
+              name: tag.name;
+            }),
+          },
+        };
+
+        console.log(workoutOrgin);
+      }
+
+      const workout = await prisma.workout.create({
+        data,
+      });
+
+      return res
+        .status(200)
+        .json({ msg: "Workout added", newWorkout: workout });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "Something went wrong" });

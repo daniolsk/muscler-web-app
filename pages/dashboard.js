@@ -196,10 +196,10 @@ export default function Dashboard({ user, workouts }) {
                             >
                               <div className="p-4">
                                 <div className="mb-2 flex justify-between">
-                                  <div className="text-lg font-bold md:text-xl">
+                                  <div className="mr-2 text-lg font-bold md:text-xl">
                                     {workout.name}
                                   </div>
-                                  <div className="text-white md:text-base">
+                                  <div className="text-right text-white md:text-base">
                                     {isClient ? formatDate(workout.date) : ""}
                                   </div>
                                 </div>
