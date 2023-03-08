@@ -19,6 +19,8 @@ export default async function handler(req, res) {
         userId: userId,
       };
 
+      let newWorkout;
+
       if (isTemplate) {
         data = {
           ...data,
@@ -27,6 +29,10 @@ export default async function handler(req, res) {
             create: tags,
           },
         };
+
+        newWorkout = await prisma.workout.create({
+          data,
+        });
       } else if (isFromTemplate) {
         data = {
           ...data,
@@ -47,25 +53,58 @@ export default async function handler(req, res) {
           },
         });
 
+        let tagsTmp = [];
+        for (const tag of workoutOrgin.tags) {
+          tagsTmp.push({ name: tag.name });
+        }
+
         data = {
           ...data,
           tags: {
-            create: workoutOrgin.tags.map((tag) => {
-              name: tag.name;
-            }),
+            create: tagsTmp,
           },
         };
 
-        console.log(workoutOrgin);
+        newWorkout = await prisma.workout.create({
+          data,
+        });
+
+        for (const ex of workoutOrgin.exercises) {
+          const exericse = await prisma.exercise.create({
+            data: {
+              name: ex.name,
+              exerciseNumber: ex.exerciseNumber,
+              workoutId: newWorkout.id,
+            },
+          });
+
+          for (const log of ex.logs) {
+            await prisma.log.create({
+              data: {
+                weight: log.weight,
+                reps: log.reps,
+                setNumber: log.setNumber,
+                workoutId: newWorkout.id,
+                exerciseId: exericse.id,
+              },
+            });
+          }
+        }
+      } else {
+        data = {
+          ...data,
+          isTemplate: false,
+          tags: {
+            create: tags,
+          },
+        };
+
+        newWorkout = await prisma.workout.create({
+          data,
+        });
       }
 
-      const workout = await prisma.workout.create({
-        data,
-      });
-
-      return res
-        .status(200)
-        .json({ msg: "Workout added", newWorkout: workout });
+      return res.status(200).json({ msg: "Workout added", newWorkout });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "Something went wrong" });
