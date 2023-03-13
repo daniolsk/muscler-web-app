@@ -12,7 +12,9 @@ function Header({
   return (
     <div className="flex items-center justify-between bg-background-darker-color p-1.5 md:p-2.5 md:text-xl">
       <div className="p-2">
-        <Link href="/dashboard">MUSCLER </Link>
+        <Link href="/dashboard" className="hover:text-neutral-300">
+          MUSCLER{" "}
+        </Link>
         <span className="text-sm font-thin italic text-neutral-400 md:text-base">
           by Daniel Skowron
         </span>

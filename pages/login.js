@@ -4,6 +4,7 @@ import { useState } from "react";
 import { verifyToken } from "../lib/jwt";
 
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 const loginF = async (username, password) => {
   const response = await fetch("/api/auth/login", {
@@ -114,7 +115,9 @@ export default function Login() {
       <main className=" text-white">
         <div className="flex items-center justify-between bg-background-darker-color p-3  md:p-4 md:text-xl">
           <div>
-            MUSCLER{" "}
+            <Link href="/" className="hover:text-neutral-300">
+              MUSCLER{" "}
+            </Link>
             <span className="text-sm font-thin italic text-neutral-400 md:text-base">
               by Daniel Skowron
             </span>
