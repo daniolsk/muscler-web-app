@@ -144,14 +144,14 @@ export default function Dashboard({ user, workouts }) {
               <NewWorkout user={user} />
               <div className="flex flex-col md:grid md:grid-cols-2">
                 {workoutsState.length < 1 ? (
-                  <>
+                  <div className="md:col-span-2">
                     <div className="mt-10 mb-2 px-4 text-center">
                       No workouts yet...
                     </div>
                     <div className="px-4 text-center text-lg font-bold text-blue-light">
                       Go ahead and create one using button above!
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <>
                     {(isFilter ? filteredWorkouts : workoutsState).map(

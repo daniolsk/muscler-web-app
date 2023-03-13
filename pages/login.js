@@ -123,30 +123,34 @@ export default function Login() {
         <div className="mt-4 p-4">
           {isNewUser ? (
             <div>
-              <h1 className="mb-4 text-center text-4xl font-bold">Register</h1>
-              <p className="mb-12 text-center text-2xl">Create new account</p>
-              <form onSubmit={handleSubmit} className="flex flex-col">
-                <input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
-                  type="text"
-                  placeholder="Username"
-                />
-                <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  placeholder="Password"
-                  className="mb-4 rounded-md border-2 border-black p-3 text-black"
-                />
-                <input
-                  onClick={handleSubmit}
-                  className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
-                  type="submit"
-                  value="Register"
-                />
-              </form>
+              <div className="m-auto max-w-md">
+                <h1 className="mb-4 text-center text-4xl font-bold">
+                  Register
+                </h1>
+                <p className="mb-12 text-center text-2xl">Create new account</p>
+                <form onSubmit={handleSubmit} className="flex flex-col">
+                  <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    placeholder="Password"
+                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                  />
+                  <input
+                    onClick={handleSubmit}
+                    className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
+                    type="submit"
+                    value="Register"
+                  />
+                </form>
+              </div>
             </div>
           ) : (
             <div>

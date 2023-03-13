@@ -11,19 +11,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen text-white">
-        <div className="flex h-full flex-col items-center justify-center p-4">
-          <h1 className="mt-4 text-center text-4xl font-bold">MUSCLER</h1>
-          <h3 className="text-md mb-8 text-center font-normal italic">
+      <main className="text-white">
+        <div className="relative flex min-h-screen flex-col items-center justify-center p-4">
+          <h1 className="mt-12 mb-1 text-center text-5xl font-bold">MUSCLER</h1>
+          <h3 className="mb-6 text-center text-lg font-normal italic">
             by Daniel Skowron
           </h3>
           <p className="mb-8 text-center text-lg">
-            Log your workouts, track your progress, improve your form
+            Log your workouts, track your progress, improve your form 💪
           </p>
-          <p className="text-center text-lg font-bold text-blue-light">
+          <p className="mb-4 text-center text-lg font-bold text-blue-light">
             IT IS THAT SIMPLE
           </p>
-          <div className="flex items-center justify-center p-6">
+          <div className="flex items-center justify-center">
             <Link
               className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark p-6 font-bold text-white hover:bg-blue-darker-lighter"
               href="/dashboard"

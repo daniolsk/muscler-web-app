@@ -35,6 +35,10 @@
     margin: 0;
   }
   body {
-    @apply min-h-screen bg-gradient-to-t from-background-darker-color to-background-color text-white;
+    @apply min-h-screen overflow-hidden bg-gradient-to-t from-background-darker-color to-background-color text-white;
   }
+}
+
+img {
+  max-width: none;
 }
