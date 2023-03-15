@@ -101,6 +101,7 @@ export default function Dashboard({ user, workouts }) {
 
       <main className="text-white">
         <Header
+          logoHref="/"
           buttonText={"Log out"}
           buttonOnClick={handleLogout}
           buttonImageName="logout"

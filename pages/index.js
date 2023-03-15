@@ -173,19 +173,3 @@ export default function Home() {
     </div>
   );
 }
-
-export async function getServerSideProps(context) {
-  const token = context.req.cookies["access-token"];
-
-  if (token && verifyToken(token)) {
-    return {
-      redirect: {
-        destination: "/dashboard",
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-}
