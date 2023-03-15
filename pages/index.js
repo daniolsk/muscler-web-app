@@ -14,9 +14,7 @@ import phoneImage from "../public/images/screens/539shots_so.png";
 import phoneImage2 from "../public/images/screens/870shots_so.png";
 import phoneImage3 from "../public/images/screens/443shots_so.png";
 
-import blob from "../public/images/blobs/blob.svg";
-import blob2 from "../public/images/blobs/blob2.svg";
-import blob3 from "../public/images/blobs/blob3.svg";
+import BackgroundImages from "../components/BackgroundImages";
 
 export default function Home() {
   return (
@@ -27,7 +25,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="text-white">
+      <main className="relative overflow-hidden text-white">
+        <BackgroundImages />
         <div className="flex h-[60vh] flex-col items-center justify-center px-6 py-4 text-center sm:h-[50vh]">
           <h1 className="mt-6 text-5xl font-bold">MUSCLER</h1>
           <h3 className="mb-8 text-lg font-normal italic">by Daniel Skowron</h3>
@@ -45,35 +44,33 @@ export default function Home() {
             Open dashboard
           </Link>
         </div>
-        <div className="flex items-start justify-center pt-4 pb-6">
-          <motion.div
-            whileHover={{ scale: 1.04 }}
-            transformTemplate={({ scale }) => `scale(${scale})`}
-          >
+        <motion.div
+          className="flex items-start justify-center pt-4 pb-8"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+        >
+          <div>
             <Image
               alt="app showcase"
               draggable={false}
               src={mainImage}
               quality={100}
               priority
-              className="-z-10 w-[240px] self-start sm:w-[300px] md:hidden"
+              className="w-[240px] self-start sm:w-[300px] md:hidden"
             ></Image>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.04 }}
-            transformTemplate={({ scale }) => `scale(${scale})`}
-          >
+          </div>
+          <div>
             <Image
               alt="app showcase big screen"
               draggable={false}
               src={mainImage2}
               quality={100}
               priority
-              className="-z-10 hidden w-[800px] self-start md:block"
+              className="hidden w-[800px] self-start md:block"
             ></Image>
-          </motion.div>
-        </div>
-        <div className="flex flex-col items-center">
+          </div>
+        </motion.div>
+        <div className="flex flex-col items-center bg-background-darker-color/75 py-4 backdrop-blur-md">
           <div className="p-4 font-semibold">
             <h3 className="mb-4 text-center text-2xl">
               With <span className="font-bold text-blue-light">MUSCLER</span>{" "}
@@ -90,15 +87,27 @@ export default function Home() {
               <li>Create templates and add workouts even faster!</li>
             </ul>
           </div>
-          <div className="flex items-start justify-center pt-4 pb-6">
-            <Image
-              alt="app showcase"
-              draggable={false}
-              src={mainImage2}
-              quality={100}
-              priority
-              className="-z-10 w-[700px] self-start px-4 md:hidden"
-            ></Image>
+          <motion.div
+            className="flex items-start justify-center pt-4 pb-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0, y: 100 },
+            }}
+          >
+            <div>
+              <Image
+                alt="app showcase"
+                draggable={false}
+                src={mainImage2}
+                quality={100}
+                priority
+                className="w-[700px] self-start px-4 md:hidden"
+              ></Image>
+            </div>
             <div className="hidden p-4 md:flex">
               <Image
                 alt="app showcase"
@@ -106,7 +115,7 @@ export default function Home() {
                 src={phoneImage}
                 quality={100}
                 priority
-                className="-z-10 w-1/3 self-start px-4 lg:w-[340px]"
+                className="w-1/3 self-start px-4 lg:w-[340px]"
               ></Image>
               <Image
                 alt="app showcase"
@@ -114,7 +123,7 @@ export default function Home() {
                 src={phoneImage2}
                 quality={100}
                 priority
-                className="-z-10 w-1/3 self-start px-4 lg:w-[340px]"
+                className="w-1/3 self-start px-4 lg:w-[340px]"
               ></Image>
               <Image
                 alt="app showcase"
@@ -122,12 +131,12 @@ export default function Home() {
                 src={phoneImage3}
                 quality={100}
                 priority
-                className="-z-10 w-1/3 self-start px-4 lg:w-[340px]"
+                className="w-1/3 self-start px-4 lg:w-[340px]"
               ></Image>
             </div>
-          </div>
+          </motion.div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center bg-background-darker-color/75  py-4 backdrop-blur-md">
           <div className="p-4 font-semibold">
             <h3 className="text-center text-2xl">
               <span className="font-bold text-blue-light">MUSCLER</span> works
@@ -136,26 +145,46 @@ export default function Home() {
             </h3>
           </div>
           <div className="overflow-hidden lg:flex">
-            <div className="flex items-start justify-center py-4">
+            <motion.div
+              className="flex items-start justify-center py-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              variants={{
+                visible: { opacity: 1, x: 0 },
+                hidden: { opacity: 0, x: -300 },
+              }}
+            >
               <Image
                 alt="app showcase"
                 draggable={false}
                 src={imageBrowser}
                 quality={100}
                 priority
-                className="-z-10 w-[700px] self-start px-4"
+                className="w-[700px] self-start px-4"
               ></Image>
-            </div>
-            <div className="flex items-start justify-center py-4">
+            </motion.div>
+            <motion.div
+              className="flex items-start justify-center py-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              variants={{
+                visible: { opacity: 1, x: 0 },
+                hidden: { opacity: 0, x: 300 },
+              }}
+            >
               <Image
                 alt="app showcase"
                 draggable={false}
                 src={imageBrowser2}
                 quality={100}
                 priority
-                className="-z-10 w-[700px] self-start px-4"
+                className="w-[700px] self-start px-4"
               ></Image>
-            </div>
+            </motion.div>
           </div>
           <div className="px-6 py-12">
             <Link
@@ -165,9 +194,9 @@ export default function Home() {
               Get started
             </Link>
           </div>
-          <div className="bg-background-darker-color py-4">
-            Made with ❤ by Daniel Skowron
-          </div>
+        </div>
+        <div className="w-full bg-background-darker-color/95 py-4 text-center backdrop-blur-md">
+          Made with ❤ by Daniel Skowron
         </div>
       </main>
     </div>
