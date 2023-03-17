@@ -27,50 +27,56 @@ export default function Home() {
 
       <main className="relative overflow-hidden text-white">
         <BackgroundImages />
-        <div className="flex h-[60vh] flex-col items-center justify-center px-6 py-4 text-center sm:h-[50vh]">
-          <h1 className="mt-6 text-5xl font-bold">MUSCLER</h1>
-          <h3 className="mb-8 text-lg font-normal italic">by Daniel Skowron</h3>
-          <div className="mb-8 text-lg font-semibold">
-            Log your workouts, track your progress, improve your form 💪
-          </div>
+        <div className="flex flex-col lg:flex-row lg:p-8 lg:py-20 lg:px-12 xl:px-20 2xl:px-36">
+          <div className="flex h-[50vh] flex-1 flex-col items-center justify-center p-8 text-center md:h-[60vh] lg:h-auto lg:flex-1 lg:items-start lg:text-left">
+            <h1 className="mt-6 text-5xl font-extrabold  lg:tracking-tighter">
+              MUSCLER
+            </h1>
+            <h3 className="mb-8 text-lg font-normal italic text-slate-400">
+              by Daniel Skowron
+            </h3>
+            <div className="mb-8 text-lg font-semibold">
+              Log your workouts, track your progress, improve your form 💪
+            </div>
 
-          <div className="mb-2 text-lg font-bold italic text-blue-light">
-            IT IS THAT SIMPLE
+            <div className="mb-2 text-lg font-bold italic text-blue-light">
+              IT IS THAT SIMPLE
+            </div>
+            <Link
+              className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark px-8 py-6 text-xl font-bold text-white hover:bg-blue-darker-lighter"
+              href="/dashboard"
+            >
+              Open dashboard
+            </Link>
           </div>
-          <Link
-            className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark p-6 font-bold text-white hover:bg-blue-darker-lighter"
-            href="/dashboard"
+          <motion.div
+            className="mb-8 mt-6 flex items-start justify-center lg:flex-1 lg:items-center"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
           >
-            Open dashboard
-          </Link>
+            <div>
+              <Image
+                alt="app showcase"
+                draggable={false}
+                src={mainImage}
+                quality={100}
+                priority
+                className="w-[240px] self-start sm:w-[300px] md:hidden"
+              ></Image>
+            </div>
+            <div>
+              <Image
+                alt="app showcase big screen"
+                draggable={false}
+                src={mainImage2}
+                quality={100}
+                priority
+                className="hidden w-[800px] self-start md:block"
+              ></Image>
+            </div>
+          </motion.div>
         </div>
-        <motion.div
-          className="flex items-start justify-center pt-4 pb-8"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-        >
-          <div>
-            <Image
-              alt="app showcase"
-              draggable={false}
-              src={mainImage}
-              quality={100}
-              priority
-              className="w-[240px] self-start sm:w-[300px] md:hidden"
-            ></Image>
-          </div>
-          <div>
-            <Image
-              alt="app showcase big screen"
-              draggable={false}
-              src={mainImage2}
-              quality={100}
-              priority
-              className="hidden w-[800px] self-start md:block"
-            ></Image>
-          </div>
-        </motion.div>
-        <div className="flex flex-col items-center bg-background-darker-color/75 py-4 backdrop-blur-md">
+        <div className="flex flex-col items-center bg-background-darker-color/60 py-8 backdrop-blur-md">
           <div className="p-4 font-semibold">
             <h3 className="mb-4 text-center text-2xl">
               With <span className="font-bold text-blue-light">MUSCLER</span>{" "}
@@ -136,7 +142,7 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-        <div className="flex flex-col items-center bg-background-darker-color/75  py-4 backdrop-blur-md">
+        <div className="flex flex-col items-center bg-background-darker-color/60  py-8 backdrop-blur-md">
           <div className="p-4 font-semibold">
             <h3 className="text-center text-2xl">
               <span className="font-bold text-blue-light">MUSCLER</span> works
@@ -186,16 +192,15 @@ export default function Home() {
               ></Image>
             </motion.div>
           </div>
-          <div className="px-6 py-12">
-            <Link
-              className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark p-6 font-bold text-white hover:bg-blue-darker-lighter"
-              href="/dashboard"
-            >
-              Get started
-            </Link>
-          </div>
+
+          <Link
+            className="text-md my-8 cursor-pointer rounded-md border-2 border-black bg-blue-dark px-12 py-8 text-xl font-bold text-white hover:bg-blue-darker-lighter"
+            href="/dashboard"
+          >
+            Get started
+          </Link>
         </div>
-        <div className="w-full bg-background-darker-color/95 py-4 text-center backdrop-blur-md">
+        <div className="w-full bg-background-darker-color/90 py-4 text-center backdrop-blur-md">
           Made with ❤ by Daniel Skowron
         </div>
       </main>

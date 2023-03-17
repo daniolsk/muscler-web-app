@@ -17,35 +17,43 @@ function BackgroundImages() {
       <Image
         className="absolute -top-[6%] -left-[50%] -z-40 w-full opacity-40 blur-2xl md:-top-[18%] lg:-top-[25%] 2xl:-top-[40%]"
         src={blob4}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -right-[50%] top-[17%] -z-40 w-full opacity-40 blur-2xl lg:top-[20%]"
         src={blob2}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -left-[50%] top-[45%] -z-40 w-full opacity-40 blur-2xl"
         src={blob}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -right-[50%] top-[75%] -z-40 w-full opacity-40 blur-2xl"
         src={blob3}
+        alt="background blob"
       ></Image>
 
       <Image
         className="absolute -top-[6%] -left-[50%] -z-50 w-full translate-x-3/4 translate-y-[350px] opacity-10  blur-2xl md:-top-[18%] lg:-top-[25%] 2xl:-top-[40%]"
         src={blob44}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -right-[50%] top-[17%] -z-50 w-full -translate-x-3/4 translate-y-[350px] opacity-10 blur-2xl lg:top-[20%]"
         src={blob22}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -left-[50%] top-[45%] -z-50 w-full translate-x-3/4 translate-y-[350px] opacity-10 blur-2xl"
         src={blobb}
+        alt="background blob"
       ></Image>
       <Image
         className="absolute -right-[50%] top-[75%] -z-50 w-full -translate-x-3/4 translate-y-[350px] opacity-10 blur-2xl"
         src={blob33}
+        alt="background blob"
       ></Image>
     </>
   );
