@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { verifyToken } from "../lib/jwt";
+
+import Header from "../components/Header";
 
 import mainImage from "../public/images/screens/539shots_so.png";
 import mainImage2 from "../public/images/screens/125shots_so.png";
@@ -26,16 +27,17 @@ export default function Home() {
       </Head>
 
       <main className="relative overflow-hidden text-white">
+        <div className="hidden lg:block">
+          <Header noButton logoHref={"/"} />
+        </div>
         <BackgroundImages />
         <div className="flex flex-col bg-[url('/images/bg.png')] bg-[length:170px_170px] bg-fixed bg-repeat lg:flex-row lg:bg-[length:220px_220px] lg:p-8 lg:py-20 lg:px-12 xl:px-20 2xl:px-36">
           <div className="flex h-[50vh] flex-1 flex-col items-center justify-center p-8 text-center md:h-[60vh] lg:h-auto lg:flex-1 lg:items-start lg:text-left">
-            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl  lg:tracking-tighter">
-              MUSCLER
+            <h1 className="mt-6 mb-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl lg:tracking-tighter">
+              Take your workouts to the next level with{" "}
+              <span className="text-blue-dark">MUSCLER</span>
             </h1>
-            <h3 className="text-md mb-8 font-normal italic text-slate-400 sm:text-lg lg:text-xl">
-              by Daniel Skowron
-            </h3>
-            <div className="mb-8 text-lg font-semibold sm:text-xl lg:text-2xl">
+            <div className="mb-8 text-lg text-slate-400 sm:text-xl lg:text-2xl">
               Log your workouts, track your progress, improve your form 💪
             </div>
 
