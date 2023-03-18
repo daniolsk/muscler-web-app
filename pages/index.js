@@ -27,23 +27,20 @@ export default function Home() {
 
       <main className="relative overflow-hidden text-white">
         <BackgroundImages />
-        <div className="flex flex-col lg:flex-row lg:p-8 lg:py-20 lg:px-12 xl:px-20 2xl:px-36">
+        <div className="flex flex-col bg-[url('/images/bg.png')] bg-[length:170px_170px] bg-fixed bg-repeat lg:flex-row lg:bg-[length:220px_220px] lg:p-8 lg:py-20 lg:px-12 xl:px-20 2xl:px-36">
           <div className="flex h-[50vh] flex-1 flex-col items-center justify-center p-8 text-center md:h-[60vh] lg:h-auto lg:flex-1 lg:items-start lg:text-left">
-            <h1 className="mt-6 text-5xl font-extrabold  lg:tracking-tighter">
+            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl  lg:tracking-tighter">
               MUSCLER
             </h1>
-            <h3 className="mb-8 text-lg font-normal italic text-slate-400">
+            <h3 className="text-md mb-8 font-normal italic text-slate-400 sm:text-lg lg:text-xl">
               by Daniel Skowron
             </h3>
-            <div className="mb-8 text-lg font-semibold">
+            <div className="mb-8 text-lg font-semibold sm:text-xl lg:text-2xl">
               Log your workouts, track your progress, improve your form 💪
             </div>
 
-            <div className="mb-2 text-lg font-bold italic text-blue-light">
-              IT IS THAT SIMPLE
-            </div>
             <Link
-              className="text-md cursor-pointer rounded-md border-2 border-black bg-blue-dark px-8 py-6 text-xl font-bold text-white hover:bg-blue-darker-lighter"
+              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark px-8 py-6 text-lg font-bold text-white hover:bg-blue-darker-lighter sm:text-xl"
               href="/dashboard"
             >
               Open dashboard
@@ -77,12 +74,15 @@ export default function Home() {
           </motion.div>
         </div>
         <div className="flex flex-col items-center bg-background-darker-color/60 py-8 backdrop-blur-md">
-          <div className="p-4 font-semibold">
-            <h3 className="mb-4 text-center text-2xl">
-              With <span className="font-bold text-blue-light">MUSCLER</span>{" "}
+          <div className="mb-4 p-4 font-semibold">
+            <h3 className="mb-4 text-center text-2xl lg:text-3xl">
+              With{" "}
+              <span className="text-3xl font-extrabold text-blue-light lg:text-4xl">
+                MUSCLER
+              </span>{" "}
               you can:
             </h3>
-            <ul className="list-disc pl-6">
+            <ul className="list-disc pl-6 text-lg lg:text-xl">
               <li className="mb-2">
                 Add workout - save your progress, add tags, sets and weight
               </li>
@@ -143,11 +143,13 @@ export default function Home() {
           </motion.div>
         </div>
         <div className="flex flex-col items-center bg-background-darker-color/60  py-8 backdrop-blur-md">
-          <div className="p-4 font-semibold">
-            <h3 className="text-center text-2xl">
-              <span className="font-bold text-blue-light">MUSCLER</span> works
-              in browser
-              <div className="text-base">(on mobile or desktop)</div>
+          <div className="mb-4 p-6 font-semibold">
+            <h3 className="text-center text-2xl lg:text-3xl">
+              <span className="text-3xl font-extrabold text-blue-light lg:text-4xl">
+                MUSCLER
+              </span>{" "}
+              works in browser
+              <div className="text-lg lg:text-xl">(on mobile or desktop)</div>
             </h3>
           </div>
           <div className="overflow-hidden lg:flex">
@@ -194,7 +196,7 @@ export default function Home() {
           </div>
 
           <Link
-            className="text-md my-8 cursor-pointer rounded-md border-2 border-black bg-blue-dark px-12 py-8 text-xl font-bold text-white hover:bg-blue-darker-lighter"
+            className="my-8 cursor-pointer rounded-md border-2 border-black bg-blue-dark px-12 py-8 text-xl font-bold text-white hover:bg-blue-darker-lighter lg:text-2xl"
             href="/dashboard"
           >
             Get started
