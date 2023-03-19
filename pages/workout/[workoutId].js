@@ -67,6 +67,14 @@ export async function getServerSideProps(context) {
     };
   }
 
+  if (workout.isTemplate) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+      },
+    };
+  }
+
   let infoForGuest = false;
 
   if (workout.isActive) {

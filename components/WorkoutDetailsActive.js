@@ -292,7 +292,7 @@ function WorkoutDetailsInactive({ workout }) {
         }}
         buttonImageName="go-back"
       />
-      <div className="m-auto max-w-3xl">
+      <div className="m-auto max-w-4xl">
         <div className="flex items-center justify-between py-4 px-6">
           <div>
             <h1 className="mb-2 text-left text-2xl font-bold">

@@ -27,7 +27,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
         href="/dashboard"
         buttonImageName="go-back"
       />
-      <div className="m-auto max-w-3xl">
+      <div className="m-auto max-w-4xl">
         <div className="mb-4 flex items-center justify-between py-4 px-6">
           <div>
             {guest ? (
@@ -90,9 +90,11 @@ function WorkoutDetailsInactive({ workout, guest }) {
           </div>
         </div>
         <div className="px-4 text-xs text-neutral-400">EXERCISE</div>
-        <div className="mb-4 sm:grid sm:grid-cols-2 sm:p-4">
+        <div className="mb-4 sm:grid sm:grid-cols-2 sm:p-2">
           {workout.exercises.length == 0 ? (
-            <div className="p-4">No exerices in this workout</div>
+            <div className="p-4 text-center text-neutral-400 sm:col-span-2">
+              No exerices in this workout
+            </div>
           ) : (
             ""
           )}

@@ -91,7 +91,7 @@ export default function Dashboard({ user, workouts }) {
           href={"/profile"}
           buttonImageName="go-back"
         />
-        <div className="m-auto max-w-3xl">
+        <div className="m-auto max-w-5xl">
           <div className="p-4 text-center text-xl font-bold md:text-2xl">
             Your templates:
           </div>
@@ -154,7 +154,7 @@ export default function Dashboard({ user, workouts }) {
                               className="flex-1"
                             >
                               <div className="p-4">
-                                <div className="mb-2 flex justify-between">
+                                <div className="mb-2 flex items-center justify-between">
                                   <div className="mr-2 text-lg font-bold md:text-xl">
                                     {workout.name}
                                   </div>
@@ -165,15 +165,15 @@ export default function Dashboard({ user, workouts }) {
                                 <div className="flex items-start justify-between">
                                   <div className=" flex flex-col text-white">
                                     <div className="text-sm md:text-base">
-                                      Total sets:{" "}
-                                      <span className="text-base font-bold md:text-lg">
-                                        {workout._count.logs}
-                                      </span>
-                                    </div>
-                                    <div className="text-sm md:text-base">
                                       Total exercises:{" "}
                                       <span className="text-base font-bold md:text-lg">
                                         {workout._count.exercises}
+                                      </span>
+                                    </div>
+                                    <div className="text-sm md:text-base">
+                                      Total sets:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.logs}
                                       </span>
                                     </div>
                                   </div>

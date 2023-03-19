@@ -106,7 +106,7 @@ export default function Dashboard({ user, workouts }) {
           buttonOnClick={handleLogout}
           buttonImageName="logout"
         />
-        <div className="m-auto max-w-3xl">
+        <div className="m-auto max-w-5xl">
           <div className="flex items-center justify-center p-5 pb-2">
             <h1 className="mr-2 text-center text-4xl font-bold md:text-5xl">
               <span className="text-2xl font-normal md:text-3xl">Hello</span>{" "}
@@ -196,7 +196,7 @@ export default function Dashboard({ user, workouts }) {
                               className="flex-1"
                             >
                               <div className="p-4">
-                                <div className="mb-2 flex justify-between">
+                                <div className="mb-2 flex items-center justify-between">
                                   <div className="mr-2 text-lg font-bold md:text-xl">
                                     {workout.name}
                                   </div>
@@ -207,15 +207,15 @@ export default function Dashboard({ user, workouts }) {
                                 <div className="flex items-start justify-between">
                                   <div className=" flex flex-col text-white">
                                     <div className="text-sm md:text-base">
-                                      Total sets:{" "}
-                                      <span className="text-base font-bold md:text-lg">
-                                        {workout._count.logs}
-                                      </span>
-                                    </div>
-                                    <div className="text-sm md:text-base">
                                       Total exercises:{" "}
                                       <span className="text-base font-bold md:text-lg">
                                         {workout._count.exercises}
+                                      </span>
+                                    </div>
+                                    <div className="text-sm md:text-base">
+                                      Total sets:{" "}
+                                      <span className="text-base font-bold md:text-lg">
+                                        {workout._count.logs}
                                       </span>
                                     </div>
                                     <div className="text-sm md:text-base">

@@ -259,7 +259,7 @@ function WorkoutDetailsInactive({ workout }) {
         }}
         buttonImageName="go-back"
       />
-      <div className="m-auto max-w-3xl">
+      <div className="m-auto max-w-4xl">
         <div className="flex items-center justify-between py-4 px-6">
           <div>
             <h1 className="mb-2 text-left text-2xl font-bold">
@@ -304,7 +304,9 @@ function WorkoutDetailsInactive({ workout }) {
         <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
         <div className="mb-2 flex flex-col md:grid md:grid-cols-2">
           {exercises.length == 0 ? (
-            <div className="p-4">No exerices in this workout</div>
+            <div className="p-4 text-center text-neutral-400 sm:col-span-2">
+              No exerices in this template
+            </div>
           ) : (
             ""
           )}

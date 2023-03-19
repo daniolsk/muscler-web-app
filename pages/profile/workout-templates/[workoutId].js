@@ -59,7 +59,15 @@ export async function getServerSideProps(context) {
     if (!workout) {
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: "/profile/workout-templates",
+        },
+      };
+    }
+
+    if (!workout.isTemplate) {
+      return {
+        redirect: {
+          destination: "/profile/workout-templates",
         },
       };
     }
