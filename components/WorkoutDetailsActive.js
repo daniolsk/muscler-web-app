@@ -292,7 +292,7 @@ function WorkoutDetailsInactive({ workout }) {
         }}
         buttonImageName="go-back"
       />
-      <div className="m-auto max-w-4xl">
+      <div className="m-auto max-w-5xl">
         <div className="flex items-center justify-between py-4 px-6">
           <div>
             <h1 className="mb-2 text-left text-2xl font-bold">
@@ -343,7 +343,7 @@ function WorkoutDetailsInactive({ workout }) {
           {error ? error : ""}
         </div>
         <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
-        <div className="mb-4 flex flex-col md:grid md:grid-cols-2">
+        <div className="flex flex-col md:grid md:grid-cols-2">
           {exercises.length == 0 ? (
             <div className="p-4">No exerices in this workout</div>
           ) : (
@@ -360,60 +360,57 @@ function WorkoutDetailsInactive({ workout }) {
               key={exercise.id}
             />
           ))}
-          <div className="flex justify-between">
-            <div>
-              <button
-                onClick={addExercise}
-                className="my-3 mr-0 ml-3 flex cursor-pointer items-center self-start rounded-md px-3 py-2 hover:bg-background-color"
-              >
-                <Image
-                  alt="plus icon"
-                  src={"/icons/plus.svg"}
-                  width={25}
-                  height={25}
-                  priority
-                ></Image>
-                <span>Add an exercise</span>
-              </button>
-            </div>
-            <div>
-              {isFinishing ? (
-                <FullScreenConfirm
-                  onCancel={() => setIsFinishing(false)}
-                  onConfirm={() => {
-                    setIsFinishing(false);
-                    finishWorkout();
-                  }}
-                  button="Finish"
-                  prompt={() => (
-                    <div>
-                      Finish workout{" "}
-                      <span className="italic">{workout.name}</span>?
-                    </div>
-                  )}
-                />
-              ) : (
-                ""
-              )}
-              {exercises.length != 0 ? (
-                <button
-                  disabled={isSaving ? true : false}
-                  onClick={() => setIsFinishing(true)}
-                  className="my-3 ml-0 mr-3 flex cursor-pointer items-center rounded-md bg-blue-dark px-3 py-2 hover:bg-blue-darker-lighter"
-                >
-                  <span className="mr-1">Finish workout</span>
-                  <Image
-                    alt="finish icon"
-                    src={"/icons/finish.svg"}
-                    width={23}
-                    height={23}
-                    priority
-                  ></Image>
-                </button>
-              ) : (
-                ""
-              )}
-            </div>
+        </div>
+        <div className="flex justify-between">
+          <div>
+            <button
+              onClick={addExercise}
+              className="my-3 mr-0 ml-3 flex cursor-pointer items-center self-start rounded-md px-3 py-2 hover:bg-background-color md:ml-0"
+            >
+              <Image
+                alt="plus icon"
+                src={"/icons/plus.svg"}
+                width={25}
+                height={25}
+                priority
+              ></Image>
+              <span>Add an exercise</span>
+            </button>
+          </div>
+
+          <div>
+            {isFinishing ? (
+              <FullScreenConfirm
+                onCancel={() => setIsFinishing(false)}
+                onConfirm={() => {
+                  setIsFinishing(false);
+                  finishWorkout();
+                }}
+                button="Finish"
+                prompt={() => (
+                  <div>
+                    Finish workout{" "}
+                    <span className="italic">{workout.name}</span>?
+                  </div>
+                )}
+              />
+            ) : (
+              ""
+            )}
+            <button
+              disabled={isSaving ? true : false}
+              onClick={() => setIsFinishing(true)}
+              className="my-3 ml-0 mr-3 flex cursor-pointer items-center rounded-md bg-blue-dark px-3 py-2 hover:bg-blue-darker-lighter md:mr-0"
+            >
+              <span className="mr-1">Finish workout</span>
+              <Image
+                alt="finish icon"
+                src={"/icons/finish.svg"}
+                width={23}
+                height={23}
+                priority
+              ></Image>
+            </button>
           </div>
         </div>
       </div>

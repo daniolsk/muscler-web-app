@@ -27,7 +27,7 @@ function WorkoutDetailsInactive({ workout, guest }) {
         href="/dashboard"
         buttonImageName="go-back"
       />
-      <div className="m-auto max-w-4xl">
+      <div className="m-auto max-w-5xl">
         <div className="mb-4 flex items-center justify-between py-4 px-6">
           <div>
             {guest ? (

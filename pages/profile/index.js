@@ -40,7 +40,7 @@ export default function Home({ user }) {
           buttonImageName="go-back"
         />
         <div>
-          <div className="m-auto max-w-3xl">
+          <div className="m-auto max-w-5xl">
             <div className="flex items-center justify-between p-4">
               <div className="flex flex-col">
                 <div className="mb-3">
