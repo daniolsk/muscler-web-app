@@ -22,13 +22,28 @@ export default async function handler(req, res) {
           workoutId: workoutId,
         },
       });
+      const updateWorkout = prisma.workout.update({
+        where: {
+          id: workoutId,
+        },
+        data: {
+          tags: {
+            set: [],
+          },
+        },
+      });
       const deleteWorkout = prisma.workout.delete({
         where: {
           id: workoutId,
         },
       });
 
-      await prisma.$transaction([deleteLogs, deleteExercises, deleteWorkout]);
+      await prisma.$transaction([
+        deleteLogs,
+        deleteExercises,
+        updateWorkout,
+        deleteWorkout,
+      ]);
 
       return res.status(200).json({ msg: "Workout removed" });
     } catch (err) {

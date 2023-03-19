@@ -26,7 +26,12 @@ export default async function handler(req, res) {
           ...data,
           isTemplate: true,
           tags: {
-            create: tags,
+            connectOrCreate: tags.map((tag) => {
+              return {
+                where: tag,
+                create: tag,
+              };
+            }),
           },
         };
 
@@ -61,7 +66,12 @@ export default async function handler(req, res) {
         data = {
           ...data,
           tags: {
-            create: tagsTmp,
+            connectOrCreate: tagsTmp.map((tag) => {
+              return {
+                where: tag,
+                create: tag,
+              };
+            }),
           },
         };
 
@@ -95,7 +105,12 @@ export default async function handler(req, res) {
           ...data,
           isTemplate: false,
           tags: {
-            create: tags,
+            connectOrCreate: tags.map((tag) => {
+              return {
+                where: tag,
+                create: tag,
+              };
+            }),
           },
         };
 

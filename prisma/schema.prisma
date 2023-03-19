@@ -58,7 +58,7 @@ model Log {
 
 model Tag {
     id       Int          @id @default(autoincrement())
-    name     Muscle_group
+    name     Muscle_group @unique
     workouts Workout[]
 }
 
