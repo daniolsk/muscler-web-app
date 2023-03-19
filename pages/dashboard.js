@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+import Calendar from "../components/Calendar";
+
 export default function Dashboard({ user, workouts }) {
   const router = useRouter();
 
@@ -125,9 +127,10 @@ export default function Dashboard({ user, workouts }) {
               ></Image>
             </Link>
           </div>
-          <p className="mb-4 text-center text-xl md:text-2xl">
+          <p className="text-center text-xl md:text-2xl">
             Your recent workouts:
           </p>
+          <Calendar workouts={workoutsState} />
           <div className="text-md text-center font-bold text-red-600">
             {error ? error : ""}
           </div>
