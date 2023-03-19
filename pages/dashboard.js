@@ -5,6 +5,7 @@ import { decode } from "jsonwebtoken";
 import prisma from "../lib/prisma";
 import { useRouter } from "next/navigation";
 
+import Loading from "../components/Loading";
 import NewWorkout from "../components/NewWorkout";
 import DeleteWorkout from "../components/DeleteWorkout";
 import Header from "../components/Header";
@@ -19,6 +20,9 @@ export default function Dashboard({ user, workouts }) {
 
   const [workoutsState, setWorkoutsState] = useState(workouts);
   const [error, setError] = useState("");
+
+  const [loadingMoreWorkouts, setLoadingMoreWorkouts] = useState(false);
+  const [isInitialAnimation, setIsInitialAnimation] = useState(true);
 
   const [filter, setFilter] = useState("");
   const [filteredWorkouts, setFilteredWorkouts] = useState(workouts);
@@ -70,11 +74,19 @@ export default function Dashboard({ user, workouts }) {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
+    setIsInitialAnimation(false);
   }, []);
 
   const deleteWorkout = (id) => {
     let tmpWrks = workoutsState;
     tmpWrks = tmpWrks.filter((wrk) => wrk.id != id);
+    setWorkoutsState([...tmpWrks]);
+  };
+
+  const handleNewWorkout = (NewWorkout) => {
+    let tmpWrks = workoutsState;
+    console.log(NewWorkout);
+    tmpWrks.push(NewWorkout);
     setWorkoutsState([...tmpWrks]);
   };
 
@@ -91,6 +103,33 @@ export default function Dashboard({ user, workouts }) {
     }
 
     router.push("/login");
+  };
+
+  const loadMore = async () => {
+    setLoadingMoreWorkouts(true);
+
+    const response = await fetch("/api/getWorkouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        skipNumber: workoutsState.length,
+      }),
+    });
+
+    let data = await response.json();
+
+    if (response.status != 200) {
+      setError(data.msg);
+      setLoadingMoreWorkouts(false);
+      return;
+    }
+
+    setWorkoutsState([...workoutsState, ...data.workouts]);
+
+    setLoadingMoreWorkouts(false);
   };
 
   return (
@@ -145,7 +184,7 @@ export default function Dashboard({ user, workouts }) {
               />
             </div>
             <div className="p-4 pt-2">
-              <NewWorkout user={user} />
+              <NewWorkout handleNewWorkout={handleNewWorkout} user={user} />
               <div className="flex flex-col md:grid md:grid-cols-2">
                 {workoutsState.length < 1 ? (
                   <div className="md:col-span-2">
@@ -169,7 +208,7 @@ export default function Dashboard({ user, workouts }) {
                             y: 0,
                             opacity: 100,
                             transition: {
-                              delay: i * 0.1,
+                              delay: isInitialAnimation ? i * 0.1 : 0,
                             },
                           }}
                           whileHover={{
@@ -254,6 +293,13 @@ export default function Dashboard({ user, workouts }) {
                   </>
                 )}
               </div>
+              <div className="flex cursor-pointer items-center justify-center py-3">
+                {loadingMoreWorkouts ? (
+                  <Loading />
+                ) : (
+                  <button onClick={loadMore}>Load more</button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -269,6 +315,7 @@ export async function getServerSideProps(context) {
     const dataFromToken = decode(token);
 
     let data = await prisma.workout.findMany({
+      take: 10,
       where: {
         userId: dataFromToken.id,
         isTemplate: false,

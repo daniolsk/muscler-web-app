@@ -18,7 +18,7 @@ const initialState = {
   ABS: false,
 };
 
-function NewWorkout({ user }) {
+function NewWorkout({ user, handleNewWorkout }) {
   const [addingWorkout, setAddingWorkout] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectingTemplate, setSelectingTemplate] = useState(false);
@@ -101,7 +101,8 @@ function NewWorkout({ user }) {
     toast.success("Workout added!", {
       id: toastId,
     });
-    router.replace(router.asPath);
+
+    handleNewWorkout(data.newWorkoutRes);
   };
 
   const fetchTemplates = async () => {

@@ -119,7 +119,35 @@ export default async function handler(req, res) {
         });
       }
 
-      return res.status(200).json({ msg: "Workout added", newWorkout });
+      const newWorkoutRes = await prisma.workout.findUnique({
+        where: {
+          id: newWorkout.id,
+        },
+        include: {
+          logs: true,
+          tags: true,
+          exercises: {
+            include: {
+              logs: true,
+            },
+          },
+          _count: {
+            select: { logs: true, exercises: true },
+          },
+        },
+      });
+
+      newWorkoutRes.date = newWorkoutRes.date.toString();
+
+      let totalWeight = 0;
+
+      newWorkoutRes.logs.forEach((log) => {
+        totalWeight += log.weight * log.reps;
+      });
+
+      newWorkoutRes.totalWeight = totalWeight;
+
+      return res.status(200).json({ msg: "Workout added", newWorkoutRes });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "Something went wrong" });
