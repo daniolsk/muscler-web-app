@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { Muscle_group } from "@prisma/client";
 import Loading from "../components/Loading";
@@ -27,8 +26,6 @@ function NewWorkout({ user, handleNewWorkout }) {
   const [error, setError] = useState("");
   const [checkboxes, setCheckboxes] = useState({ ...initialState });
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-
-  const router = useRouter();
 
   const addWorkout = () => {
     setAddingWorkout(true);

@@ -85,7 +85,6 @@ export default function Dashboard({ user, workouts }) {
 
   const handleNewWorkout = (NewWorkout) => {
     let tmpWrks = workoutsState;
-    console.log(NewWorkout);
     tmpWrks.unshift(NewWorkout);
     setWorkoutsState([...tmpWrks]);
   };
