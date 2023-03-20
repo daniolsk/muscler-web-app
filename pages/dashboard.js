@@ -11,6 +11,7 @@ import DeleteWorkout from "../components/DeleteWorkout";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import { motion } from "framer-motion";
 
 import Calendar from "../components/Calendar";
