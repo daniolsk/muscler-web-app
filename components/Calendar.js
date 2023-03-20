@@ -35,7 +35,7 @@ function Calendar({ workouts }) {
     <div className="p-4">
       <div className="flex justify-between overflow-auto pb-2">
         {lastDays.map((day, i) => (
-          <div key={i} className="mr-2">
+          <div key={i}>
             <div
               className={`whitespace-nowrap border-b-2 border-blue-light px-4 py-2 text-center ${
                 i == 0 ? "font-bold text-blue-light" : "text-white"
