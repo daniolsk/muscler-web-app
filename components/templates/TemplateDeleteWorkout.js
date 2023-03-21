@@ -73,7 +73,7 @@ function DeleteWorkout({ workout, deleteWorkoutHandle }) {
           src="/icons/trash.svg"
           width={20}
           height={20}
-          alt="trash can icon"
+          alt="trash icon"
           priority
         ></Image>
       </div>

@@ -158,7 +158,7 @@ export default function Dashboard({ user, workouts }) {
               className="cursor-pointer rounded-md p-1 hover:bg-white/20 md:p-2"
             >
               <Image
-                alt="profile settings"
+                alt="profile settings icon"
                 src="/icons/settings.svg"
                 width={21}
                 height={21}

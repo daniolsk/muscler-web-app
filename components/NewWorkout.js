@@ -244,7 +244,7 @@ function NewWorkout({ user, handleNewWorkout }) {
                 <div className="mr-1">Back</div>
                 <Image
                   src={"/icons/go-back.svg"}
-                  alt="arrow right"
+                  alt="go back icon"
                   width={15}
                   height={15}
                 ></Image>

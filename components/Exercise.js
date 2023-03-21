@@ -49,7 +49,7 @@ function Exercise({
           className="flex w-full items-center justify-center rounded-md bg-blue-dark p-2 hover:bg-blue-darker-lighter"
         >
           <Image
-            alt="plus icon"
+            alt="thras icon"
             src={"/icons/trash.svg"}
             width={13}
             height={13}
