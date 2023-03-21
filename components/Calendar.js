@@ -43,6 +43,7 @@ function Calendar({ workouts }) {
     if (lastDays.length == 0) {
       generateMoreDays(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
