@@ -10,8 +10,16 @@ export default async function handler(req, res) {
         return res.status(401).json({ msg: "Unauthorized" });
       }
 
-      const { newExercises, newLogs, modifiedExercises, modifiedLogs } =
-        req.body;
+      const {
+        workoutId,
+        newExercises,
+        newLogs,
+        modifiedExercises,
+        modifiedLogs,
+        name,
+        tagsChanged,
+        tags,
+      } = req.body;
 
       let idsToChange = [];
 
@@ -77,6 +85,46 @@ export default async function handler(req, res) {
         });
 
         idsToChange.push([log.id, updatedLog.id]);
+      }
+
+      if (name) {
+        await prisma.workout.update({
+          where: {
+            id: workoutId,
+          },
+          data: {
+            name: name,
+          },
+        });
+      }
+
+      if (tagsChanged) {
+        await prisma.workout.update({
+          where: {
+            id: workoutId,
+          },
+          data: {
+            tags: {
+              set: [],
+            },
+          },
+        });
+
+        await prisma.workout.update({
+          where: {
+            id: workoutId,
+          },
+          data: {
+            tags: {
+              connectOrCreate: tags.map((tag) => {
+                return {
+                  where: { id: tag.id },
+                  create: { name: tag.name },
+                };
+              }),
+            },
+          },
+        });
       }
 
       return res.status(200).json({ msg: "Workout saved", data: idsToChange });

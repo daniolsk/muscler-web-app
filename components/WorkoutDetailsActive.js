@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Exercise from "./Exercise";
 import { useRouter } from "next/router";
@@ -16,6 +16,11 @@ function WorkoutDetailsInactive({ workout }) {
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  const [workoutName, setWorkoutName] = useState(workout.name);
+
+  const [tags, setTags] = useState(workout.tags);
+  const [tagsChanged, setTagsChanged] = useState(false);
+
   const [isFinishing, setIsFinishing] = useState(false);
 
   const isVisible = usePageVisibility();
@@ -32,6 +37,11 @@ function WorkoutDetailsInactive({ workout }) {
   }, [isVisible]);
 
   const router = useRouter();
+
+  const handleDeleteTag = (id) => {
+    setTags((tags) => tags.filter((tag) => tag.id != id));
+    setTagsChanged(true);
+  };
 
   const finishWorkout = async () => {
     if (!isSaving) await saveWorkout(false);
@@ -64,6 +74,14 @@ function WorkoutDetailsInactive({ workout }) {
 
   const saveWorkout = async (showToast) => {
     setIsSaving(true);
+
+    if (workoutName == "") {
+      toast.error("Name can not be empty!", {
+        position: "top-center",
+      });
+      setIsSaving(false);
+      return;
+    }
 
     let toastId = null;
 
@@ -100,7 +118,9 @@ function WorkoutDetailsInactive({ workout }) {
       newExercises.length == 0 &&
       newLogs.length == 0 &&
       modifiedExercises.length == 0 &&
-      modifiedLogs.length == 0
+      modifiedLogs.length == 0 &&
+      workout.name == workoutName &&
+      !tagsChanged
     ) {
       setIsSaving(false);
       if (showToast)
@@ -116,17 +136,29 @@ function WorkoutDetailsInactive({ workout }) {
       }
     }
 
+    const bodyToSend = {
+      workoutId: workout.id,
+      newExercises,
+      newLogs,
+      modifiedExercises,
+      modifiedLogs,
+    };
+
+    if (workout.name != workoutName) {
+      bodyToSend.name = workoutName;
+    }
+
+    if (tagsChanged) {
+      bodyToSend.tags = tags;
+      bodyToSend.tagsChanged = true;
+    }
+
     const response = await fetch("/api/saveWorkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        newExercises,
-        newLogs,
-        modifiedExercises,
-        modifiedLogs,
-      }),
+      body: JSON.stringify(bodyToSend),
     });
 
     const data = await response.json();
@@ -142,6 +174,7 @@ function WorkoutDetailsInactive({ workout }) {
     }
 
     setIsSaving(false);
+    setTagsChanged(false);
 
     if (data.data && data.data.length > 0) {
       let tmpExercises = exercises;
@@ -293,11 +326,20 @@ function WorkoutDetailsInactive({ workout }) {
         buttonImageName="go-back"
       />
       <div className="m-auto max-w-5xl">
+        <div className="text-md text-center font-bold text-red-600">
+          {error ? error : ""}
+        </div>
         <div className="flex items-center justify-between py-4 px-6">
-          <div>
-            <h1 className="mb-2 text-left text-2xl font-bold">
-              {workout.name}
-            </h1>
+          <div className="mr-4 flex-1">
+            <input
+              className="mb-2 w-3/4 flex-1 resize-none border-none bg-transparent text-left text-2xl font-bold text-white"
+              type="text"
+              value={workoutName}
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              onChange={(e) => setWorkoutName(e.target.value)}
+            />
             <h3 className="text-left text-sm">{date}</h3>
             <div className=" flex flex-col justify-start text-white">
               <div className="text-sm">
@@ -329,18 +371,29 @@ function WorkoutDetailsInactive({ workout }) {
             </button>
           </div>
         </div>
-        <div className="flex items-center px-6 py-2">
-          {workout.tags.map((tag) => (
+        <div className="flex items-center justify-start px-6 py-2">
+          {tags.map((tag) => (
             <div
               key={tag.id}
-              className="mr-2 rounded-full bg-red-800 p-2 text-xs font-bold"
+              className="mr-2 cursor-pointer rounded-full bg-red-800 p-2 text-xs font-bold hover:bg-red-700"
+              onClick={() => {
+                handleDeleteTag(tag.id);
+              }}
             >
               {tag.name}
+              <span className="ml-2 font-extrabold">-</span>
             </div>
           ))}
-        </div>
-        <div className="text-md text-center font-bold text-red-600">
-          {error ? error : ""}
+          <div className="flex cursor-pointer rounded-full fill-red-500 p-1.5 text-lg font-bold hover:bg-background-color">
+            <Image
+              alt="plus icon"
+              src={"/icons/plus.svg"}
+              className="fill-red-500"
+              width={23}
+              height={23}
+              priority
+            ></Image>
+          </div>
         </div>
         <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
         <div className="flex flex-col md:grid md:grid-cols-2">
