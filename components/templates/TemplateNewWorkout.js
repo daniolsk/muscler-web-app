@@ -95,7 +95,7 @@ function NewWorkout({ user }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
-              className="mb-4 rounded-md border-2 border-black p-3 text-black"
+              className="mb-4 rounded-md border-2 border-black bg-gray-800 p-3 text-white"
             />
             <h3 className="text-md mb-4 text-center font-medium text-white">
               Choose categories:

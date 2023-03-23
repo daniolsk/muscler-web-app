@@ -10,7 +10,7 @@ export default function Workout({ workout }) {
       <Head>
         <title>Muscler</title>
         <meta name="description" content="Workout tracker app" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <TemplateWorkoutDetailsActive workout={workout} />

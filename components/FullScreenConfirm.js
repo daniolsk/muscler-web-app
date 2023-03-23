@@ -22,7 +22,7 @@ function FullScreenConfirm({ prompt, button, onConfirm, onCancel, error }) {
             className="flex flex-col"
           >
             <input
-              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 hover:bg-blue-darker-lighter"
+              className="cursor-pointer rounded-md border-2 border-black bg-blue-dark p-3 text-white hover:bg-blue-darker-lighter"
               type="submit"
               value={button}
             />

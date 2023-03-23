@@ -3,26 +3,7 @@
 :root {
   --primary: #040914;
   --secondary: #1f283b;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--primary);
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 15px;
-  background: var(--primary);
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--primary);
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border-radius: 14px;
+  color-scheme: dark;
 }
 
 @tailwind components;

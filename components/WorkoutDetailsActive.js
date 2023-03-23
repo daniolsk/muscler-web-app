@@ -4,6 +4,8 @@ import Exercise from "./Exercise";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 
+import AddTagsMenu from "../components/AddTagsMenu";
+
 import { toast } from "react-hot-toast";
 
 import { v4 as uuidv4 } from "uuid";
@@ -11,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { usePageVisibility } from "./hooks/usePageVisibility";
 import FullScreenConfirm from "./FullScreenConfirm";
 
-function WorkoutDetailsInactive({ workout }) {
+function WorkoutDetailsActive({ workout }) {
   const [exercises, setExercises] = useState(workout.exercises);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -40,6 +42,11 @@ function WorkoutDetailsInactive({ workout }) {
 
   const handleDeleteTag = (id) => {
     setTags((tags) => tags.filter((tag) => tag.id != id));
+    setTagsChanged(true);
+  };
+
+  const addTag = (tag, id) => {
+    setTags((tags) => [...tags, { name: tag, id: id }]);
     setTagsChanged(true);
   };
 
@@ -152,6 +159,8 @@ function WorkoutDetailsInactive({ workout }) {
       bodyToSend.tags = tags;
       bodyToSend.tagsChanged = true;
     }
+
+    console.log(tags);
 
     const response = await fetch("/api/saveWorkout", {
       method: "POST",
@@ -332,7 +341,7 @@ function WorkoutDetailsInactive({ workout }) {
         <div className="flex items-center justify-between py-4 px-6">
           <div className="mr-4 flex-1">
             <input
-              className="mb-2 w-3/4 flex-1 resize-none border-none bg-transparent text-left text-2xl font-bold text-white"
+              className="mb-2 w-3/4 flex-1 resize-none border-none bg-transparent text-left text-2xl font-extrabold text-white"
               type="text"
               value={workoutName}
               onFocus={(e) => {
@@ -371,11 +380,11 @@ function WorkoutDetailsInactive({ workout }) {
             </button>
           </div>
         </div>
-        <div className="flex items-center justify-start px-6 py-2">
+        <div className="flex flex-wrap items-center justify-start gap-2 px-6 py-2">
           {tags.map((tag) => (
             <div
-              key={tag.id}
-              className="mr-2 cursor-pointer rounded-full bg-red-800 p-2 text-xs font-bold hover:bg-red-700"
+              key={tag.name}
+              className="cursor-pointer rounded-full bg-red-800 p-2 text-xs font-bold hover:bg-red-700"
               onClick={() => {
                 handleDeleteTag(tag.id);
               }}
@@ -384,17 +393,8 @@ function WorkoutDetailsInactive({ workout }) {
               <span className="ml-2 font-extrabold">-</span>
             </div>
           ))}
-          <div className="flex cursor-pointer rounded-full fill-red-500 p-1.5 text-lg font-bold hover:bg-background-color">
-            <Image
-              alt="plus icon"
-              src={"/icons/plus.svg"}
-              className="fill-red-500"
-              width={23}
-              height={23}
-              priority
-            ></Image>
-          </div>
         </div>
+        <AddTagsMenu tags={tags} addTag={addTag} />
         <div className="mt-4 px-4 text-xs text-neutral-400">EXERCISE</div>
         <div className="flex flex-col md:grid md:grid-cols-2">
           {exercises.length == 0 ? (
@@ -471,4 +471,4 @@ function WorkoutDetailsInactive({ workout }) {
   );
 }
 
-export default WorkoutDetailsInactive;
+export default WorkoutDetailsActive;

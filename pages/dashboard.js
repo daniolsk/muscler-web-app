@@ -137,12 +137,12 @@ export default function Dashboard({ user, workouts }) {
       <Head>
         <title>Muscler</title>
         <meta name="description" content="Workout tracker app" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className="text-white">
         <Header
-          logoHref="/"
+          logoHref="/dashboard"
           buttonText={"Log out"}
           buttonOnClick={handleLogout}
           buttonImageName="logout"

@@ -28,34 +28,37 @@ function WorkoutDetailsInactive({ workout, guest }) {
         buttonImageName="go-back"
       />
       <div className="m-auto max-w-5xl">
+        <div>
+          {guest ? (
+            <h1 className="-mb-4 px-6 pt-4 text-left text-xl font-bold italic ">
+              {workout.user.username}&apos;s workout
+            </h1>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="flex justify-between px-6 pt-4 text-left text-2xl font-extrabold">
+          <div className="mr-4">{workout.name}</div>
+          <button
+            className="flex items-center rounded-md bg-background-darker-color px-2.5 py-1.5 hover:bg-background-darker-color-lighter"
+            onClick={() => {
+              if (window.isSecureContext)
+                navigator.clipboard.writeText(window.location.href);
+              toast.success("Link copied to clipboard!");
+            }}
+          >
+            <div className="mr-1 text-sm">Share</div>
+            <Image
+              alt="share icon"
+              priority
+              src={"/icons/share.svg"}
+              width={18}
+              height={18}
+            ></Image>
+          </button>
+        </div>
         <div className="mb-4 flex items-center justify-between py-4 px-6">
           <div>
-            {guest ? (
-              <h1 className="mb-2 text-left text-2xl font-bold italic">
-                {workout.user.username}&apos;s workout
-              </h1>
-            ) : (
-              ""
-            )}
-            <div className="mb-2 flex flex-col items-start text-left text-2xl font-bold md:flex-row">
-              <div className="mb-2 md:mr-4">{workout.name}</div>
-              <button
-                className="flex items-center rounded-md bg-background-darker-color px-2.5 py-1.5"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  toast.success("Link copied to clipboard!");
-                }}
-              >
-                <div className="mr-1 text-sm">Share</div>
-                <Image
-                  alt="share icon"
-                  priority
-                  src={"/icons/share.svg"}
-                  width={18}
-                  height={18}
-                ></Image>
-              </button>
-            </div>
             <h3 className="text-left text-sm">{date}</h3>
             <div className=" flex flex-col justify-start text-white">
               <div className="text-sm">

@@ -139,7 +139,7 @@ function NewWorkout({ user, handleNewWorkout }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
-              className="mb-4 rounded-md border-2 border-black p-3 text-black"
+              className="mb-4 rounded-md border-2 border-black bg-gray-800 p-3 text-white"
             />
             {selectingTemplate ? (
               <div className="mb-4 flex min-h-[150px] overflow-x-auto py-2">
