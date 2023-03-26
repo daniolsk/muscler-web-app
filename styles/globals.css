@@ -1,13 +1,10 @@
 @tailwind base;
-
-:root {
-  --primary: #040914;
-  --secondary: #1f283b;
-  color-scheme: dark;
-}
-
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
 
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,

@@ -113,7 +113,7 @@ export default function Dashboard({ user, workouts }) {
               <div className="flex flex-col md:grid md:grid-cols-2">
                 {workoutsState.length < 1 ? (
                   <>
-                    <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light">
+                    <div className="mt-10 px-6 text-center text-lg font-bold text-blue-light md:col-span-2">
                       Create new template using button above!
                     </div>
                   </>

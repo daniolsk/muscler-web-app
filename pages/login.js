@@ -135,7 +135,7 @@ export default function Login() {
                   <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    className="mb-4 rounded-md border-2 border-black bg-background-darker-color p-3 text-white"
                     type="text"
                     placeholder="Username"
                   />
@@ -144,7 +144,7 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
-                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    className="mb-4 rounded-md border-2 border-black bg-background-darker-color-lighter p-3 text-white"
                   />
                   <input
                     onClick={handleSubmit}
@@ -166,7 +166,7 @@ export default function Login() {
                   <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    className="mb-4 rounded-md border-2 border-black bg-background-darker-color-lighter p-3 text-white"
                     type="text"
                     placeholder="Username"
                   />
@@ -175,7 +175,7 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
-                    className="mb-4 rounded-md border-2 border-black p-3 text-black"
+                    className="mb-4 rounded-md border-2 border-black bg-background-darker-color-lighter p-3 text-white"
                   />
                   <input
                     onClick={handleSubmit}

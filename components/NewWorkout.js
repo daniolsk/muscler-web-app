@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const initialState = {
   CHEST: false,
@@ -146,58 +147,75 @@ function NewWorkout({ user, handleNewWorkout }) {
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  templates.map((template, i) => (
-                    <motion.div
-                      initial={{
-                        x: 50,
-                        opacity: 0,
-                      }}
-                      animate={{
-                        x: 0,
-                        opacity: 100,
-                        transition: {
-                          delay: i * 0.1,
-                        },
-                      }}
-                      onClick={() => setSelectedTemplate(template.id)}
-                      key={template.id}
-                      className={`mr-2 flex cursor-pointer flex-col rounded-lg border-2 border-gray-700 bg-gray-800 text-gray-300  hover:border-gray-600 ${
-                        selectedTemplate == template.id
-                          ? `!border-blue-dark !text-white`
-                          : ""
-                      }`}
-                    >
-                      <div className="flex items-center justify-between rounded-t-md bg-gray-900 p-3">
-                        <div className="mr-5 flex flex-col">
-                          <div className="whitespace-nowrap text-lg font-bold">
-                            {template.name}
-                          </div>
-                        </div>
-                        <div className="flex flex-1 flex-nowrap items-start justify-end">
-                          {template.tags.map((tag) => (
-                            <div
-                              key={tag.id}
-                              className="ml-1 rounded-full bg-red-800 p-1.5 text-xs font-semibold"
-                            >
-                              {tag.name}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex flex-1 p-3">
-                        <div className="grid flex-1 grid-cols-[2fr,_1fr] items-center justify-items-center gap-2">
-                          {template.exercises.map((exercise) => (
-                            <Fragment key={exercise.id}>
-                              <div className="text-sm">{exercise.name}</div>
-                              <div className="w-full text-center text-sm text-white">
-                                {exercise._count.logs}
+                  <>
+                    {templates.length > 0 ? (
+                      templates.map((template, i) => (
+                        <motion.div
+                          initial={{
+                            x: 50,
+                            opacity: 0,
+                          }}
+                          animate={{
+                            x: 0,
+                            opacity: 100,
+                            transition: {
+                              delay: i * 0.1,
+                            },
+                          }}
+                          onClick={() => setSelectedTemplate(template.id)}
+                          key={template.id}
+                          className={`mr-2 flex cursor-pointer flex-col rounded-lg border-2 border-gray-700 bg-gray-800 text-gray-300  hover:border-gray-600 ${
+                            selectedTemplate == template.id
+                              ? `!border-blue-dark !text-white`
+                              : ""
+                          }`}
+                        >
+                          <div className="flex items-center justify-between rounded-t-md bg-gray-900 p-3">
+                            <div className="mr-5 flex flex-col">
+                              <div className="whitespace-nowrap text-lg font-bold">
+                                {template.name}
                               </div>
-                            </Fragment>
-                          ))}
+                            </div>
+                            <div className="flex flex-1 flex-nowrap items-start justify-end">
+                              {template.tags.map((tag) => (
+                                <div
+                                  key={tag.id}
+                                  className="ml-1 rounded-full bg-red-800 p-1.5 text-xs font-semibold"
+                                >
+                                  {tag.name}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex flex-1 p-3">
+                            <div className="grid flex-1 grid-cols-[2fr,_1fr] items-center justify-items-center gap-2">
+                              {template.exercises.map((exercise) => (
+                                <Fragment key={exercise.id}>
+                                  <div className="text-sm">{exercise.name}</div>
+                                  <div className="w-full text-center text-sm text-white">
+                                    {exercise._count.logs}
+                                  </div>
+                                </Fragment>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))
+                    ) : (
+                      <div className="flex flex-1 flex-col items-center justify-center text-lg">
+                        <div>You have no templates</div>
+                        <div>
+                          Create one{" "}
+                          <Link
+                            href="/profile/workout-templates"
+                            className="text-blue-500 underline hover:text-blue-400"
+                          >
+                            here
+                          </Link>
                         </div>
                       </div>
-                    </motion.div>
-                  ))
+                    )}
+                  </>
                 )}
               </div>
             ) : (

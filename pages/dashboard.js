@@ -186,7 +186,7 @@ export default function Dashboard({ user, workouts }) {
             <div className="p-4 pt-2">
               <NewWorkout handleNewWorkout={handleNewWorkout} user={user} />
               <div className="flex flex-col md:grid md:grid-cols-2">
-                {workoutsState.length < 1 ? (
+                {workoutsState.length == 0 ? (
                   <div className="md:col-span-2">
                     <div className="mt-10 mb-2 px-4 text-center">
                       No workouts yet...
@@ -293,13 +293,17 @@ export default function Dashboard({ user, workouts }) {
                   </>
                 )}
               </div>
-              <div className="flex cursor-pointer items-center justify-center py-3">
-                {loadingMoreWorkouts ? (
-                  <Loading />
-                ) : (
-                  <button onClick={loadMore}>Load more</button>
-                )}
-              </div>
+              {workoutsState.length > 0 ? (
+                <div className="flex cursor-pointer items-center justify-center py-3">
+                  {loadingMoreWorkouts ? (
+                    <Loading />
+                  ) : (
+                    <button onClick={loadMore}>Load more</button>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
